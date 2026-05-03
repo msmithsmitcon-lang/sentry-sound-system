@@ -2,10 +2,12 @@ Write-Host "Sentry Sound Royalty Engine Check" -ForegroundColor Cyan
 
 $path = "src\lib\royalties\calculateRoyaltyDistribution.ts"
 $servicePath = "src\lib\royalties\processRoyaltyEvent.ts"
+$ledgerPath = "src\lib\royalties\processRoyaltyEventToLedger.ts"
 $errors = @()
 
 if (!(Test-Path $path)) { $errors += "Royalty calculation file missing" }
 if (!(Test-Path $servicePath)) { $errors += "Royalty processing service missing" }
+if (!(Test-Path $ledgerPath)) { $errors += "Royalty ledger processing service missing" }
 
 $content = Get-Content $path -Raw
 

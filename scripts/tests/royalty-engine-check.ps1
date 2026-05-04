@@ -15,6 +15,12 @@ if (!(Test-Path $ledgerValidatorPath)) { $errors += "Ledger integrity validator 
 if (!(Test-Path $balancePath)) { $errors += "Contributor balance recalculation service missing" }
 if (!(Test-Path $payoutPath)) { $errors += "Payout batch processing service missing" }
 
+$payoutContent = Get-Content $payoutPath -Raw
+
+if ($payoutContent -notmatch "Payout batch already processed") { $errors += "Payout duplicate protection missing" }
+if ($payoutContent -notmatch "Payout amount must be greater than 0") { $errors += "Invalid payout amount protection missing" }
+if ($payoutContent -notmatch "Insufficient contributor balance") { $errors += "Insufficient balance protection missing" }
+
 $content = Get-Content $path -Raw
 $ledgerContent = Get-Content $ledgerPath -Raw
 

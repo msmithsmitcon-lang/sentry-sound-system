@@ -2,6 +2,7 @@ import { calculateRoyaltyDistribution } from "./calculateRoyaltyDistribution"
 import { validateLedgerEntries } from "./validateLedgerEntries"
 import { recalculateContributorBalance } from "./recalculateContributorBalance"
 import { writeAuditLog } from "../auditLog"
+import { getAccountContext } from "../getAccountContext"
 
 export async function processRoyaltyEventToLedger({
   supabase,
@@ -16,7 +17,9 @@ export async function processRoyaltyEventToLedger({
   gross_amount: number
   platform_fee_percentage?: number
 }) {
-    await writeAuditLog({
+  const account_id = await getAccountContext(supabase)
+
+  await writeAuditLog({
     supabase,
     action: "ROYALTY_PROCESS_START",
     entity_type: "royalty_event",
@@ -30,7 +33,6 @@ export async function processRoyaltyEventToLedger({
     .limit(1)
 
   if (existingError) throw new Error(existingError.message)
-
   if (existingDistributions && existingDistributions.length > 0) {
     throw new Error("Royalty event already processed")
   }
@@ -50,41 +52,51 @@ export async function processRoyaltyEventToLedger({
   })
 
   const distributionRows = result.distributions.map((d) => ({
+    account_id,
     royalty_event_id,
+    work_id,
     contributor_id: d.contributor_id,
+    split_type: "composition",
     percentage: d.percentage,
     amount: d.amount,
+    currency: "ZAR",
+    status: "calculated",
   }))
 
-  const { error: distributionError } = await supabase
+  const { data: insertedDistributions, error: distributionError } = await supabase
     .from("royalty_distributions")
     .insert(distributionRows)
+    .select("id, contributor_id, amount, work_id")
 
   if (distributionError) throw new Error(distributionError.message)
 
-    const ledgerRows = []
+  const ledgerRows = []
 
-  // CREDIT entries (contributors earn)
-  for (const d of result.distributions) {
+  for (const d of insertedDistributions || []) {
     ledgerRows.push({
-      royalty_event_id,
+      account_id,
       contributor_id: d.contributor_id,
+      work_id: d.work_id,
+      royalty_distribution_id: d.id,
       entry_type: "credit" as const,
-      amount: d.amount,
+      amount: Number(d.amount || 0),
+      currency: "ZAR",
       description: "Royalty distribution",
     })
   }
 
-  // DEBIT entry (system outflow)
   ledgerRows.push({
-    royalty_event_id,
-    contributor_id: null,
+    account_id,
+    contributor_id: insertedDistributions?.[0]?.contributor_id,
+    work_id,
+    royalty_distribution_id: insertedDistributions?.[0]?.id || null,
     entry_type: "debit" as const,
     amount: result.net_amount,
+    currency: "ZAR",
     description: "Royalty payable (system liability)",
   })
 
-    validateLedgerEntries(ledgerRows)
+  validateLedgerEntries(ledgerRows)
 
   const { error: ledgerError } = await supabase
     .from("royalty_ledger")
@@ -99,7 +111,7 @@ export async function processRoyaltyEventToLedger({
     })
   }
 
-    await writeAuditLog({
+  await writeAuditLog({
     supabase,
     action: "ROYALTY_PROCESS_SUCCESS",
     entity_type: "royalty_event",
@@ -109,8 +121,4 @@ export async function processRoyaltyEventToLedger({
 
   return result
 }
-
-
-
-
 

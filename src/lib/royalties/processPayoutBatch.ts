@@ -1,5 +1,6 @@
 import { recalculateContributorBalance } from "./recalculateContributorBalance"
 import { writeAuditLog } from "../auditLog"
+import { getAccountContext } from "../getAccountContext"
 
 export async function processPayoutBatch({
   supabase,
@@ -8,6 +9,7 @@ export async function processPayoutBatch({
   supabase: any
   payout_batch_id: string
 }) {
+  const account_id = await getAccountContext(supabase)
     await writeAuditLog({
     supabase,
     action: "PAYOUT_PROCESS_START",
@@ -53,8 +55,7 @@ export async function processPayoutBatch({
   for (const item of payoutItems) {
     const payoutAmount = Number(item.amount || 0)
 
-    const { error: ledgerError } = await supabase.from("royalty_ledger").insert([
-      {
+    const { error: ledgerError } = await supabase.from("royalty_ledger").insert([{ account_id,
         contributor_id: item.contributor_id,
         entry_type: "debit",
         amount: payoutAmount,
@@ -72,7 +73,7 @@ export async function processPayoutBatch({
 
   const { error: batchError } = await supabase
     .from("payout_batches")
-    .update({ status: "processed", processed_at: new Date().toISOString() })
+    .update({ account_id, status: "processed", processed_at: new Date().toISOString() })
     .eq("id", payout_batch_id)
 
   if (batchError) throw new Error(batchError.message)
@@ -90,4 +91,5 @@ export async function processPayoutBatch({
     processed_items: payoutItems.length,
   }
 }
+
 

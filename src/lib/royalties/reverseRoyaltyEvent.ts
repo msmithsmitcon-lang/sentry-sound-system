@@ -1,6 +1,7 @@
 import { validateLedgerEntries } from "./validateLedgerEntries"
 import { recalculateContributorBalance } from "./recalculateContributorBalance"
 import { writeAuditLog } from "../auditLog"
+import { getAccountContext } from "../getAccountContext"
 
 export async function reverseRoyaltyEvent({
   supabase,
@@ -11,6 +12,7 @@ export async function reverseRoyaltyEvent({
   royalty_event_id: string
   reason: string
 }) {
+  const account_id = await getAccountContext(supabase)
   if (!reason || reason.trim().length < 3) {
     throw new Error("Reversal reason is required")
   }
@@ -25,7 +27,7 @@ export async function reverseRoyaltyEvent({
     throw new Error("No ledger entries found for royalty event")
   }
 
-  const reversalEntries = originalEntries.map((entry: any) => ({
+  const reversalEntries = originalEntries.map((entry: any) => ({ account_id,
     royalty_event_id,
     contributor_id: entry.contributor_id,
     entry_type: entry.entry_type === "credit" ? "debit" as const : "credit" as const,
@@ -67,4 +69,7 @@ export async function reverseRoyaltyEvent({
     reversal_entries: reversalEntries.length,
   }
 }
+
+
+
 

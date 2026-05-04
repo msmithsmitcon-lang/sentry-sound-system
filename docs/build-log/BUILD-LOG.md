@@ -68,3 +68,22 @@ Recovered create-song page after broken UI patch. Production build now passes an
 Test: npm run build
 Status: PASS
 
+
+## ✅ Royalty Engine Milestone (COMPLETE)
+
+- Royalty event API working
+- Processing pipeline working
+- Distribution logic implemented
+- Ledger system implemented
+- Foreign key integrity enforced
+- Duplicate processing prevention implemented
+
+### Key Decisions
+- Ledger links to distribution (not event)
+- All monetary flows must be ledger-backed
+- No null contributor_id allowed
+- Test data must use real UUIDs
+
+### Status
+CORE ROYALTY ENGINE: STABLE ✅
+

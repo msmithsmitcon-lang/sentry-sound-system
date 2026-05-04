@@ -1,4 +1,5 @@
 import { writeAuditLog } from "../auditLog"
+import { getAccountContext } from "../getAccountContext"
 
 export async function createSettlementForPayoutBatch({
   supabase,
@@ -7,6 +8,7 @@ export async function createSettlementForPayoutBatch({
   supabase: any
   payout_batch_id: string
 }) {
+  const account_id = await getAccountContext(supabase)
   const { data: batch, error: batchError } = await supabase
     .from("payout_batches")
     .select("id, status")
@@ -27,9 +29,7 @@ export async function createSettlementForPayoutBatch({
   if (existingSettlement) throw new Error("Settlement already exists for payout batch")
 
   const { data: settlement, error: settlementError } = await supabase
-    .from("settlements")
-    .insert([
-      {
+    .from("settlements").insert([{ account_id,
         payout_batch_id,
         status: "settled",
         settled_at: new Date().toISOString(),
@@ -50,3 +50,5 @@ export async function createSettlementForPayoutBatch({
 
   return settlement
 }
+
+

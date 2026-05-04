@@ -1,4 +1,5 @@
 import { calculateRoyaltyDistribution } from "./calculateRoyaltyDistribution"
+import { validateLedgerEntries } from "./validateLedgerEntries"
 
 export async function processRoyaltyEventToLedger({
   supabase,
@@ -52,13 +53,29 @@ export async function processRoyaltyEventToLedger({
 
   if (distributionError) throw new Error(distributionError.message)
 
-  const ledgerRows = result.distributions.map((d) => ({
+    const ledgerRows = []
+
+  // CREDIT entries (contributors earn)
+  for (const d of result.distributions) {
+    ledgerRows.push({
+      royalty_event_id,
+      contributor_id: d.contributor_id,
+      entry_type: "credit" as const,
+      amount: d.amount,
+      description: "Royalty distribution",
+    })
+  }
+
+  // DEBIT entry (system outflow)
+  ledgerRows.push({
     royalty_event_id,
-    contributor_id: d.contributor_id,
-    entry_type: "credit",
-    amount: d.amount,
-    description: "Royalty distribution generated from royalty event",
-  }))
+    contributor_id: null,
+    entry_type: "debit" as const,
+    amount: result.net_amount,
+    description: "Royalty payable (system liability)",
+  })
+
+    validateLedgerEntries(ledgerRows)
 
   const { error: ledgerError } = await supabase
     .from("royalty_ledger")
@@ -68,3 +85,6 @@ export async function processRoyaltyEventToLedger({
 
   return result
 }
+
+
+

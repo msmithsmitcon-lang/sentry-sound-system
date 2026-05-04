@@ -1,4 +1,5 @@
 import { recalculateContributorBalance } from "./recalculateContributorBalance"
+import { writeAuditLog } from "../auditLog"
 
 export async function processPayoutBatch({
   supabase,
@@ -7,6 +8,13 @@ export async function processPayoutBatch({
   supabase: any
   payout_batch_id: string
 }) {
+    await writeAuditLog({
+    supabase,
+    action: "PAYOUT_PROCESS_START",
+    entity_type: "payout_batch",
+    entity_id: payout_batch_id,
+  })
+
   const { data: batch, error: batchLookupError } = await supabase
     .from("payout_batches")
     .select("id, status")
@@ -69,8 +77,17 @@ export async function processPayoutBatch({
 
   if (batchError) throw new Error(batchError.message)
 
+  await writeAuditLog({
+    supabase,
+    action: "PAYOUT_PROCESS_SUCCESS",
+    entity_type: "payout_batch",
+    entity_id: payout_batch_id,
+    metadata: { processed_items: payoutItems.length },
+  })
+
   return {
     payout_batch_id,
     processed_items: payoutItems.length,
   }
 }
+

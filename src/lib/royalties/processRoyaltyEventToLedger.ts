@@ -1,6 +1,7 @@
 import { calculateRoyaltyDistribution } from "./calculateRoyaltyDistribution"
 import { validateLedgerEntries } from "./validateLedgerEntries"
 import { recalculateContributorBalance } from "./recalculateContributorBalance"
+import { writeAuditLog } from "../auditLog"
 
 export async function processRoyaltyEventToLedger({
   supabase,
@@ -15,6 +16,13 @@ export async function processRoyaltyEventToLedger({
   gross_amount: number
   platform_fee_percentage?: number
 }) {
+    await writeAuditLog({
+    supabase,
+    action: "ROYALTY_PROCESS_START",
+    entity_type: "royalty_event",
+    entity_id: royalty_event_id,
+  })
+
   const { data: existingDistributions, error: existingError } = await supabase
     .from("royalty_distributions")
     .select("id")
@@ -91,8 +99,17 @@ export async function processRoyaltyEventToLedger({
     })
   }
 
+    await writeAuditLog({
+    supabase,
+    action: "ROYALTY_PROCESS_SUCCESS",
+    entity_type: "royalty_event",
+    entity_id: royalty_event_id,
+    metadata: { distributions: result.distributions.length },
+  })
+
   return result
 }
+
 
 
 

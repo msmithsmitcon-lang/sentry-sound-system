@@ -7,6 +7,7 @@ $ledgerValidatorPath = "src\lib\royalties\validateLedgerEntries.ts"
 $balancePath = "src\lib\royalties\recalculateContributorBalance.ts"
 $payoutPath = "src\lib\royalties\processPayoutBatch.ts"
 $auditPath = "src\lib\auditLog.ts"
+$settlementPath = "src\lib\royalties\createSettlementForPayoutBatch.ts"
 $errors = @()
 
 if (!(Test-Path $path)) { $errors += "Royalty calculation file missing" }
@@ -16,6 +17,7 @@ if (!(Test-Path $ledgerValidatorPath)) { $errors += "Ledger integrity validator 
 if (!(Test-Path $balancePath)) { $errors += "Contributor balance recalculation service missing" }
 if (!(Test-Path $payoutPath)) { $errors += "Payout batch processing service missing" }
 if (!(Test-Path $auditPath)) { $errors += "Audit logger missing" }
+if (!(Test-Path $settlementPath)) { $errors += "Settlement creation service missing" }
 
 $payoutContent = Get-Content $payoutPath -Raw
 

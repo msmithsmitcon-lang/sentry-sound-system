@@ -13,6 +13,18 @@ export async function processRoyaltyEventToLedger({
   gross_amount: number
   platform_fee_percentage?: number
 }) {
+  const { data: existingDistributions, error: existingError } = await supabase
+    .from("royalty_distributions")
+    .select("id")
+    .eq("royalty_event_id", royalty_event_id)
+    .limit(1)
+
+  if (existingError) throw new Error(existingError.message)
+
+  if (existingDistributions && existingDistributions.length > 0) {
+    throw new Error("Royalty event already processed")
+  }
+
   const { data: splits, error: splitsError } = await supabase
     .from("work_contributors")
     .select("contributor_id, percentage")

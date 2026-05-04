@@ -22,6 +22,7 @@ if ($content -notmatch "net_amount") { $errors += "Net amount calculation missin
 if ($content -notmatch "distributions") { $errors += "Distribution output missing" }
 if ($ledgerContent -notmatch "Royalty event already processed") { $errors += "Idempotency duplicate protection missing" }
 if ($ledgerContent -notmatch "validateLedgerEntries") { $errors += "Ledger balance validation not enforced" }
+if ($ledgerContent -notmatch "recalculateContributorBalance") { $errors += "Balance recalculation not wired into royalty pipeline" }
 if ($ledgerContent -notmatch '"debit" as const') { $errors += "Debit ledger entry missing" }
 if ($ledgerContent -notmatch '"credit" as const') { $errors += "Credit ledger entries missing" }
 

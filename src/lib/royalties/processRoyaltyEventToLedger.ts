@@ -1,5 +1,6 @@
 import { calculateRoyaltyDistribution } from "./calculateRoyaltyDistribution"
 import { validateLedgerEntries } from "./validateLedgerEntries"
+import { recalculateContributorBalance } from "./recalculateContributorBalance"
 
 export async function processRoyaltyEventToLedger({
   supabase,
@@ -83,8 +84,16 @@ export async function processRoyaltyEventToLedger({
 
   if (ledgerError) throw new Error(ledgerError.message)
 
+  for (const d of result.distributions) {
+    await recalculateContributorBalance({
+      supabase,
+      contributor_id: d.contributor_id,
+    })
+  }
+
   return result
 }
+
 
 
 

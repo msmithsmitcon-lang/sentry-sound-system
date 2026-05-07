@@ -1242,3 +1242,11 @@ Creates the organizational operating backbone.
 - Added workflow run schema.
 - Added workflow audit events.
 - Next: Workflow Orchestration service layer.
+
+## Workflow Orchestration Service Layer Added
+
+- Added workflow event service.
+- Added workflow rule service.
+- Added workflow run service.
+- Added Workflow Orchestration module export index.
+- Next: workflow event dispatch / rule matching.

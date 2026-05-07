@@ -73,3 +73,19 @@ Workflow Orchestration now supports:
 
 ## Next build unit
 Workflow service layer.
+
+## Service layer
+
+### Services added
+- createWorkflowEvent
+- createWorkflowRule
+- createWorkflowRun
+
+## Backend rules
+- Workflow events are workspace-scoped.
+- Workflow rules define trigger/action configuration.
+- Workflow runs track execution state.
+- Workflow layer coordinates modules without duplicating module logic.
+
+## Next build unit
+Workflow event dispatch / rule matching.

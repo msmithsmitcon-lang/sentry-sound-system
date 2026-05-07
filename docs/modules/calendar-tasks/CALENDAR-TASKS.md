@@ -63,3 +63,21 @@ Calendar & Tasks now support:
 
 ## Next build unit
 Calendar & Task service layer.
+
+## Service layer
+
+### Services added
+- createCalendarEvent
+- createTaskItem
+- assignTaskItem
+- updateTaskLifecycle
+
+## Backend rules
+- Calendar events are workspace-scoped.
+- Tasks are workspace-scoped.
+- Tasks can link to any operational record.
+- Tasks can be assigned to workspace members or CRM contacts.
+- Task lifecycle changes are audited.
+
+## Next build unit
+Operational Dashboard backend.

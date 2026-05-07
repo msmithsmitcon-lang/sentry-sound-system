@@ -78,3 +78,15 @@ Distribution service layer.
 
 ## Next build unit
 Release Management backend.
+
+## Release alignment completed
+
+Distribution releases now link to Release Management through:
+
+- distribution_releases.source_release_id ? releases.id
+
+## Strategic impact
+This connects the operational release layer to the delivery/distribution layer.
+
+## Flow now supported
+Release ? Distribution Release ? Distribution Channels ? Delivery Events

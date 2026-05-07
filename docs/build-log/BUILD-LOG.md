@@ -1140,3 +1140,9 @@ Creates the organizational operating backbone.
 - Added release lifecycle service.
 - Added release module export index.
 - Next: Distribution-to-Release alignment.
+
+## Distribution Aligned With Releases
+
+- Added FK from distribution_releases.source_release_id to releases.id.
+- Added index for release-to-distribution lookups.
+- Connected Release Management to Distribution Pipeline.

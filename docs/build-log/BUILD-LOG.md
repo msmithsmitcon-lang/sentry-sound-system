@@ -1064,3 +1064,19 @@ Creates the organizational operating backbone.
 - Added allocation state outputs.
 - Established validation foundation for royalty control logic.
 - Next: rights conflict and territory inheritance architecture.
+
+## Contract System Backend Started
+
+- Created Contract System module documentation.
+- Confirmed contracts as legal/operational binding layer above CRM, Artists, Contributors, and Rights.
+- Next: workspace-scoped contract database schema.
+
+## Contract System Schema Completed
+
+- Added Contract System schema.
+- Added contract parties.
+- Added rights links.
+- Added obligations.
+- Added contract audit events.
+- Added royalty/payment terms to contract records.
+- Next: Contract service layer.

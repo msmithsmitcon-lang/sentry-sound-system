@@ -68,3 +68,19 @@ Approval Workflows now support:
 
 ## Next build unit
 Approval Workflow service layer.
+
+## Service layer
+
+### Services added
+- createApprovalRequest
+- createApprovalStep
+- createApprovalResponse
+
+## Backend rules
+- Approval requests are workspace-scoped.
+- Approval requests can link to any operational record.
+- Approval steps support ordered review.
+- Responses support approved, rejected, and commented outcomes.
+
+## Next build unit
+Approval lifecycle/status automation.

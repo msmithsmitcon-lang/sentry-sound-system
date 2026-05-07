@@ -1326,3 +1326,11 @@ Creates the organizational operating backbone.
 - Added approval responses.
 - Added approval audit events.
 - Next: Approval Workflow service layer.
+
+## Approval Workflow Service Layer Added
+
+- Added approval request service.
+- Added approval step service.
+- Added approval response service.
+- Added Approval Workflow module export index.
+- Next: approval lifecycle/status automation.

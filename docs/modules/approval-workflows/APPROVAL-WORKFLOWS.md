@@ -84,3 +84,29 @@ Approval Workflow service layer.
 
 ## Next build unit
 Approval lifecycle/status automation.
+
+## Approval lifecycle automation
+
+### processApprovalLifecycle
+
+Responsible for:
+- evaluating approval responses
+- determining lifecycle status
+- updating approval request state
+- creating workflow events
+- generating notifications
+
+## Lifecycle outcomes
+- pending_review
+- approved
+- rejected
+
+## Strategic importance
+Approval workflows now propagate operational consequences into:
+- workflow orchestration
+- notifications
+- future dashboard activity
+- future automation chains
+
+## Next build unit
+Approval escalation and timeout handling.

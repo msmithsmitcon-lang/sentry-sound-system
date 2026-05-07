@@ -1350,3 +1350,12 @@ Creates the organizational operating backbone.
 - Added workflow event propagation.
 - Added escalation notification generation.
 - Next: approval API routes or scheduled escalation processor.
+
+## Approval API Routes Added
+
+- Added approval request API route.
+- Added approval step API route.
+- Added approval response API route.
+- Added approval lifecycle processing API route.
+- Added approval escalation API route.
+- Next: Workflow API routes.

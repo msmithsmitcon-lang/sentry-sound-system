@@ -131,3 +131,20 @@ Approval workflows now support operational escalation for blocked or overdue rev
 
 ## Next build unit
 Approval API routes or scheduled escalation processor.
+
+## API routes
+
+### Routes added
+- POST /api/approvals/requests
+- POST /api/approvals/steps
+- POST /api/approvals/responses
+- POST /api/approvals/process
+- POST /api/approvals/escalations
+
+## Backend rules
+- Routes call approved service-layer functions.
+- Routes do not contain business logic.
+- Errors return structured JSON responses.
+
+## Next build unit
+Workflow API routes.

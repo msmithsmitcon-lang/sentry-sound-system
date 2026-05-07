@@ -1106,3 +1106,13 @@ Creates the organizational operating backbone.
 - Added distribution audit events.
 - Renamed release reference to source_release_id for safe future alignment.
 - Next: Distribution service layer.
+
+## Distribution Service Layer Added
+
+- Added distribution channel service.
+- Added distribution release service.
+- Added release-channel service.
+- Added delivery status service.
+- Added distribution lifecycle service.
+- Added distribution module export index.
+- Next: Release Management backend.

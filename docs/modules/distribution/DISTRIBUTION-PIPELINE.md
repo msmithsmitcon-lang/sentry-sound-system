@@ -58,3 +58,23 @@ Distribution now supports:
 
 ## Next build unit
 Distribution service layer.
+
+## Service layer
+
+### Services added
+- createDistributionChannel
+- createDistributionRelease
+- addDistributionReleaseChannel
+- updateDistributionDeliveryStatus
+- updateDistributionReleaseLifecycle
+
+## Backend rules
+- Distribution is workspace-scoped.
+- Channels represent DSP/platform destinations.
+- Releases can be scheduled before delivery.
+- Release-channel records track territory/platform delivery state.
+- Delivery events capture operational history.
+- Lifecycle changes are audited.
+
+## Next build unit
+Release Management backend.

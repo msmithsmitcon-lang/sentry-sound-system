@@ -59,3 +59,20 @@ Releases now support:
 
 ## Next build unit
 Release service layer.
+
+## Service layer
+
+### Services added
+- createRelease
+- addReleaseTrack
+- updateReleaseLifecycle
+
+## Backend rules
+- Releases are workspace-scoped.
+- Releases may link to primary artist profiles.
+- Tracks may link to musical works and sound recordings.
+- Release lifecycle changes are audited.
+- DSP/import references are stored for future reconciliation.
+
+## Next build unit
+Connect Distribution source_release_id to releases.

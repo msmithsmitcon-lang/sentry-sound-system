@@ -1132,3 +1132,11 @@ Creates the organizational operating backbone.
 - Added release audit events.
 - Added DSP/import reference fields.
 - Next: Release service layer.
+
+## Release Service Layer Added
+
+- Added release creation service.
+- Added release track service.
+- Added release lifecycle service.
+- Added release module export index.
+- Next: Distribution-to-Release alignment.

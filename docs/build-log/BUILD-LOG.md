@@ -1298,3 +1298,11 @@ Creates the organizational operating backbone.
 - Added notification templates.
 - Added notification audit events.
 - Next: Notification service layer.
+
+## Notification Service Layer Added
+
+- Added notification creation service.
+- Added notification recipient service.
+- Added delivery attempt service.
+- Added Notification module export index.
+- Next: workflow-to-notification automation integration.

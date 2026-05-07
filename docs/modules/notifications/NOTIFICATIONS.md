@@ -71,3 +71,20 @@ Notifications can later support:
 
 ## Next build unit
 Notification service layer.
+
+## Service layer
+
+### Services added
+- createNotification
+- addNotificationRecipient
+- createNotificationDeliveryAttempt
+
+## Backend rules
+- Notifications are workspace-scoped.
+- Notifications may link to operational records.
+- Notifications support multiple recipients.
+- Delivery attempts are tracked separately.
+- Notification delivery is provider-agnostic.
+
+## Next build unit
+Workflow-to-notification automation integration.

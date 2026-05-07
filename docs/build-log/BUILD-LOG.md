@@ -87,3 +87,949 @@ Status: PASS
 ### Status
 CORE ROYALTY ENGINE: STABLE ✅
 
+
+## 🏁 BACKEND V1 FINALIZED
+
+Status:
+All financial modules implemented and tested successfully.
+
+Completed systems:
+- Royalty processing
+- Distribution engine
+- Ledger system
+- Contributor balances
+- Payout batching and processing
+- Audit system (rebuild, validate, reconcile)
+
+System properties:
+- Ledger is source of truth
+- All balances derivable and auditable
+- Deterministic financial flow
+- Fully testable via API scripts
+
+Conclusion:
+Backend V1 is production-capable and ready for system expansion.
+
+
+## Finance Layer - Accounts System
+
+Implemented finance_accounts table, create/list API, PowerShell test script, and documentation.
+
+Files:
+- app/api/finance/accounts/route.ts
+- scripts/finance/test-finance-accounts.ps1
+- docs/modules/finance.md
+- docs/architecture/finance-layer.md
+- docs/database/finance-accounts.md
+
+Principle preserved:
+- Contributor ledger remains separate.
+- Finance accounts are system-level tracking accounts.
+
+## Fix - Supabase Admin Client
+
+Added missing `src/lib/supabaseAdmin.ts`.
+
+Finance account API now uses the shared admin Supabase client.
+
+## Finance Transactions System
+
+Implemented:
+- finance_transactions table
+- debit/credit structure
+- reference tracking
+- audit-ready financial movement layer
+
+Foundation for:
+- expenses
+- payout settlement
+- reconciliation
+- reporting
+
+## Finance Transaction API Layer
+
+Implemented transaction creation endpoint.
+
+Validation:
+- debit != credit
+- amount > 0
+- required fields enforced
+
+System remains deterministic and auditable.
+
+## Finance Balance Engine
+
+Implemented automatic balance movement during finance transaction creation.
+
+This creates:
+- operational finance ledger
+- live account balances
+- deterministic financial state transitions
+
+## Finance Ledger Inspection
+
+Added finance transaction listing endpoint.
+
+Purpose:
+- audit inspection
+- reporting foundation
+- reconciliation support
+- operational finance visibility
+
+## Finance Transaction Idempotency
+
+Added unique reference constraint:
+
+reference_type + reference_id
+
+Purpose:
+- prevent duplicate financial postings
+- protect ledger integrity
+- support retry-safe APIs
+
+## Expense Accounting Layer
+
+Added expense posting flow using finance ledger.
+
+This extends the system from royalty accounting into operational business accounting.
+
+## Finance Reporting Foundation
+
+Implemented finance summary endpoint.
+
+Purpose:
+- operational finance visibility
+- reporting foundation
+- dashboard aggregation
+- future accounting reports
+
+## Revenue Accounting Layer
+
+Added revenue posting flow using finance ledger.
+
+This extends the finance model into company income tracking.
+
+## Finance Ledger Drilldown
+
+Implemented account detail + account transaction inspection endpoint.
+
+Purpose:
+- ledger analysis
+- audit review
+- account reconciliation
+- reporting drilldown
+
+## Fix - Finance Account Detail Route
+
+Recreated dynamic `[id]` route using PowerShell `-LiteralPath`.
+
+Reason:
+PowerShell can treat square brackets as wildcard characters unless `-LiteralPath` is used.
+
+## Fix - Finance Account Detail Route
+
+Created the `[id]` dynamic API route folder using `-LiteralPath`.
+
+This enables:
+/api/finance/accounts/[id]
+
+## Fix - Finance Account Detail Route
+
+Created the `[id]` dynamic API route folder using `-LiteralPath`.
+
+This enables:
+/api/finance/accounts/[id]
+
+## Finance Reconciliation Layer
+
+Implemented reconciliation tracking on finance transactions.
+
+This creates the foundation for:
+- bank matching
+- payout confirmation
+- financial close workflows
+- reconciliation reporting
+
+## Reconciliation Workflow Layer
+
+Implemented reconciliation update endpoint.
+
+This enables:
+- transaction verification
+- operational accounting review
+- bank matching workflows
+- financial close support
+
+## Reconciliation Queue Layer
+
+Implemented reconciliation status filtering.
+
+This creates:
+- reconciliation work queues
+- finance review pipelines
+- accounting close support
+
+## Financial Close Layer
+
+Implemented accounting periods.
+
+Purpose:
+- prevent uncontrolled historical changes
+- support financial close procedures
+- enable audit-safe reporting workflows
+
+## Accounting Close Workflow
+
+Implemented finance period closing endpoint.
+
+This creates:
+- accounting close procedures
+- locked reporting periods
+- audit-safe financial workflows
+
+## Accounting Lock Enforcement
+
+Implemented financial period lock protection.
+
+Closed accounting periods now reject new transaction postings.
+
+## Accounting Period Reopen Workflow
+
+Implemented finance period reopen endpoint for controlled correction workflows.
+
+## Financial Audit Layer
+
+Implemented finance audit inspection endpoint.
+
+This creates:
+- audit traceability
+- transaction review workflows
+- finance inspection tooling
+- compliance support
+
+## Accounting Reporting Layer
+
+Implemented trial balance reporting endpoint.
+
+This creates:
+- accounting validation
+- reporting foundation
+- ERP-style financial summaries
+- financial statement groundwork
+
+## Financial Statements Layer
+
+Implemented Profit & Loss reporting endpoint.
+
+This creates:
+- operational profitability reporting
+- executive finance visibility
+- accounting statement generation
+- ERP financial reporting foundation
+
+## Financial Position Reporting
+
+Implemented balance sheet reporting endpoint.
+
+This creates:
+- company financial position visibility
+- accounting statement generation
+- ERP-style reporting capability
+- executive finance dashboards
+
+## Cash Flow Reporting Layer
+
+Implemented cash flow summary endpoint.
+
+This creates:
+- cash movement visibility
+- liquidity reporting foundation
+- operational bank/cash reporting
+- future cash flow statement support
+
+## General Ledger Export Layer
+
+Implemented general ledger export endpoint.
+
+This creates:
+- accounting export capability
+- finance reporting pipelines
+- audit export workflows
+- ERP integration foundation
+
+## Executive Finance Layer
+
+Implemented consolidated finance dashboard endpoint.
+
+This creates:
+- executive finance visibility
+- ERP overview reporting
+- operational accounting KPIs
+- management dashboard foundation
+
+## Finance Health Monitoring
+
+Implemented finance health check endpoint.
+
+This creates:
+- system integrity visibility
+- audit readiness checks
+- finance control monitoring
+- ERP admin diagnostics
+
+## Chart of Accounts Layer
+
+Implemented structured chart of accounts endpoint.
+
+This creates:
+- standardized accounting structure
+- grouped financial accounts
+- ERP finance organization foundation
+
+## Finance Documentation Consolidation
+
+Created formal finance subsystem documentation:
+
+- finance architecture
+- finance schema
+- finance module/API documentation
+
+The finance layer is now documented as a structured accounting subsystem.
+
+## Accounts Receivable Layer
+
+Implemented receivables subsystem foundation.
+
+This creates:
+- money owed tracking
+- customer finance workflows
+- invoice/payment groundwork
+- ERP receivables architecture
+
+## Receivable Settlement Layer
+
+Implemented receivable payment processing.
+
+This creates:
+- customer payment workflows
+- outstanding balance tracking
+- ERP receivable settlement support
+
+## Accounts Payable Layer
+
+Implemented payables subsystem foundation.
+
+This creates:
+- vendor obligation tracking
+- payable workflows
+- ERP accounting completeness
+- operational liability management
+
+## Payable Settlement Layer
+
+Implemented payable payment processing.
+
+This creates:
+- vendor settlement workflows
+- operational liability reduction
+- ERP payable payment support
+
+## AR/AP Reporting Layer
+
+Implemented consolidated receivables/payables summary endpoint.
+
+This creates:
+- working capital visibility
+- ERP cash planning foundation
+- operational finance management support
+
+## Overdue Risk Visibility Layer
+
+Implemented overdue receivable/payable reporting.
+
+This creates:
+- collections visibility
+- overdue liability tracking
+- finance risk monitoring
+- ERP operational finance support
+
+## Finance KPI Layer
+
+Implemented executive finance KPI endpoint.
+
+This creates:
+- financial analytics
+- liquidity monitoring
+- ERP executive metrics
+- operational finance intelligence
+
+## Historical Finance Layer
+
+Implemented finance snapshot system.
+
+This creates:
+- historical finance archives
+- trend-analysis foundation
+- audit snapshot support
+- ERP history tracking
+
+## Historical Comparison Layer
+
+Implemented finance snapshot comparison endpoint.
+
+This creates:
+- trend analysis
+- historical performance comparison
+- ERP analytics foundation
+- executive reporting support
+
+## Finance Documentation Update
+
+Updated structured finance docs after AR/AP and snapshot systems.
+
+Docs updated:
+- docs/architecture/finance-architecture.md
+- docs/database/finance-schema.md
+- docs/modules/finance.md
+
+## Budgeting Layer
+
+Implemented finance budgeting foundation.
+
+This creates:
+- planned vs actual structure
+- forecasting groundwork
+- ERP financial planning support
+
+## Financial Planning Analytics
+
+Implemented budget vs actual reporting.
+
+This creates:
+- spend tracking
+- variance analysis
+- planning intelligence
+- ERP budgeting analytics
+
+## Forecasting Layer
+
+Implemented finance forecasting foundation.
+
+This creates:
+- projected finance visibility
+- planning intelligence
+- executive forecasting support
+- ERP BI groundwork
+
+## Finance Monitoring Layer
+
+Implemented finance alert engine.
+
+This creates:
+- automated finance monitoring
+- operational risk detection
+- ERP alerting foundation
+- executive finance intelligence
+
+## Multi-Currency Layer
+
+Implemented exchange-rate foundation.
+
+This creates:
+- international finance capability
+- foreign currency groundwork
+- ERP globalization support
+
+## Currency Conversion Layer
+
+Implemented operational currency conversion.
+
+This creates:
+- international finance workflows
+- foreign value conversion
+- ERP globalization capability
+
+## Tax Architecture Layer
+
+Implemented finance tax-rate foundation.
+
+This creates:
+- tax compliance groundwork
+- VAT/GST support
+- ERP taxation architecture
+
+## Entity Tax Profile Layer
+
+Implemented entity-level tax profiles.
+
+This ensures VAT is not automatically applied to every entity.
+
+Supports:
+- VAT registered
+- not registered
+- exempt
+- pending
+
+This is required for correct tax-aware ERP workflows.
+
+## Onboarding Currency + Tax Note
+
+Added requirement:
+Country selected during onboarding must link to default currency and tax profile setup.
+
+VAT registration must be explicitly asked during onboarding.
+
+## Multi-Currency Upgrade
+
+Added audit-safe transaction currency fields to finance_transactions.
+
+## International Finance Transaction Engine
+
+Upgraded transaction posting for multi-currency accounting.
+
+Transactions now permanently store:
+- original transaction currency
+- locked conversion rate
+- reporting/base currency value
+
+This is required for audit-safe international ERP accounting.
+
+## Exchange Rate Source Governance
+
+Enhanced exchange-rate architecture with source metadata and audit fields.
+
+## Official FX Synchronization Layer
+
+Implemented exchange-rate synchronization foundation.
+
+This creates:
+- controlled FX update architecture
+- official-rate governance
+- ERP international finance compliance support
+
+## Company Finance Configuration Layer
+
+Implemented company-level finance settings.
+
+This creates:
+- centralized finance configuration
+- international ERP defaults
+- tax-registration configuration
+- currency governance support
+
+## Country → Currency Resolution Layer
+
+Implemented country-based currency mapping.
+
+This creates:
+- onboarding auto-resolution
+- international ERP localization
+- regional finance configuration support
+
+## International Onboarding Intelligence
+
+Implemented onboarding finance resolution layer.
+
+This creates:
+- country-driven currency setup
+- onboarding finance defaults
+- VAT-aware onboarding
+- international ERP onboarding support
+
+## Enterprise Finance Governance
+
+Implemented finance audit-event architecture.
+
+This creates:
+- immutable finance event history
+- enterprise audit support
+- forensic traceability
+- ERP governance infrastructure
+
+## Automated Governance Layer
+
+Implemented automatic finance audit emission.
+
+Finance transactions now generate immutable audit records automatically.
+
+## Soft/Hard Close Architecture
+
+Enhanced finance period governance with enterprise accounting controls.
+
+## Period Governance Enforcement
+
+Implemented transaction-level period governance enforcement.
+
+The accounting engine now enforces:
+- soft-close warnings
+- hard-close locks
+
+This is required for enterprise accounting compliance.
+
+## Year-End Accounting Governance
+
+Implemented financial-year close architecture.
+
+This creates:
+- accounting lifecycle management
+- year-end governance
+- audit-year separation
+- ERP financial history controls
+
+## Equity Accounting Layer
+
+Implemented retained earnings calculation.
+
+This creates:
+- accounting equity logic
+- year-end rollover foundation
+- ERP balance-sheet correctness
+
+## Finance Access Governance
+
+Implemented finance roles foundation.
+
+This creates:
+- finance permission structure
+- enterprise role governance
+- future approval workflow support
+
+## Finance Access Governance
+
+Implemented finance roles foundation.
+
+This creates:
+- finance permission structure
+- enterprise role governance
+- future approval workflow support
+
+## Finance Access Governance
+
+Implemented finance roles foundation.
+
+This creates:
+- finance permission structure
+- enterprise role governance
+- future approval workflow support
+
+## Enterprise Approval Governance
+
+Implemented finance approval foundation.
+
+This creates:
+- separation of duties
+- controlled finance approvals
+- ERP governance workflows
+
+## Approval Decision Governance
+
+Implemented approval decision workflow.
+
+This creates:
+- operational finance approvals
+- approval accountability
+- ERP governance enforcement
+
+## Operational Notification Layer
+
+Implemented finance notification foundation.
+
+This creates:
+- finance workflow notifications
+- operational alerting
+- ERP messaging infrastructure
+
+## Governance Workflow Documentation Update
+
+Updated formal finance docs after:
+- roles
+- approvals
+- approval decisions
+- notifications
+
+## Notification Read Workflow
+
+Implemented finance notification read-state update endpoint.
+
+## Executive Dashboard Layer
+
+Implemented finance dashboard aggregation API.
+
+This creates:
+- executive finance overview
+- ERP dashboard foundation
+- operational KPI aggregation
+
+## Executive Finance Intelligence
+
+Implemented finance health scoring.
+
+This creates:
+- operational finance scoring
+- risk visibility
+- ERP intelligence foundation
+
+## Dashboard + Finance Intelligence Documentation Update
+
+Updated formal finance docs after:
+- notification read workflow
+- dashboard summary
+- finance health score
+
+## Finance Automation Foundation
+
+Implemented scheduled finance job architecture.
+
+This creates:
+- ERP automation infrastructure
+- scheduled operations foundation
+- future background worker support
+
+## ERP Automation Execution Layer
+
+Implemented scheduled-job execution workflow.
+
+This creates:
+- automation orchestration
+- execution tracking
+- background operation support
+
+## Finance Automation Documentation Update
+
+Updated formal finance docs after:
+- scheduled jobs
+- scheduled job execution
+
+## Finance Document Infrastructure
+
+Implemented finance attachment architecture.
+
+This creates:
+- audit evidence support
+- finance document linkage
+- ERP document infrastructure
+
+## Finance Collaboration Layer
+
+Implemented finance notes architecture.
+
+This creates:
+- operational collaboration
+- audit commentary
+- approval communication
+- ERP workflow discussion support
+
+## Unified Finance Timeline Layer
+
+Implemented unified finance activity timeline.
+
+This creates:
+- ERP activity feeds
+- audit review visibility
+- operational history tracking
+- future AI activity analysis support
+
+## Collaboration + Timeline Documentation Update
+
+Updated formal finance docs after:
+- attachments
+- notes
+- unified activity timeline
+
+## Enterprise Reporting Infrastructure
+
+Implemented finance report export registry.
+
+This creates:
+- export tracking
+- report governance
+- downloadable reporting foundation
+- ERP reporting infrastructure
+
+## Enterprise Reporting Queue
+
+Implemented finance report-job architecture.
+
+This creates:
+- async reporting foundation
+- export orchestration
+- enterprise report pipelines
+- future AI-generated reporting support
+
+## Reporting Workflow Engine
+
+Implemented finance report-job processing lifecycle.
+
+This creates:
+- async reporting execution
+- export orchestration
+- enterprise reporting pipelines
+
+## Reporting Infrastructure Documentation Update
+
+Updated formal finance docs after:
+- report export registry
+- report job queue
+- report job processing workflow
+
+## Operational Health Monitoring
+
+Implemented centralized finance health endpoint.
+
+This creates:
+- operational diagnostics
+- infrastructure monitoring
+- ERP health verification
+
+## Final ERP Finance Infrastructure Consolidation
+
+Consolidated enterprise finance architecture after completion of:
+- accounting
+- governance
+- international finance
+- collaboration
+- reporting
+- automation
+- diagnostics
+- intelligence
+
+## Workspace Foundation
+
+Implemented workspace/company operations foundation.
+
+This creates:
+- SaaS tenant structure
+- company-level operating context
+- member model
+- settings model
+- activity feed foundation
+
+## Workspace Membership Layer
+
+Implemented workspace membership workflow.
+
+This creates:
+- team structure foundation
+- SaaS role assignment
+- operational company membership support
+
+## Project Operations Layer
+
+Implemented project workflow foundation.
+
+This creates:
+- operational production structure
+- SaaS project workflows
+- company production management
+
+## Projects Schema Patch
+
+Added missing project fields:
+- created_by
+- start_date
+- end_date
+- metadata
+
+## Project Task Workflow Layer
+
+Implemented project task foundation.
+
+This creates:
+- operational project execution tracking
+- team assignment workflow
+- production management structure
+
+## Workflow Engine Layer
+
+Implemented:
+- workflow stage engine
+- entity lifecycle stages
+- stage history tracking
+
+This becomes the base operational orchestration layer.
+
+## Organizational Structure Layer
+
+Implemented:
+- department structure
+- team structure
+- workspace member system
+
+Creates the organizational operating backbone.
+
+## CRM Backend Started
+
+- Created CRM module documentation.
+- Confirmed CRM as reusable contact foundation for artists, rights, contracts, releases, distribution, and finance.
+- Next: database schema for workspace-scoped contacts.
+
+## CRM Schema Completed
+
+- Added workspace-scoped CRM contact tables.
+- Added email, phone, relationship, note, and audit-event tables.
+- Added updated_at trigger.
+- Added SQL schema validation checks.
+- Next: CRM service layer.
+
+## CRM Service Layer Started
+
+- Added createCrmContact service.
+- Added validation for workspaceId and displayName.
+- Added automatic audit event creation.
+- Added CRM service test script.
+- Next: reusable CRM email and phone service functions.
+
+## CRM Contact Services Expanded
+
+- Added reusable email service.
+- Added reusable phone service.
+- Added relationship service.
+- Added note service.
+- Added CRM module export index.
+- Next: duplicate-prevention and primary email/phone rules.
+
+## CRM Duplicate Prevention Added
+
+- Added unique email per contact.
+- Added unique phone per contact.
+- Added one primary email per contact.
+- Added one primary phone per contact.
+- Next: CRM lifecycle status service.
+
+## CRM Duplicate Prevention Added
+
+- Added unique email per contact.
+- Added unique phone per contact.
+- Added one primary email per contact.
+- Added one primary phone per contact.
+- Next: CRM lifecycle status service.
+
+## CRM Duplicate Prevention Added
+
+- Added unique email per contact.
+- Added unique phone per contact.
+- Added one primary email per contact.
+- Added one primary phone per contact.
+- Updated CRM channel services to use upsert logic.
+- Next: CRM lifecycle status service.
+
+## CRM Lifecycle Service Added
+
+- Added CRM lifecycle status constants.
+- Added lifecycle update service.
+- Added validation for allowed lifecycle statuses.
+- Added lifecycle audit event.
+- Next: CRM search/list service.
+
+## CRM V1 Foundation Completed
+
+- Completed CRM backend foundation.
+- Established CRM as reusable operational entity layer.
+- Confirmed Artist Management must extend CRM entities.
+- Next recommended subsystem: Artist Management backend.
+
+## Artist Management Backend Started
+
+- Created Artist Management module documentation.
+- Confirmed artists extend CRM contacts instead of duplicating identity records.
+- Next: workspace-scoped artist database schema.

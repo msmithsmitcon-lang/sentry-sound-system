@@ -1169,3 +1169,18 @@ Creates the organizational operating backbone.
 - Added file version service.
 - Added File Vault module export index.
 - Next: Calendar / Task Scheduling backend.
+
+## Calendar & Task Backend Started
+
+- Created Calendar & Task module documentation.
+- Confirmed operational orchestration layer for workflows, deadlines, approvals, and execution.
+- Next: workspace-scoped Calendar & Task database schema.
+
+## Calendar & Task Schema Completed
+
+- Added calendar event schema.
+- Added task item schema.
+- Added task assignment schema.
+- Added task comment schema.
+- Added task audit events.
+- Next: Calendar & Task service layer.

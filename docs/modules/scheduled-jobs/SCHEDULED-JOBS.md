@@ -88,3 +88,18 @@ Scheduled Job service layer.
 
 ## Next build unit
 Scheduled Job API routes.
+
+## API routes
+
+### Routes added
+- POST /api/scheduled-jobs/create
+- POST /api/scheduled-jobs/runs
+- POST /api/scheduled-jobs/process
+
+## Backend rules
+- Routes call Scheduled Job service-layer functions.
+- Routes do not contain business logic.
+- Errors return structured JSON responses.
+
+## Next build unit
+Operational analytics / reporting backend.

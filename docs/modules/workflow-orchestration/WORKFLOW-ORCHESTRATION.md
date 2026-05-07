@@ -192,3 +192,21 @@ When a workflow run executes a send_notification action, the system:
 
 ## Strategic importance
 Workflow automation can now route operational communication across the platform.
+
+## API routes
+
+### Routes added
+- POST /api/workflows/events
+- POST /api/workflows/rules
+- POST /api/workflows/runs
+- POST /api/workflows/dispatch
+- POST /api/workflows/queue
+
+## Backend rules
+- Routes call workflow service-layer functions.
+- Routes do not contain business logic.
+- Queue route supports enqueue and process actions.
+- Errors return structured JSON responses.
+
+## Next build unit
+Notification API routes.

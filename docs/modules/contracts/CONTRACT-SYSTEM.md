@@ -60,3 +60,23 @@ Contracts now sit above Rights Lifecycle and can control:
 
 ## Next build unit
 Contract service layer.
+
+## Service layer
+
+### Services added
+- createContract
+- addContractParty
+- linkContractToRightsAsset
+- createContractObligation
+- updateContractLifecycle
+
+## Backend rules
+- Contracts are workspace-scoped.
+- Contract parties link to CRM contacts and/or contributors.
+- Contracts can link directly to rights assets.
+- Obligations are tracked separately from contract metadata.
+- Lifecycle changes are audited.
+- Royalty/payment terms live on the contract record.
+
+## Next build unit
+Contract validation layer.

@@ -1080,3 +1080,13 @@ Creates the organizational operating backbone.
 - Added contract audit events.
 - Added royalty/payment terms to contract records.
 - Next: Contract service layer.
+
+## Contract Service Layer Added
+
+- Added contract creation service.
+- Added party-link service.
+- Added rights-link service.
+- Added obligation service.
+- Added lifecycle service.
+- Added contract module export index.
+- Next: Contract validation layer.

@@ -118,3 +118,36 @@ This establishes the foundation for:
 
 ## Next build unit
 Workflow action execution layer.
+
+## Action execution layer
+
+### executeWorkflowRun
+
+Responsible for:
+- loading workflow run
+- executing workflow actions
+- updating workflow run status
+- marking completion timestamps
+
+## Current supported actions
+- dashboard_alert
+- dashboard_activity
+- create_task
+
+## Strategic importance
+This establishes the first operational automation layer across:
+- dashboard system
+- task system
+- workflow orchestration
+
+## Future expansion
+- notifications
+- approvals
+- report generation
+- payout workflows
+- release automation
+- AI orchestration
+- external webhooks
+
+## Next build unit
+Workflow queue/async processing architecture.

@@ -1207,3 +1207,11 @@ Creates the organizational operating backbone.
 - Added dashboard snapshots.
 - Added dashboard activity feed.
 - Next: Operational Dashboard service layer.
+
+## Operational Dashboard Service Layer Added
+
+- Added dashboard alert service.
+- Added dashboard activity service.
+- Added dashboard snapshot service.
+- Added Operational Dashboard module export index.
+- Next: Dashboard aggregation/read-model services.

@@ -65,3 +65,19 @@ Operational Dashboard now supports:
 
 ## Next build unit
 Operational Dashboard service layer.
+
+## Service layer
+
+### Services added
+- createDashboardAlert
+- addDashboardActivity
+- createDashboardSnapshot
+
+## Backend rules
+- Dashboard data is workspace-scoped.
+- Alerts link to operational records.
+- Activity feed records cross-module operational movement.
+- Snapshots store generated dashboard states for async reporting.
+
+## Next build unit
+Dashboard aggregation/read-model services.

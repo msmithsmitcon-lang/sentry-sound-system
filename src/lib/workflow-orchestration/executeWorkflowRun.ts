@@ -3,6 +3,7 @@ import { supabaseAdmin } from "@/lib/supabase/admin";
 import { createDashboardAlert } from "@/lib/operational-dashboard";
 import { addDashboardActivity } from "@/lib/operational-dashboard";
 import { createTaskItem } from "@/lib/calendar-tasks";
+import { createNotification, addNotificationRecipient } from "@/lib/notifications";
 
 export async function executeWorkflowRun(input: {
   workspaceId: string;
@@ -75,6 +76,30 @@ export async function executeWorkflowRun(input: {
             action.priorityLevel ?? "normal",
         });
         break;
+
+      case "send_notification": {
+        const notification = await createNotification({
+          workspaceId: input.workspaceId,
+          notificationType: action.notificationType ?? "workflow",
+          title: action.title ?? "Workflow Notification",
+          message: action.message ?? "Workflow-generated notification",
+          linkedRecordType: action.linkedRecordType ?? null,
+          linkedRecordId: action.linkedRecordId ?? null,
+          metadata: action.metadata ?? {},
+        });
+
+        await addNotificationRecipient({
+          workspaceId: input.workspaceId,
+          notificationId: notification.id,
+          recipientType: action.recipientType ?? "workspace_member",
+          recipientId: action.recipientId ?? null,
+          recipientEmail: action.recipientEmail ?? null,
+          deliveryChannel: action.deliveryChannel ?? "in_app",
+          metadata: action.recipientMetadata ?? {},
+        });
+
+        break;
+      }
     }
   }
 
@@ -92,3 +117,4 @@ export async function executeWorkflowRun(input: {
     status: "completed",
   };
 }
+

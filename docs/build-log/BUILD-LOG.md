@@ -1306,3 +1306,9 @@ Creates the organizational operating backbone.
 - Added delivery attempt service.
 - Added Notification module export index.
 - Next: workflow-to-notification automation integration.
+
+## Workflow Connected To Notifications
+
+- Added send_notification workflow action.
+- Connected workflow action executor to Notification service layer.
+- Workflow automation can now create notifications and recipients.

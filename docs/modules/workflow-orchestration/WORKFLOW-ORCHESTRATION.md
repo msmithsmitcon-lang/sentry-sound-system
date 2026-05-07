@@ -177,3 +177,18 @@ Workflow orchestration now supports safe background-style execution for:
 - future notifications
 - future approvals
 - future AI orchestration
+
+## Notification integration
+
+### Workflow action added
+- send_notification
+
+## Action behavior
+When a workflow run executes a send_notification action, the system:
+- creates a notification
+- creates a notification recipient
+- supports in_app, email, sms, and webhook channels
+- keeps delivery provider handling separate
+
+## Strategic importance
+Workflow automation can now route operational communication across the platform.

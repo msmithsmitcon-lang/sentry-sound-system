@@ -72,3 +72,20 @@ Files can attach to any operational entity using:
 
 ## Next build unit
 File Vault service layer.
+
+## Service layer
+
+### Services added
+- createFileVaultItem
+- linkFileVaultItem
+- addFileVaultVersion
+
+## Backend rules
+- Files are workspace-scoped.
+- Files store metadata only; actual storage remains provider-based.
+- Files can link to any operational record.
+- Versions are tracked separately.
+- File actions are audited.
+
+## Next build unit
+Calendar / Task Scheduling backend.

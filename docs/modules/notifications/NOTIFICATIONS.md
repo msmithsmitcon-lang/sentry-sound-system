@@ -88,3 +88,18 @@ Notification service layer.
 
 ## Next build unit
 Workflow-to-notification automation integration.
+
+## API routes
+
+### Routes added
+- POST /api/notifications/create
+- POST /api/notifications/recipients
+- POST /api/notifications/delivery-attempts
+
+## Backend rules
+- Routes call Notification service-layer functions.
+- Routes do not contain business logic.
+- Errors return structured JSON responses.
+
+## Next build unit
+Scheduled job / cron processing architecture.

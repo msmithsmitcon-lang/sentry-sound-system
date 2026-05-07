@@ -110,3 +110,24 @@ Approval workflows now propagate operational consequences into:
 
 ## Next build unit
 Approval escalation and timeout handling.
+
+## Approval escalation backend
+
+### processApprovalEscalations
+
+Responsible for:
+- finding overdue approval steps
+- creating dashboard alerts
+- creating workflow events
+- creating escalation notifications
+
+## Escalation trigger
+Approval steps where:
+- lifecycle_status = pending_review
+- due_at is earlier than current time
+
+## Strategic importance
+Approval workflows now support operational escalation for blocked or overdue reviews.
+
+## Next build unit
+Approval API routes or scheduled escalation processor.

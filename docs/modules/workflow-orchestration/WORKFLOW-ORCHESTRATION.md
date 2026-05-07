@@ -89,3 +89,32 @@ Workflow service layer.
 
 ## Next build unit
 Workflow event dispatch / rule matching.
+
+## Dispatch layer
+
+### dispatchWorkflowEvent
+
+Responsible for:
+- loading workflow event
+- matching active workflow rules
+- creating workflow runs
+- marking events as processed
+
+## Matching logic
+Rules currently match by:
+- source_module
+- event_type
+
+Null values act as wildcards.
+
+## Strategic importance
+This establishes the foundation for:
+- automation pipelines
+- notifications
+- approvals
+- async processing
+- dashboard propagation
+- AI orchestration hooks
+
+## Next build unit
+Workflow action execution layer.

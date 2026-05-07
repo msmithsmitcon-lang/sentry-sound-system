@@ -1250,3 +1250,11 @@ Creates the organizational operating backbone.
 - Added workflow run service.
 - Added Workflow Orchestration module export index.
 - Next: workflow event dispatch / rule matching.
+
+## Workflow Dispatch Layer Added
+
+- Added workflow event dispatch service.
+- Added workflow rule matching.
+- Added workflow run generation.
+- Added processed-event tracking.
+- Next: workflow action execution layer.

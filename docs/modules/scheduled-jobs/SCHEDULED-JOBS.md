@@ -68,3 +68,23 @@ Scheduled jobs act as the operational heartbeat for:
 
 ## Next build unit
 Scheduled Job service layer.
+
+## Service layer
+
+### Services added
+- createScheduledJob
+- createScheduledJobRun
+- processScheduledJobs
+
+## Current supported job types
+- workflow_queue_processing
+- approval_escalation
+
+## Backend rules
+- Scheduled jobs are workspace-scoped.
+- Jobs trigger existing service-layer functions.
+- Job runs track status, payloads, errors, and completion.
+- Scheduled jobs do not duplicate workflow or approval logic.
+
+## Next build unit
+Scheduled Job API routes.

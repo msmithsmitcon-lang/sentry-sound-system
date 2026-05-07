@@ -1033,3 +1033,18 @@ Creates the organizational operating backbone.
 - Created Artist Management module documentation.
 - Confirmed artists extend CRM contacts instead of duplicating identity records.
 - Next: workspace-scoped artist database schema.
+
+## Rights Lifecycle Backend Started
+
+- Created Rights Lifecycle module documentation.
+- Confirmed rights records as the control layer above royalty splits.
+- Next: workspace-scoped rights lifecycle database schema.
+
+## Rights Lifecycle Schema Completed
+
+- Added rights asset system.
+- Added ownership claim structure.
+- Added contributor-linked ownership model.
+- Added territory/effective-date support.
+- Added rights lifecycle and audit events.
+- Next: Rights service layer.

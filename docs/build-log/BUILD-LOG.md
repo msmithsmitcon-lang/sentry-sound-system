@@ -1215,3 +1215,16 @@ Creates the organizational operating backbone.
 - Added dashboard snapshot service.
 - Added Operational Dashboard module export index.
 - Next: Dashboard aggregation/read-model services.
+
+## Royalty Control Alignment Started
+
+- Confirmed existing Royalty Engine remains authoritative calculation engine.
+- Introduced Rights/Contracts/Releases/Distribution as upstream control layers.
+- Next: royalty control validation services.
+
+## Royalty Control Preflight Added
+
+- Added royalty processing preflight validation service.
+- Connected preflight to rights ownership validation.
+- Preserved existing Royalty Engine as calculation/ledger authority.
+- Next: connect preflight to royalty event processing route.

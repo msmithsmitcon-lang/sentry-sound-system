@@ -1267,3 +1267,19 @@ Creates the organizational operating backbone.
 - Added workflow-generated task creation.
 - Added workflow completion tracking.
 - Next: workflow queue and async processing architecture.
+
+## Workflow Queue Backend Added
+
+- Added workflow_queue schema.
+- Added workflow run enqueue service.
+- Added workflow queue processor.
+- Added retry/failure handling.
+- Next: workflow API routes or scheduled processor integration.
+
+## Workflow Queue Backend Added
+
+- Added workflow_queue schema.
+- Added workflow run enqueue service.
+- Added workflow queue processor.
+- Added retry/failure handling.
+- Next: workflow API routes or scheduled processor integration.

@@ -151,3 +151,29 @@ This establishes the first operational automation layer across:
 
 ## Next build unit
 Workflow queue/async processing architecture.
+
+## Queue / async layer
+
+### Tables added
+- workflow_queue
+
+### Services added
+- enqueueWorkflowRun
+- processWorkflowQueue
+
+## Backend rules
+- Workflow runs can be queued for async execution.
+- Queue items support priority levels.
+- Queue items support delayed availability.
+- Queue items support retry attempts.
+- Failed jobs store last_error.
+- Processing uses executeWorkflowRun.
+
+## Strategic importance
+Workflow orchestration now supports safe background-style execution for:
+- automation
+- dashboard alerts
+- task creation
+- future notifications
+- future approvals
+- future AI orchestration

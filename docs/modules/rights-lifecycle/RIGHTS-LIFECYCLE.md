@@ -64,3 +64,29 @@ Rights records now sit above royalty splits and below CRM/Artist identity layers
 
 ## Next build unit
 Rights service layer.
+
+## Validation layer
+
+### validateRightsOwnershipTotals
+
+Validates verified ownership totals for:
+- asset
+- territory
+- ownership percentages
+
+### Validation outputs
+- verifiedOwnershipTotal
+- isComplete
+- isOverAllocated
+- isUnderAllocated
+
+## Strategic importance
+This validation layer becomes the future control gate before:
+- royalty calculations
+- ledger postings
+- payout generation
+- settlements
+- rights activation
+
+## Next build unit
+Rights territory inheritance + rights conflict handling.

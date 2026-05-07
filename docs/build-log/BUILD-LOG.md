@@ -1048,3 +1048,19 @@ Creates the organizational operating backbone.
 - Added territory/effective-date support.
 - Added rights lifecycle and audit events.
 - Next: Rights service layer.
+
+## Rights Service Layer Started
+
+- Added createRightsAsset service.
+- Added createRightsOwnershipClaim service.
+- Added updateRightsAssetLifecycle service.
+- Added Rights Lifecycle module export index.
+- Next: ownership validation service.
+
+## Rights Ownership Validation Added
+
+- Added verified ownership total validation.
+- Added territory-aware ownership checks.
+- Added allocation state outputs.
+- Established validation foundation for royalty control logic.
+- Next: rights conflict and territory inheritance architecture.

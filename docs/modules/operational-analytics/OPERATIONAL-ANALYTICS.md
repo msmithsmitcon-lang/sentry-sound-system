@@ -76,3 +76,19 @@ Analytics now acts as the executive visibility layer for:
 
 ## Next build unit
 Operational Analytics service layer.
+
+## Service layer
+
+### Services added
+- createAnalyticsMetric
+- createAnalyticsSnapshot
+- createAnalyticsReportDefinition
+
+## Backend rules
+- Analytics records are workspace-scoped.
+- Metrics store KPI values.
+- Snapshots store generated reporting states.
+- Report definitions store reusable report configurations.
+
+## Next build unit
+Analytics report run / execution service.

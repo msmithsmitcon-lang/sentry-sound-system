@@ -1419,3 +1419,11 @@ Creates the organizational operating backbone.
 - Added analytics report runs.
 - Added analytics audit events.
 - Next: Operational Analytics service layer.
+
+## Operational Analytics Service Layer Added
+
+- Added analytics metric service.
+- Added analytics snapshot service.
+- Added report definition service.
+- Added Operational Analytics module export index.
+- Next: analytics report run / execution service.

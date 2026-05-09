@@ -1,0 +1,58 @@
+export const EVIDENCE_TYPES = [
+  "SPLIT_CONFIRMATION",
+  "DEED_OF_ASSIGNMENT",
+  "IPI_CONFIRMATION",
+  "ISRC_PROOF",
+  "ISWC_PROOF",
+  "CUE_SHEET",
+  "SESSION_LOG",
+  "ID_DOCUMENT",
+  "PROOF_OF_ADDRESS",
+  "TERRITORY_CLEARANCE",
+  "LABEL_AUTHORIZATION",
+  "PUBLISHER_AUTHORIZATION",
+  "FUNDING_APPROVAL",
+  "DISTRIBUTION_CONFIRMATION",
+  "USAGE_REPORT",
+  "ROYALTY_STATEMENT",
+  "CONTRACT",
+  "OTHER"
+] as const
+
+export type EvidenceType = typeof EVIDENCE_TYPES[number]
+
+export const EVIDENCE_VERIFICATION_STATUSES = [
+  "PENDING",
+  "UNDER_REVIEW",
+  "VERIFIED",
+  "REJECTED",
+  "SUPERSEDED",
+  "EXPIRED"
+] as const
+
+export type EvidenceVerificationStatus =
+  typeof EVIDENCE_VERIFICATION_STATUSES[number]
+
+export const EVIDENCE_REQUIREMENT_LEVELS = [
+  "OPTIONAL",
+  "RECOMMENDED",
+  "REQUIRED",
+  "BLOCKING"
+] as const
+
+export type EvidenceRequirementLevel =
+  typeof EVIDENCE_REQUIREMENT_LEVELS[number]
+
+export const EVIDENCE_RELATED_ENTITY_TYPES = [
+  "WORK",
+  "RELEASE",
+  "RECORDING",
+  "CONTRIBUTOR",
+  "RIGHTSHOLDER",
+  "SUBMISSION",
+  "ROYALTY_PERIOD",
+  "DISTRIBUTION_BATCH"
+] as const
+
+export type EvidenceRelatedEntityType =
+  typeof EVIDENCE_RELATED_ENTITY_TYPES[number]

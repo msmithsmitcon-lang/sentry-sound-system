@@ -1,0 +1,13 @@
+export type EvidenceType =
+  | "split_sheet"
+  | "signed_composer_split_confirmation"
+  | "performer_declaration"
+  | "performer_session_log"
+  | "master_ownership_agreement"
+  | "deed_of_assignment"
+  | "cue_sheet"
+  | "deposit_certificate"
+  | "isrc_documentation"
+  | "iswc_documentation"
+  | "amendment_evidence"
+  | "dispute_evidence"

@@ -1,0 +1,512 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model MusicalWork {
+  id                String   @id @default(cuid())
+  title             String
+  alternateTitle    String?
+  subtitle          String?
+  language          String?
+  status            String
+  iswc              String?
+  documented        Boolean  @default(false)
+  disputed          Boolean  @default(false)
+  amendmentRequired Boolean  @default(false)
+  readinessScore    Int?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  contributors MusicalWorkContributor[]
+  auditEvents  RegistrationAuditEvent[]
+  disputes     RegistrationDispute[]
+  amendments   RegistrationAmendment[]
+}
+
+model MusicalWorkContributor {
+  id                       String   @id @default(cuid())
+  musicalWorkId            String
+  contributorId            String
+  contributorName          String
+  role                     String
+  ownershipPercentage      Float
+  publisherSharePercentage Float?
+  territory                String?
+  confirmed                Boolean  @default(false)
+  createdAt                DateTime @default(now())
+
+  musicalWork MusicalWork @relation(fields: [musicalWorkId], references: [id], onDelete: Cascade)
+}
+
+model Recording {
+  id                  String    @id @default(cuid())
+  title               String
+  isrc                String    @unique
+  status              String
+  recordingDate       DateTime?
+  studioName          String?
+  masterOwnerId       String
+  masterOwnerName     String
+  linkedMusicalWorkId String?
+  documented          Boolean   @default(false)
+  disputed            Boolean   @default(false)
+  amendmentRequired   Boolean   @default(false)
+  readinessScore      Int?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  performers  RecordingPerformer[]
+  auditEvents RegistrationAuditEvent[]
+  disputes    RegistrationDispute[]
+  amendments  RegistrationAmendment[]
+}
+
+model RecordingPerformer {
+  id                      String   @id @default(cuid())
+  recordingId             String
+  performerId             String
+  performerName           String
+  role                    String
+  participationPercentage Float?
+  confirmed               Boolean  @default(false)
+  createdAt               DateTime @default(now())
+
+  recording Recording @relation(fields: [recordingId], references: [id], onDelete: Cascade)
+}
+
+model RegistrationAuditEvent {
+  id                 String   @id @default(cuid())
+  eventType          String
+  entityType         String
+  entityId           String
+  performedBy        String?
+  reason             String?
+  oldValue           Json?
+  newValue           Json?
+  relatedEvidenceIds Json?
+  metadata           Json?
+  musicalWorkId      String?
+  recordingId        String?
+  createdAt          DateTime @default(now())
+
+  musicalWork MusicalWork? @relation(fields: [musicalWorkId], references: [id])
+  recording   Recording?   @relation(fields: [recordingId], references: [id])
+}
+
+model RegistrationDispute {
+  id                          String   @id @default(cuid())
+  disputeType                 String
+  disputeStatus               String
+  relatedEntityType           String
+  relatedEntityId             String
+  openedBy                    String?
+  description                 String
+  evidenceIds                 Json?
+  proposedResolution          String?
+  affectsRegistrationStatus   Boolean  @default(true)
+  resultingRegistrationStatus String?
+  musicalWorkId               String?
+  recordingId                 String?
+  createdAt                   DateTime @default(now())
+  updatedAt                   DateTime @updatedAt
+
+  musicalWork MusicalWork? @relation(fields: [musicalWorkId], references: [id])
+  recording   Recording?   @relation(fields: [recordingId], references: [id])
+}
+
+model RegistrationAmendment {
+  id                     String   @id @default(cuid())
+  amendmentType          String
+  amendmentStatus        String
+  relatedEntityType      String
+  relatedEntityId        String
+  requestedBy            String?
+  reason                 String
+  oldValues              Json?
+  newValues              Json?
+  evidenceIds            Json?
+  requiresReconfirmation Boolean  @default(false)
+  musicalWorkId          String?
+  recordingId            String?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  musicalWork MusicalWork? @relation(fields: [musicalWorkId], references: [id])
+  recording   Recording?   @relation(fields: [recordingId], references: [id])
+}
+
+model RegistrationEvidence {
+  id String @id @default(cuid())
+
+  evidenceType String
+  layer        String
+
+  title       String
+  description String?
+
+  requirementLevel   String
+  verificationStatus String
+
+  requiresSignature    Boolean @default(false)
+  requiresVerification Boolean @default(false)
+
+  blocksSubmissionIfMissing Boolean @default(false)
+
+  uploadedBy String?
+  uploadedAt DateTime @default(now())
+
+  expiryDate             DateTime?
+  supersededByEvidenceId String?
+
+  relatedEntityType String
+  relatedEntityId   String
+
+  relatedSubmissionId String?
+
+  metadata Json?
+
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  evidenceAuditEvents EvidenceAuditEvent[]
+}
+
+model SubmissionSnapshot {
+  id String @id @default(cuid())
+
+  exportId String @unique
+
+  submissionType String
+
+  entityType String
+  entityId   String
+
+  fingerprint String
+
+  exportPayload Json
+
+  exportFormat String?
+
+  generatedBy String?
+
+  generatedAt DateTime
+
+  submittedAt DateTime?
+
+  regulatorResponse Json?
+
+  status String
+
+  createdAt DateTime @default(now())
+}
+
+model SubmissionQueue {
+  id String @id @default(cuid())
+
+  workspaceId String?
+
+  target String
+
+  status String
+
+  priority String
+
+  entityType String
+  entityId   String
+
+  exportFormat String
+
+  fingerprint String
+
+  version Int @default(1)
+
+  retryCount Int @default(0)
+  maxRetries Int @default(5)
+
+  regulatorReference String?
+
+  scheduledAt DateTime?
+  submittedAt DateTime?
+  acceptedAt  DateTime?
+  rejectedAt  DateTime?
+  failedAt    DateTime?
+  expiresAt   DateTime?
+
+  blockingIssues Json?
+
+  metadata Json?
+
+  snapshotId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SubmissionQueueEvent {
+  id String @id @default(cuid())
+
+  submissionQueueId String
+
+  eventType String
+
+  oldStatus String?
+  newStatus String?
+
+  message String?
+
+  metadata Json?
+
+  createdAt DateTime @default(now())
+}
+
+model SubmissionRemediationCase {
+  id String @id @default(cuid())
+
+  submissionQueueId String
+
+  type String
+
+  status String
+
+  reason String
+
+  requiredActions Json
+
+  blocksRoyaltyEligibility Boolean @default(true)
+
+  dueAt DateTime?
+
+  metadata Json?
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+}
+
+model EvidenceAuditEvent {
+  id String @id @default(cuid())
+
+  evidenceId String
+
+  eventType String
+
+  actorUserId String?
+
+  relatedEntityType String?
+  relatedEntityId   String?
+
+  previousState Json?
+  nextState     Json?
+
+  metadata Json?
+
+  occurredAt DateTime @default(now())
+
+  createdAt DateTime @default(now())
+
+  evidence RegistrationEvidence @relation(fields: [evidenceId], references: [id], onDelete: Cascade)
+
+  @@index([evidenceId])
+  @@index([eventType])
+  @@index([occurredAt])
+}
+
+model SubmissionExport {
+  id String @id @default(cuid())
+
+  regulator String
+
+  format String
+
+  payload Json
+
+  manifestId String?
+
+  submissionQueueId String?
+
+  metadata Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([regulator])
+  @@index([manifestId])
+  @@index([submissionQueueId])
+  @@index([createdAt])
+}
+
+model SubmissionDispatchQueue {
+  id String @id @default(cuid())
+
+  submissionExportId String
+
+  regulator String
+
+  status String @default("queued")
+
+  retryCount Int @default(0)
+
+  maxRetries Int @default(5)
+
+  scheduledAt DateTime?
+
+  dispatchedAt DateTime?
+
+  failedAt DateTime?
+
+  metadata Json?
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  @@index([submissionExportId])
+  @@index([regulator])
+  @@index([status])
+  @@index([scheduledAt])
+  @@index([createdAt])
+}
+
+model SubmissionDispatchAttempt {
+  id String @id @default(cuid())
+
+  dispatchId String
+
+  attemptNumber Int
+
+  status String
+
+  message String?
+
+  regulatorResponse Json?
+
+  metadata Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([dispatchId])
+  @@index([attemptNumber])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OperationalIncident {
+  id String @id @default(cuid())
+
+  type String
+
+  severity String
+
+  status String @default("open")
+
+  title String
+
+  description String?
+
+  metadata Json?
+
+  acknowledgedAt DateTime?
+
+  resolvedAt DateTime?
+
+  closedAt DateTime?
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  @@index([type])
+  @@index([severity])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OperationalEscalationEvent {
+  id                String   @id
+
+  trigger_type      String
+
+  severity          String
+
+  lifecycle_state   String
+
+  policy_code       String?
+
+  reasons           Json
+
+  triggered_at      DateTime @default(now())
+
+  acknowledged_at   DateTime?
+
+  resolved_at       DateTime?
+
+  created_at        DateTime @default(now())
+
+  @@index([trigger_type])
+
+  @@index([lifecycle_state])
+
+  @@index([severity])
+}
+
+
+model EscalationNotificationQueue {
+  id               String   @id
+
+  escalation_id    String
+
+  channel          String
+
+  recipients       Json
+
+  subject          String
+
+  message          String
+
+  status           String   @default("QUEUED")
+
+  queued_at        DateTime @default(now())
+
+  dispatched_at    DateTime?
+
+  failed_at        DateTime?
+
+  failure_reason   String?
+
+  created_at       DateTime @default(now())
+
+  @@index([status])
+
+  @@index([channel])
+
+  @@index([escalation_id])
+}
+
+
+model EscalationDeadLetterQueue {
+  id                 String   @id
+
+  notification_id    String
+
+  escalation_id      String
+
+  channel            String
+
+  failure_reason     String
+
+  original_status    String
+
+  quarantined_at     DateTime @default(now())
+
+  created_at         DateTime @default(now())
+
+  @@index([notification_id])
+
+  @@index([escalation_id])
+
+  @@index([channel])
+}
+

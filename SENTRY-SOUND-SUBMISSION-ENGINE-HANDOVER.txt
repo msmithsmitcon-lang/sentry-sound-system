@@ -1,0 +1,151 @@
+
+# Sentry Sound — Submission Engine Handover
+
+## Project Context
+
+Sentry Sound is being built as a deterministic Rights + Royalty Operating System.
+
+Architecture direction:
+- backend/system logic first
+- tests second
+- UI later
+- PowerShell-first workflow
+- enterprise auditability
+- deterministic compliance infrastructure
+- operational orchestration before frontend
+
+## Working Style
+
+- concise responses
+- one step at a time
+- PowerShell commands preferred
+- avoid manual editing where possible
+- documentation updates are mandatory milestone steps
+- backend contracts drive future UI
+- user-facing forms intentionally deferred
+
+## Current Completed Systems
+
+### Registration Submission Engine
+
+Completed:
+- submission lifecycle states
+- queue persistence
+- queue event persistence
+- retry governance
+- regulator adapter abstraction
+- SAMRO adapter stub
+- deterministic processing service
+- Supabase persistence
+- regulator response ingestion
+- remediation workflows
+- royalty eligibility blocking
+
+### Deterministic Infrastructure
+
+Completed:
+- deterministic CSV generation
+- SHA-256 fingerprinting
+- immutable submission snapshots
+- idempotent snapshot reuse
+- idempotent queue reuse
+- normalization before fingerprinting
+- duplicate contributor detection
+
+### SAMRO Compliance Gate V2
+
+Validation includes:
+- ownership total validation
+- contributor IPI validation
+- publisher IPI validation
+- contributor role validation
+- territory validation
+- duplicate contributor detection
+- normalization
+
+### Regulator Response Ingestion V1
+
+Supports:
+- accepted
+- rejected
+- amendment_required
+- undocumented
+- retry_pending
+
+### Amendment + Undocumented Workflow V1
+
+Completed:
+- automatic remediation case creation
+- undocumented escalation
+- royalty eligibility blocking
+- remediation idempotency
+- cashflow-risk escalation metadata
+
+### Royalty Eligibility Gate
+
+Implemented:
+- blocking remediation case detection
+- compliance-to-royalty bridge foundation
+
+## Current Database Structures
+
+Implemented:
+- SubmissionQueue
+- SubmissionQueueEvent
+- SubmissionSnapshot
+- SubmissionRemediationCase
+
+## Existing Documentation
+
+Updated:
+- BUILD-LOG.md
+- SAMRO-COMPLIANCE-GATE-V1.md
+- SAMRO-COMPLIANCE-GATE-V2.md
+- REGULATOR-RESPONSE-INGESTION-V1.md
+- AMENDMENT-UNDOCUMENTED-WORKFLOW-V1.md
+
+## Important Architectural Boundary
+
+DO NOT start frontend/UI work yet.
+
+User-facing submission intake fields and UI mapping are intentionally deferred to a future dedicated phase.
+
+Current focus remains:
+- backend infrastructure
+- operational orchestration
+- compliance governance
+- deterministic auditability
+
+## Recommended Next Phase
+
+# Evidence Vault V1
+
+Purpose:
+Store and govern evidence required for remediation resolution and regulator compliance.
+
+Planned evidence support:
+- split sheets
+- cue sheets
+- deeds of assignment
+- performer session logs
+- ownership confirmations
+- supporting regulator evidence
+
+Planned future linkage:
+Submission
+? Remediation Case
+? Evidence Vault
+? Resolution Workflow
+? Resubmission
+? Royalty Eligibility
+
+## Strategic Direction
+
+System is evolving into:
+- deterministic rights infrastructure
+- compliance orchestration infrastructure
+- payout governance infrastructure
+- forensic reconciliation infrastructure
+
+Not a CRUD music app.
+

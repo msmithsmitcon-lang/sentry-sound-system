@@ -1,3 +1,4 @@
+﻿import { publishWorkerHeartbeat } from "../../../../lib/runtime/health/worker-heartbeat";
 import { supabaseAdmin } from "../../../lib/supabaseAdmin";
 
 const WORKER_ID =
@@ -5,16 +6,18 @@ const WORKER_ID =
   `worker-${crypto.randomUUID()}`;
 
 const HEARTBEAT_INTERVAL_MS = 10000;
-const LEASE_SECONDS = 30;
 const POLL_INTERVAL_MS = 3000;
 
 let running = true;
+let activeTaskCount = 0;
 
 async function heartbeat() {
-  await supabaseAdmin.rpc("rpc_ai_upsert_worker", {
-    p_worker_id: WORKER_ID,
-    p_status: "active",
-    p_lease_seconds: LEASE_SECONDS,
+  const heartbeatResult = await publishWorkerHeartbeat(WORKER_ID, activeTaskCount);
+
+  console.log("HEARTBEAT_OK", {
+    workerId: heartbeatResult.workerId,
+    activeTaskCount: heartbeatResult.activeTaskCount,
+    time: heartbeatResult.lastHeartbeatAt,
   });
 }
 
@@ -31,24 +34,42 @@ async function claimTask() {
     return null;
   }
 
-  return Array.isArray(data) ? data[0] : data;
+  const task = Array.isArray(data) ? data[0] : data;
+
+  if (!task) {
+    console.log("NO_TASK_FOUND");
+  }
+
+  return task;
 }
 
 async function processTask(task: any) {
+  activeTaskCount = 1;
+
   console.log("PROCESSING_TASK", task?.task_id);
 
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  await heartbeat();
 
-  const { error } = await supabaseAdmin.rpc(
-  "rpc_ai_complete_task",
-  {
-    p_task_id: task.task_id,
-    p_result: JSON.parse(JSON.stringify({ success: true })),
-  }
-);
+  try {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  if (error) {
-    console.error("COMPLETE_ERROR", error);
+    const { error } = await supabaseAdmin.rpc(
+      "rpc_ai_complete_task",
+      {
+        p_task_id: task.task_id,
+        p_result: JSON.parse(JSON.stringify({ success: true })),
+      }
+    );
+
+    if (error) {
+      console.error("COMPLETE_ERROR", error);
+      return;
+    }
+
+    console.log("TASK_COMPLETED", task.task_id);
+  } finally {
+    activeTaskCount = 0;
+    await heartbeat();
   }
 }
 
@@ -94,5 +115,3 @@ export async function startRuntimeWorker() {
 
   await workerLoop();
 }
-
-

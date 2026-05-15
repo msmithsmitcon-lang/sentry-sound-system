@@ -1,3 +1,5 @@
+import { prisma } from "@/lib/db/prisma"
+
 export type CreateMusicalWorkInput = {
   work_title: string
   genre?: string
@@ -9,10 +11,22 @@ export type CreateMusicalWorkInput = {
 export async function createMusicalWork(
   input: CreateMusicalWorkInput
 ) {
-  console.log("createMusicalWork input", input)
+  if (!input.work_title) {
+    return {
+      success: false,
+      message: "work_title is required."
+    }
+  }
+
+  const work = await prisma.musicalWork.create({
+    data: {
+      title: input.work_title,
+      status: input.registration_status ?? "draft"
+    }
+  })
 
   return {
-    success: false,
-    message: "Create musical work service not implemented yet."
+    success: true,
+    work
   }
 }

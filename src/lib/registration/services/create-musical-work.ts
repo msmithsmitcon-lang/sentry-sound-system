@@ -1,27 +1,19 @@
 import { prisma } from "@/lib/db/prisma"
 
-export type CreateMusicalWorkInput = {
-  work_title: string
-  genre?: string
-  mood?: string
-  copyright_status?: string
-  registration_status?: string
-}
+import {
+  CreateMusicalWorkRequest,
+  validateCreateMusicalWork
+} from "@/lib/registration/contracts/create-musical-work-contract"
 
 export async function createMusicalWork(
-  input: CreateMusicalWorkInput
+  input: CreateMusicalWorkRequest
 ) {
-  if (!input.work_title) {
-    return {
-      success: false,
-      message: "work_title is required."
-    }
-  }
+  const validated = validateCreateMusicalWork(input)
 
   const work = await prisma.musicalWork.create({
     data: {
-      title: input.work_title,
-      status: input.registration_status ?? "draft"
+      title: validated.work_title,
+      status: validated.registration_status
     }
   })
 

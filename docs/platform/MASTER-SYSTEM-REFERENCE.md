@@ -79,3 +79,12 @@ Before implementation:
 - identify actual working state
 - update system-state docs
 - then implement bounded changes
+
+## Canonical Direction Document
+
+The canonical system identity and product direction document is:
+
+docs/platform/MASTER-DIRECTION-AND-SYSTEM-IDENTITY.md
+
+All platform stabilization, Codex sessions, future chats, AI-assisted engineering, backend development, and architecture decisions must align to that document.
+

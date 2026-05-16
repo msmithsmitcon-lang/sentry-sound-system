@@ -4066,3 +4066,300 @@ Provider resolution
 
 Runtime validated successfully.
 
+
+[ACADEMY] Locked SLB-01.01 governance, runtime blueprint, and AI Runtime Prompt Contract V1.
+
+[ACADEMY] Added governance backfill structure for accreditation preparation and canonical architecture persistence.
+
+[ACADEMY] Persisted Module 01 canonical structure, approved SLBs, and SLB generation governance.
+
+[ACADEMY] Persisted competency, telemetry, and remediation framework contracts V1.
+
+[ACADEMY] Persisted programme architecture, standards alignment framework, and governance contract V1.
+
+[ACADEMY] Completed foundational governance backfill for assessment, evidence, AI interaction, runtime states, and module validation philosophy.
+
+[ACADEMY] Created executable academy runtime structure foundation.
+
+[ACADEMY] Created canonical SLB runtime contract structure and SLB-01.01 executable contract.
+
+[ACADEMY] Added SLB runtime orchestration foundation for session creation and state transitions.
+
+[ACADEMY] Added canonical telemetry capture foundation and runtime telemetry event model.
+
+[ACADEMY] Added remediation execution foundation and canonical remediation routing map.
+
+[ACADEMY] Added competency evaluation execution foundation.
+
+[ACADEMY] Added governed SLB execution loop foundation integrating orchestration, telemetry, remediation, and competency validation.
+
+[ACADEMY] Added persistent learner competency-state foundation.
+
+[ACADEMY] Added canonical programme/module/SLB registry foundation.
+
+[ACADEMY] Added learner evidence persistence foundation and approved evidence type registry.
+
+[ACADEMY] Added standards and accreditation mapping foundation.
+
+[ACADEMY] Added canonical assessment execution foundation.
+
+[ACADEMY] Added canonical AI interaction execution foundation.
+
+[ACADEMY] Added academy runtime persistence schema foundation for Supabase/PostgreSQL.
+
+[ACADEMY] Added canonical runtime API contract foundation.
+
+[ACADEMY] Added canonical orchestration service foundation.
+
+[ACADEMY] Added canonical runtime audit trail foundation.
+
+[ACADEMY] Added canonical progression engine foundation.
+
+[ACADEMY] Added learner runtime profile foundation.
+
+[ACADEMY] Added runtime metrics aggregation foundation.
+
+[ACADEMY] Added competency analytics foundation.
+
+[ACADEMY] Added module completion and certification eligibility foundation.
+
+[ACADEMY] Added governance monitoring foundation.
+
+[ACADEMY] Completed canonical academy runtime foundation layer.
+
+[ACADEMY] Added executable interaction foundation for SLB-01.01.
+
+[ACADEMY] Added interaction execution orchestration foundation.
+
+[ACADEMY] Added interaction telemetry execution and failure detection foundation.
+
+[ACADEMY] Added adaptive remediation execution bridge.
+
+[ACADEMY] Added executable competency checkpoint orchestration foundation.
+
+[ACADEMY] Added learner progression memory foundation.
+
+[ACADEMY] Added runtime session recovery and resumability foundation.
+
+[ACADEMY] Added AI response governance filtering foundation.
+
+[ACADEMY] Added canonical runtime event bus foundation.
+
+[ACADEMY] Locked Runtime Architecture Snapshot V1.
+
+[ACADEMY] Added runtime repository foundation for persistence integration.
+
+[ACADEMY] Added Supabase runtime repository implementations foundation.
+
+[ACADEMY] Added persistent runtime execution service foundation.
+
+[ACADEMY] Added Next.js academy runtime API foundation.
+
+[ACADEMY] Added learner runtime entry UI foundation.
+
+[ACADEMY] Added live runtime interaction rendering foundation.
+
+[ACADEMY] Added learner response execution and remediation triggering foundation.
+
+[ACADEMY] Added persistent learner interaction telemetry execution.
+
+[ACADEMY] Connected live learner runtime UI to persistent telemetry tracking.
+
+[ACADEMY] Added persistent competency evaluation execution flow.
+
+[ACADEMY] Added persistent learner state update execution flow.
+
+[ACADEMY] Replaced mock learner state updates with Supabase persistence.
+
+[ACADEMY] Added runtime validation and health testing foundation.
+
+[ACADEMY] Added runtime validation and health testing foundation.
+
+[ACADEMY] Added runtime persistence alignment, constraints registry, table registry, and Runtime Architecture Snapshot V2.
+
+[ACADEMY] Added Academy SLB registry + SLB-to-runtime-competency mapping layer. Patched telemetry repository to resolve slb_id and competency_id from canonical mapping instead of hardcoded/null runtime values.
+
+[ACADEMY] Runtime orchestration now persists telemetry + learner-state synchronization through executeSLBFlow. Live orchestration execution validated end-to-end.
+
+[ACADEMY] Runtime evidence persistence wired into executeSLBFlow. Live orchestration now persists telemetry, learner state, and evidence records.
+
+[ACADEMY] Runtime Persistence Expansion V1 completed and validated end-to-end.
+
+- HARDLOCKED Verify First Development Rule architecture process (2026-05-12)
+
+- Validated Runtime Remediation Orchestration V1 repository stabilization and queue injection flow (2026-05-12)
+
+- Migrated remediation queue insertion to RPC-first governance architecture with audit logging validation (2026-05-12)
+
+- Validated remediation lifecycle transitions queued → assigned → resolved through SQL RPC governance layer (2026-05-12)
+
+- Validated escalation governance lifecycle and RPC-first escalation orchestration (2026-05-12)
+
+- HARDLOCKED Academy Priority Protection Rule and 70/30 execution-vs-governance development strategy (2026-05-12)
+
+## 2026-05-12 - Academy Runtime Registry + Competency Bridge V1
+- Created/confirmed Academy SLB runtime registry alignment.
+- Confirmed academy_slb_registry already existed with mature fields.
+- Seeded SLB-01.01 into academy_slb_registry.
+- Cleaned duplicate academy_slb_competency_map row.
+- Added unique guard on academy_slb_competency_map(academy_slb_id, competency_id).
+- Created academy_competency_registry as bridge between Academy competency codes and runtime competency UUIDs.
+- Seeded COMP-DEMO-001 mapped to runtime competency UUID 33333333-3333-3333-3333-333333333333.
+- Verified full SLB → competency → runtime UUID bridge.
+- Runtime execution test passed with remediation state.
+
+
+## 2026-05-12 - Canonical Academy Curriculum Runtime + Multi-LLM Governance Build
+- Verified existing runtime architecture before extension.
+- Confirmed runtime persistence already existed and aligned development to existing systems.
+- Implemented academy_slb_registry runtime alignment.
+- Implemented academy_slb_competency_map canonical competency linkage.
+- Implemented academy_competency_registry bridge between academy competency codes and runtime UUID competency engine.
+- Validated end-to-end SLB runtime execution flow.
+- Implemented canonical curriculum contract layer:
+  - academy_programmes
+  - academy_modules
+  - academy_programme_modules
+- Seeded locked 25-module topology and programme sequencing.
+- Implemented academy_module_analysis governance gate.
+- Implemented academy_module_generation_readiness governance gate.
+- Completed full MODULE-01 analysis lifecycle and generation readiness approval.
+- Implemented governed multi-LLM architecture:
+  - academy_llm_generation_contracts
+  - academy_llm_generation_reviews
+  - academy_generation_payload_schemas
+  - academy_secondary_llm_support_outputs
+  - academy_generation_prompt_contracts
+- Locked ChatGPT as canonical generation authority.
+- Locked Gemini as controlled secondary support pathway only.
+- Implemented Canonical SLB Generation Contract V1:
+  - academy_slb_generation_contracts
+- Locked SLB philosophy as atomic execution/runtime unit.
+- Locked runtime-aware, competency-first, evidence-aware generation architecture.
+- Confirmed methodology enforcement through SQL governance contracts.
+
+
+
+## 2026-05-13 - Gemini Structured Return Contract V1
+- Added locked Gemini structured return contract for controlled support-output ingestion.
+- Aligned Gemini manual browser workflow to existing academy_secondary_llm_support_outputs.support_output JSONB governance path.
+- Confirmed Gemini remains support-only; ChatGPT remains canonical authority.
+
+
+## 2026-05-15 - Create Song Boundary Refactor: Manual DB Alignment
+
+- Confirmed active Next.js router uses root `app/`, not `src/app/`.
+- API boundary `/api/works/create` is active and reachable.
+- Service boundary `src/lib/registration/services/create-musical-work.ts` now creates `MusicalWork` through Prisma.
+- `prisma db push` was avoided due to unstable Supabase pooler/connectivity risk.
+- Manual Supabase SQL was used to create `public."MusicalWork"`.
+- API test succeeded end-to-end:
+  - UI/API boundary
+  - API/service boundary
+  - Service/Prisma boundary
+  - Prisma/Supabase boundary
+- Committed service stabilization:
+  - `a7984ef stabilize create-song backend boundary orchestration`
+
+
+# Create Song Boundary Refactor - Stabilized Framework
+
+## Current Status
+
+The Create Song flow has been stabilized into the correct governed backend boundary pattern.
+
+Current flow:
+
+UI
+-> API Route
+-> Contract Validation
+-> Orchestration Service
+-> Existing Operational Tables
+
+Implemented boundaries:
+
+- app/api/songs/create/route.ts
+- src/lib/registration/contracts/create-song-contract.ts
+- src/lib/registration/services/create-song-with-contributors.ts
+- src/lib/supabase-server.ts
+
+The UI page no longer directly creates:
+
+- assets
+- musical_works
+- contributors
+- work_contributors
+
+Instead, the UI sends one payload to:
+
+POST /api/songs/create
+
+## Important Environment Alignment Finding
+
+A previous issue was caused by Supabase project mismatch / key confusion.
+
+Correct environment rule:
+
+- DATABASE_URL, DIRECT_URL, NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, and SUPABASE_SERVICE_ROLE_KEY must all belong to the same Supabase project.
+- Current intended project ref:
+  ykagnyfkwlxcuqxpkkma
+
+Do not mix publishable/secret keys from another Supabase project.
+
+## Stabilization Rules Going Forward
+
+Any new chat must follow this framework:
+
+1. Inspect existing docs first.
+2. Inspect existing files before editing.
+3. Do not invent schema.
+4. Do not use Prisma db push unless explicitly approved.
+5. Prefer manual SQL inspection before schema changes.
+6. Keep UI thin.
+7. Keep orchestration in backend service boundaries.
+8. Preserve existing operational tables unless source-of-truth docs say otherwise.
+9. Do not mix Academy/runtime/unrelated files into Platform stabilization commits.
+10. Commit only bounded task files.
+
+## What Was Completed
+
+- Create Song UI persistence was removed.
+- Backend API route was introduced.
+- Contract validation was introduced.
+- Asset creation moved to backend.
+- Musical work creation moved to backend.
+- Contributor lookup/creation moved to backend.
+- Work contributor linking moved to backend.
+- Split validation centralized in backend contract.
+- Server Supabase client added.
+- API test returned 200 OK after full backend orchestration.
+
+## What Must NOT Be Done Next
+
+Do not immediately build:
+
+- large new backend modules
+- new Prisma contributor models
+- audit automation
+- lifecycle engine
+- transaction system
+- dashboard UI
+- unrelated Academy/runtime work
+
+## Correct Next Step
+
+The next step is a small stabilization step:
+
+Add transaction safety / rollback protection around the current Create Song orchestration.
+
+Layman explanation:
+
+Right now the backend creates the song in steps. If step 1 succeeds but step 3 fails, the database could have a half-saved song. The next small improvement is to make the save process safer so it either completes properly or fails cleanly.
+
+This is aligned with:
+
+- Phase 2 - Transaction Integrity Stabilization
+- no destructive rewrite
+- no new major backend expansion
+- preserving operational continuity
+

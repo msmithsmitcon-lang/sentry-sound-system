@@ -1,7 +1,8 @@
-import { NextRequest, NextResponse } from "next/server"
+import { NextResponse } from "next/server"
+
 import { createMusicalWork } from "@/lib/registration/services/create-musical-work"
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   try {
     const body = await req.json()
 
@@ -9,15 +10,16 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(result)
   } catch (error) {
-    console.error(error)
-
     return NextResponse.json(
       {
         success: false,
-        message: "Unexpected server error."
+        message:
+          error instanceof Error
+            ? error.message
+            : "Unexpected create work error."
       },
       {
-        status: 500
+        status: 400
       }
     )
   }

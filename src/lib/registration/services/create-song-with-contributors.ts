@@ -43,3 +43,45 @@ export async function createSongWithContributors(
     contributors_pending: validated.contributors.length
   }
 }
+async function resolveContributorId(
+  contributor: {
+    contributor_id?: string
+    name: string
+    role: string
+  }
+) {
+  if (contributor.contributor_id) {
+    return contributor.contributor_id
+  }
+
+  const { data: existingContributor } = await supabaseServer
+    .from("contributors")
+    .select("id")
+    .ilike("full_name", contributor.name.trim())
+    .maybeSingle()
+
+  if (existingContributor?.id) {
+    return existingContributor.id
+  }
+
+  const { data: createdContributor, error: contributorError } =
+    await supabaseServer
+      .from("contributors")
+      .insert([
+        {
+          full_name: contributor.name,
+          stage_name: contributor.name,
+          role: contributor.role,
+          contributor_type: "person"
+        }
+      ])
+      .select("id")
+      .single()
+
+  if (contributorError || !createdContributor) {
+    throw new Error("Failed to create contributor.")
+  }
+
+  return createdContributor.id
+}
+

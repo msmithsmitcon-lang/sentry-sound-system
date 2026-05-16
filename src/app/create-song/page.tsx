@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { supabase } from "@/lib/supabase"
+
 
 const roles = [
   "composer",
@@ -358,6 +358,7 @@ export default function CreateSongPage() {
     </div>
   )
 }
+
 
 
 

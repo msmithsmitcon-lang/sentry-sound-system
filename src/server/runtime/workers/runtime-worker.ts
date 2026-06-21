@@ -21,7 +21,7 @@ async function heartbeat() {
   });
 }
 
-async function claimTask() {
+export async function claimTask() {
   const { data, error } = await supabaseAdmin.rpc(
     "rpc_ai_claim_next_task",
     {
@@ -43,7 +43,7 @@ async function claimTask() {
   return task;
 }
 
-async function processTask(task: any) {
+export async function processTask(task: any) {
   activeTaskCount = 1;
 
   console.log("PROCESSING_TASK", task?.task_id);
@@ -57,7 +57,7 @@ async function processTask(task: any) {
       "rpc_ai_complete_task",
       {
         p_task_id: task.task_id,
-        p_result: JSON.parse(JSON.stringify({ success: true })),
+        p_result: { success: true },
       }
     );
 

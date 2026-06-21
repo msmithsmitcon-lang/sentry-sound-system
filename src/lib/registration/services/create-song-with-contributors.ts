@@ -6,14 +6,22 @@ import {
 } from "@/lib/registration/contracts/create-song-contract"
 
 export async function createSongWithContributors(
-  input: CreateSongRequest
+  input: CreateSongRequest,
+  context: {
+    workspaceId: string
+    createdByUserId: string
+  }
 ) {
   const validated = validateCreateSongInput(input)
 
   const { data, error } = await supabaseServer.rpc(
     "rpc_create_song_with_contributors",
     {
-      payload: validated
+      payload: {
+        ...validated,
+        workspace_id: context.workspaceId,
+        created_by_user_id: context.createdByUserId,
+      },
     }
   )
 

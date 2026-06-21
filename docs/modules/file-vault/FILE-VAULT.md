@@ -6,6 +6,9 @@ The File Vault is the secure document and asset-file layer for contracts, KYC, p
 ## Core principle
 Files must link to operational records without duplicating business logic.
 
+Independent Module Integrity:
+The File Vault and Supporting Materials layer must remain useful as a standalone workspace-owned reference/document surface. It may integrate with readiness, submissions, legal governance, finance, releases, and AI later, but basic file/reference value must not depend on those modules. User-facing language must not imply legal clearance, verified evidence, submission approval, or regulator readiness unless those governed modules and backend contracts are active.
+
 ## Core entities
 - file_vault_items
 - file_vault_links
@@ -89,3 +92,30 @@ File Vault service layer.
 
 ## Next build unit
 Calendar / Task Scheduling backend.
+
+## Work Supporting Materials V1
+
+Status: active metadata-reference layer.
+
+Song Profile now uses the File Vault foundation for workspace-owned supporting material references through:
+
+- `GET /api/works/[workId]/files`
+- `POST /api/works/[workId]/files`
+- `file_vault_items`
+- `file_vault_links`
+- `file_vault_audit_events`
+
+This V1 layer is for operational visibility only. It records the existence of supporting materials around a work, such as split sheets, artwork, proof notes, contracts, invoices, or compliance references.
+
+It does not implement:
+
+- real file upload
+- external storage sync
+- OCR
+- AI document analysis
+- evidence verification
+- legal clearance
+- readiness scoring
+- submission automation
+
+User-facing wording must remain clear: references are not verified and do not confirm legal clearance or submission readiness.

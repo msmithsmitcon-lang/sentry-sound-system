@@ -47,18 +47,29 @@ These models already support:
 - submission packaging
 - governance workflows
 
-## Strategic Direction
+## Approved Strategic Direction
 
-The governed registration lifecycle domain will become the long-term canonical operational persistence direction.
+The current lowercase operational model is the living product seed and will be formalized into the canonical operational schema.
 
-This is because it already aligns more closely to:
+This means:
 
-- governed rights operations
-- operational lifecycle orchestration
-- auditability requirements
-- compliance workflows
-- submission infrastructure
-- long-term platform scalability
+- `musical_works`, `assets`, `contributors`, and `work_contributors` are the active canonical seed for current Works/Songs UX.
+- governed lifecycle concepts from the Prisma registration domain remain valuable, but must be aligned to the canonical operational schema.
+- Prisma is a backend/developer access and modelling layer over Postgres.
+- Prisma models must not remain a competing business reality.
+- duplicate Prisma work concepts such as `MusicalWork` are legacy/parallel until aligned.
+
+The goal is not to choose Prisma or Supabase. Supabase/Postgres is the database. The goal is to establish one canonical operational model that Prisma can model/access safely.
+
+This decision aligns with:
+
+- active UX truth discovered through Works/Songs capture.
+- governed rights operations.
+- operational lifecycle orchestration.
+- auditability requirements.
+- compliance workflows.
+- submission infrastructure.
+- future identifier, royalty, reporting, and AI intelligence needs.
 
 ## Important Rule
 
@@ -80,7 +91,7 @@ Instead:
 2. introduce backend orchestration boundaries
 3. centralize validation
 4. centralize persistence orchestration
-5. progressively align models
+5. progressively align Prisma models to the canonical operational schema
 6. progressively align workflows
 7. progressively align readiness lifecycle
 
@@ -99,3 +110,5 @@ before major persistence migrations occur.
 ## Immediate Restriction
 
 No new major operational tables should be introduced until persistence alignment direction is stabilized.
+
+Official identifier tables, ISWC/ISRC UI capture, and submission-return-to-identifier automation remain deferred until the canonical entity owner is confirmed.

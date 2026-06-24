@@ -16,6 +16,7 @@ import {
   Trash2,
   Users,
 } from "lucide-react";
+import { MUSIC_GENRES } from "@/lib/constants/music-genres";
 
 type FieldImportance =
   | "System-managed field"
@@ -567,7 +568,7 @@ export default function NewWorkPage() {
 
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               <TextField label="Work title" required value={workTitle} onChange={(value) => { setSaved(null); setWorkTitle(value); }} />
-              <TextField label="Genre" value={genre} onChange={(value) => { setSaved(null); setGenre(value); }} />
+              <SelectField label="Genre" value={genre} options={["", ...MUSIC_GENRES]} onChange={(value) => { setSaved(null); setGenre(value); }} />
               <TextField label="Mood" value={mood} onChange={(value) => { setSaved(null); setMood(value); }} />
               <ReadOnlyField label="Registration status" value="Draft" />
             </div>

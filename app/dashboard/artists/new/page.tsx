@@ -26,11 +26,12 @@ import {
   UserRound,
   type LucideIcon,
 } from "lucide-react";
+import { MUSIC_GENRES } from "@/lib/constants/music-genres";
 
 const artistTypes = ["Solo artist", "Group", "Band", "DJ", "Producer", "Composer", "Label"];
 const countries = ["South Africa", "Nigeria", "United States", "United Kingdom", "Other"];
 const languages = ["English", "Afrikaans", "isiZulu", "Sesotho", "Instrumental", "Multiple languages", "Other"];
-const genres = ["Afrobeats", "Amapiano", "Hip Hop", "House", "R&B", "Pop", "Gospel", "Other"];
+const genres = MUSIC_GENRES;
 const accountTypes = ["Unknown", "Cheque / Current", "Savings", "Business", "Transmission", "Other"];
 
 const onboardingSteps = [
@@ -229,7 +230,7 @@ export default function NewArtistPage() {
                 <SelectField name="artistType" label="Artist type" value="Solo artist" options={artistTypes} />
                 <SelectField name="country" label="Country" value="South Africa" options={countries} />
                 <SelectField name="primaryLanguage" label="Primary language" value="English" options={languages} />
-                <SelectField name="genre" label="Genre" value="Afrobeats" options={genres} />
+                <SelectField name="genre" label="Genre" value="Afrobeats/Afropop" options={genres} />
                 <div className="rounded-xl border border-dashed border-[#CBD5E1] bg-[#F8FAFC] p-4">
                   <div className="flex h-24 items-center justify-center rounded-lg bg-white text-[#94A3B8]">
                     <ImageIcon className="h-8 w-8" />
@@ -457,7 +458,7 @@ function TextField({
   );
 }
 
-function SelectField({ name, label, value, options }: { name: string; label: string; value: string; options: string[] }) {
+function SelectField({ name, label, value, options }: { name: string; label: string; value: string; options: readonly string[] }) {
   return (
     <label>
       <span className="text-xs font-semibold text-[#334155]">{label}</span>

@@ -677,6 +677,8 @@ export default function WorkDetailsPage() {
                 </div>
               </section>
 
+              <ComplianceExportsCard workId={workId} />
+
               {activeTab === "captured-basics" ? (
               <>
               <section className="rounded-2xl border border-[#E5E7EB] bg-white p-6 shadow-sm shadow-slate-200/60">
@@ -1916,4 +1918,127 @@ function formatDate(value?: string | null) {
     month: "short",
     day: "numeric",
   });
+}
+
+function ComplianceExportsCard({ workId }: { workId: string }) {
+  const [generatingPack, setGeneratingPack] = useState(false);
+  const [packError, setPackError] = useState<string | null>(null);
+  const [packIssues, setPackIssues] = useState<string[]>([]);
+
+  const [generatingCertificate, setGeneratingCertificate] = useState(false);
+  const [certificateError, setCertificateError] = useState<string | null>(null);
+  const [certificateVerificationId, setCertificateVerificationId] = useState<string | null>(null);
+
+  async function handleGenerateCertificate() {
+    setGeneratingCertificate(true);
+    setCertificateError(null);
+    setCertificateVerificationId(null);
+    try {
+      const response = await fetch(`/api/works/${workId}/certificate`, { method: "POST" });
+      const data = await response.json();
+      if (!response.ok || !data.success) {
+        throw new Error(data.error ?? "Failed to generate certificate.");
+      }
+      setCertificateVerificationId(data.certificate.verification_id);
+    } catch (error) {
+      setCertificateError(error instanceof Error ? error.message : "Failed to generate certificate.");
+    } finally {
+      setGeneratingCertificate(false);
+    }
+  }
+
+  async function handleGenerateCmoPack() {
+    setGeneratingPack(true);
+    setPackError(null);
+    setPackIssues([]);
+    try {
+      const response = await fetch("/api/compliance/cmo-pack", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ work_id: workId }),
+      });
+
+      if (response.status === 422) {
+        const data = await response.json();
+        setPackIssues((data.issues ?? []).map((issue: { message: string }) => issue.message));
+        return;
+      }
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.error ?? "Failed to generate CMO submission pack.");
+      }
+
+      const blob = await response.blob();
+      const disposition = response.headers.get("Content-Disposition") ?? "";
+      const fileNameMatch = disposition.match(/filename="(.+)"/);
+      const fileName = fileNameMatch?.[1] ?? "CMO_submission_pack.zip";
+
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName;
+      link.click();
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      setPackError(error instanceof Error ? error.message : "Failed to generate CMO submission pack.");
+    } finally {
+      setGeneratingPack(false);
+    }
+  }
+
+  return (
+    <section className="rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-sm shadow-slate-200/60">
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#2F48F7]">Compliance exports</p>
+      <p className="mt-1 text-sm font-semibold text-[#334155]">CMO Submission Ready Pack</p>
+      <p className="mt-1 text-xs text-[#64748B]">
+        Generates SAMRO, CAPASSO, and SAMPRA submission CSVs plus a filing checklist, bundled as a zip.
+      </p>
+      <button
+        type="button"
+        onClick={handleGenerateCmoPack}
+        disabled={generatingPack}
+        className="mt-3 inline-flex items-center justify-center rounded-xl bg-[#2F48F7] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1E3AE0] disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        {generatingPack ? "Generating…" : "Generate Submission Pack"}
+      </button>
+      {packError ? <p className="mt-2 text-xs font-semibold text-[#C2410C]">{packError}</p> : null}
+      {packIssues.length > 0 ? (
+        <ul className="mt-2 space-y-1 text-xs font-semibold text-[#C2410C]">
+          {packIssues.map((issue) => (
+            <li key={issue}>{issue}</li>
+          ))}
+        </ul>
+      ) : null}
+
+      <div className="mt-5 border-t border-[#E5E7EB] pt-4">
+        <p className="text-sm font-semibold text-[#334155]">Proof of Collaboration Certificate</p>
+        <p className="mt-1 text-xs text-[#64748B]">
+          Timestamped certificate naming all confirmed contributors, hashed to the uploaded master audio file. Share before handing over stems.
+        </p>
+        <button
+          type="button"
+          onClick={handleGenerateCertificate}
+          disabled={generatingCertificate}
+          className="mt-3 inline-flex items-center justify-center rounded-xl border border-[#2F48F7] px-4 py-2 text-sm font-semibold text-[#2F48F7] transition hover:bg-[#EFF6FF] disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {generatingCertificate ? "Generating…" : "Generate Certificate"}
+        </button>
+        {certificateError ? <p className="mt-2 text-xs font-semibold text-[#C2410C]">{certificateError}</p> : null}
+        {certificateVerificationId ? (
+          <p className="mt-2 text-xs font-semibold text-[#15803D]">
+            Certificate generated.{" "}
+            <a
+              href={`/verify/${certificateVerificationId}`}
+              target="_blank"
+              rel="noreferrer"
+              className="underline"
+            >
+              View public verification page
+            </a>
+          </p>
+        ) : null}
+      </div>
+    </section>
+  );
 }

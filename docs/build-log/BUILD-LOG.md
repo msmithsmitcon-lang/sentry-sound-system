@@ -10332,3 +10332,41 @@ Changes:
 Boundary:
 - Design and read-only authority mapping only.
 - No code, UI, API, SQL, schema, migration, refactor, import, or database write was performed.
+
+---
+
+## 2026-06-22 - V1 Core Journey: Genre Enum, Storage Upload, CMO Pack, Collaboration Certificate
+
+Files:
+- `supabase/migrations/20260622000001_music_genre_enum_bpm_key.sql`
+- `supabase/migrations/20260622000002_work_assets_storage_bucket.sql`
+- `supabase/migrations/20260622000003_plexicon_domain_events_log.sql`
+- `supabase/migrations/20260622000004_musical_works_cmo_required_fields.sql`
+- `supabase/migrations/20260622000005_collaboration_certificates.sql`
+- `sql/platform/rpc_create_song_with_contributors.sql`
+- `src/lib/constants/music-genres.ts`
+- `app/dashboard/works/new/page.tsx`, `src/app/create-song/page.tsx`, `app/dashboard/works/song-capture-v2/page.tsx`, `app/dashboard/artists/new/page.tsx`
+- `app/api/works/[workId]/contributors/route.ts` (new PATCH confirm endpoint)
+- `app/api/works/[workId]/assets/route.ts`, `src/lib/work-files/work-asset-storage-repository.ts`, `work-asset-upload-service.ts`, `work-asset-upload.types.ts`
+- `src/lib/registration/contracts/create-song-contract.ts`
+- `src/lib/compliance/cmo-pack-data.ts`, `cmo-pack-generator.ts`, `collaboration-certificate.ts`
+- `app/api/compliance/cmo-pack/route.ts`, `app/api/works/[workId]/certificate/route.ts`, `app/api/verify/[certificate_id]/route.ts`, `app/verify/[certificate_id]/page.tsx`
+- `src/lib/plexicon-events/emit-domain-event.ts`
+- `app/dashboard/works/details/[workId]/page.tsx`
+
+Changes:
+- Added `music_genre` Postgres enum (15 canonical Music Domain Pack values), `bpm`, `musical_key` to `musical_works`. Existing free-text genre values preserved verbatim in `genre_legacy_text` before normalization; unmapped values became NULL rather than guessed, "Pop" mapped to "Other". New shared `MUSIC_GENRES` constant replaces four previously-inconsistent hardcoded genre lists (two free-text inputs, two mismatched dropdown arrays, one missing 8 of 15 canonical values and carrying a non-canonical "Pop").
+- Found the live, dashboard-linked song creation wizard is `song-capture-v2/page.tsx` — not `works/new` or `create-song`, which are unlinked from any dashboard navigation. Found its Files & Assets step was decorative only (UI's own label: "Prototype only. Uploads and file categories are not saved yet.") — built a real Supabase Storage upload path (`work-assets` bucket, SHA-256 checksum, `file_vault_items`/`file_vault_links`). Found "Confirm splits" had no backend representation at all (`work_contributors.confirmed` always false, gated only by client React state) — added a server-validated PATCH confirm endpoint.
+- Found existing SAMRO export/validation logic (`src/lib/registration/submission-engine/*`) is real and fairly sophisticated, but operates against a different, currently-disconnected Prisma-modeled data layer than the one the live wizard writes to (confirmed: its own repository is missing exports that `scripts/tests/*.ts` expect). Built `cmo-pack-generator.ts` fresh against the live workspace-scoped tables rather than bridging two divergent data models. No CAPASSO/SAMPRA export or zip bundling existed previously (no `jszip`/`archiver` dependency) — added `jszip`. Added `iswc`/`language`/`duration_seconds` to `musical_works`, none of which existed before, since CMO validation has nothing to check without them.
+- Found no proof-of-collaboration certificate or public verification logic anywhere. Built `collaboration_certificates` table (denormalized contributor snapshot, separate public `verification_id`), generator requiring a confirmed split set and a real uploaded master-audio checksum, and a public no-auth `/verify/[certificate_id]` page showing names/roles only (never split percentages).
+- Both new domain events (`plexicon.domain.music.submission_pack.generated.v1`, `plexicon.domain.music.collaboration_proof.issued.v1`) are persisted in a new local `plexicon_domain_events` table in the canonical payload shape — there is no live cross-repo transport into `plexicon-contracts` yet (Plexicon's own Integration Layer is listed OUTSTANDING).
+
+Flagged, not resolved (genuine business/product decisions, not technical ones):
+- No PayFast integration exists anywhere in this codebase. `POST /api/compliance/cmo-pack` currently allows pack generation unconditionally rather than building a fake payment wall or blocking the journey on missing payment infrastructure — needs a decision on whether V1 ships with billing enforcement deferred, or whether PayFast is a blocking dependency for this feature.
+- No test runner (jest/vitest/etc.) is installed despite numerous `*.test.ts` files existing — the test suite cannot currently be executed at all. Pre-existing, not introduced by this work.
+- Migrations were authored and reviewed but NOT applied to any live database — no Supabase CLI/psql available in this environment, and applying schema changes to a possibly-live project without explicit confirmation was judged too risky to do unprompted.
+
+Boundary:
+- Real code, schema, and migration changes — not a design/read-only entry like prior entries in this log.
+- `tsc --noEmit` clean throughout (250 pre-existing, unrelated errors in untouched files — finance/CRM/contracts/distribution modules, a missing `@/lib/supabase/admin` module — confirmed unchanged before/after via diff, none introduced by this work).
+- Migrations not applied to a live database in this session — see flagged items above.

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -31,6 +31,7 @@ import {
   Zap,
   type LucideIcon,
 } from "lucide-react";
+import { MUSIC_GENRES } from "@/lib/constants/music-genres";
 
 type CreateSongResponse = {
   success?: boolean;
@@ -130,7 +131,7 @@ const recentSongs = [
   { title: "Paper Planes", status: "Draft", detail: "Needs contributors" },
 ];
 
-const genreOptions = ["", "Afrobeats", "Amapiano", "Hip Hop", "House", "Pop", "R&B", "Soul", "Gospel", "Other"];
+const genreOptions = ["", ...MUSIC_GENRES];
 const languageOptions = ["", "English", "Afrikaans", "isiZulu", "Instrumental", "Multiple languages", "Other / Not sure"];
 const releaseProjectGroupingOptions = [
   { type: "standalone_single", label: "Standalone single" },
@@ -142,7 +143,7 @@ const releaseProjectGroupingOptions = [
 
 export default function SongCaptureV2PrototypePage() {
   const [songTitle, setSongTitle] = useState("Midnight Drive");
-  const [genre, setGenre] = useState("Afrobeats");
+  const [genre, setGenre] = useState("Afrobeats/Afropop");
   const [alternateTitle, setAlternateTitle] = useState("");
   const [language, setLanguage] = useState("English");
   const [releaseProjectGroupingType, setReleaseProjectGroupingType] = useState("standalone_single");
@@ -319,22 +320,35 @@ export default function SongCaptureV2PrototypePage() {
     }
   }
 
-  function markContributorsReviewed() {
+  async function markContributorsReviewed() {
     if (contributorSplitTotal !== 100) {
       setContributorsError(`Contributor split total is ${contributorSplitTotal}%. It must equal 100% before review.`);
       setContributorsReviewed(false);
       return;
     }
 
-    if (!contributorsSaved) {
+    if (!contributorsSaved || !savedWorkId) {
       setContributorsError("Save contributors before marking them reviewed.");
       setContributorsReviewed(false);
       return;
     }
 
     setContributorsError(null);
-    setContributorsMessage("Contributors reviewed. Files & Assets are now unlocked.");
-    setContributorsReviewed(true);
+    setContributorsSaving(true);
+    try {
+      const response = await fetch(`/api/works/${savedWorkId}/contributors`, { method: "PATCH" });
+      const data = (await response.json()) as WorkContributorsResponse;
+      if (!response.ok) {
+        throw new Error(data.error ?? "Failed to confirm splits.");
+      }
+      setContributorsMessage("Contributors reviewed and confirmed. Files & Assets are now unlocked.");
+      setContributorsReviewed(true);
+    } catch (error) {
+      setContributorsError(error instanceof Error ? error.message : "Failed to confirm splits.");
+      setContributorsReviewed(false);
+    } finally {
+      setContributorsSaving(false);
+    }
   }
 
   async function saveSongFoundation() {
@@ -563,7 +577,7 @@ export default function SongCaptureV2PrototypePage() {
                   onSave={saveContributors}
                   onMarkReviewed={markContributorsReviewed}
                 />
-                <FilesAssetsCard locked={!contributorsReviewed} />
+                <FilesAssetsCard locked={!contributorsReviewed} workId={savedWorkId} />
                 <ReviewSaveCard locked />
 
                 <section className="flex flex-col gap-3 rounded-xl border border-[#E5E7EB] bg-white p-4 text-sm text-[#64748B] shadow-sm sm:flex-row sm:items-center sm:justify-between">
@@ -968,7 +982,64 @@ function ContributorsCard({
   );
 }
 
-function FilesAssetsCard({ locked }: { locked: boolean }) {
+type WorkAssetSummary = {
+  id: string;
+  file_name: string;
+  file_category: string;
+  file_size_bytes: number | null;
+  checksum: string | null;
+  created_at: string;
+};
+
+type WorkAssetsListResponse = {
+  success?: boolean;
+  assets?: WorkAssetSummary[];
+  error?: string;
+};
+
+function FilesAssetsCard({ locked, workId }: { locked: boolean; workId: string | null }) {
+  const [assets, setAssets] = useState<WorkAssetSummary[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (!workId || locked) return;
+    fetch(`/api/works/${workId}/assets`)
+      .then((response) => response.json())
+      .then((data: WorkAssetsListResponse) => {
+        if (data.assets) setAssets(data.assets);
+      })
+      .catch(() => {
+        // Listing failure is non-blocking — upload remains available.
+      });
+  }, [workId, locked]);
+
+  async function handleFileSelected(file: File | undefined) {
+    if (!file || !workId) return;
+    setUploading(true);
+    setUploadError(null);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("file_category", "master_audio");
+
+      const response = await fetch(`/api/works/${workId}/assets`, {
+        method: "POST",
+        body: formData,
+      });
+      const data = (await response.json()) as WorkAssetsListResponse;
+      if (!response.ok || !data.assets) {
+        throw new Error(data.error ?? "Upload failed.");
+      }
+      setAssets(data.assets);
+    } catch (error) {
+      setUploadError(error instanceof Error ? error.message : "Upload failed.");
+    } finally {
+      setUploading(false);
+    }
+  }
+
   return (
     <section className={`rounded-xl border border-[#E5E7EB] bg-white p-5 shadow-sm ${locked ? "opacity-65" : ""}`}>
       <div className="grid gap-5 xl:grid-cols-[0.95fr_1.45fr]">
@@ -977,18 +1048,43 @@ function FilesAssetsCard({ locked }: { locked: boolean }) {
           <p className="mt-3 text-xs font-semibold text-[#64748B]">
             {locked
               ? "Files unlock after contributors are reviewed."
-              : "Prototype only. Uploads and file categories are not saved yet."}
+              : uploading
+                ? "Uploading…"
+                : "Files upload to secure storage and are hashed for verification."}
           </p>
-          <div className="mt-4 flex min-h-40 flex-col items-center justify-center rounded-xl border border-dashed border-[#7C3AED] bg-[#FBFAFF] p-6 text-center">
+          {uploadError ? <p className="mt-2 text-xs font-semibold text-[#C2410C]">{uploadError}</p> : null}
+          <input
+            ref={fileInputRef}
+            type="file"
+            className="hidden"
+            disabled={locked || uploading || !workId}
+            onChange={(event) => handleFileSelected(event.target.files?.[0])}
+          />
+          <button
+            type="button"
+            disabled={locked || uploading || !workId}
+            onClick={() => fileInputRef.current?.click()}
+            className="mt-4 flex min-h-40 w-full flex-col items-center justify-center rounded-xl border border-dashed border-[#7C3AED] bg-[#FBFAFF] p-6 text-center disabled:cursor-not-allowed disabled:opacity-60"
+          >
             <div className="flex h-15 w-15 items-center justify-center rounded-2xl bg-[#4F46E5] text-white">
               <UploadCloud className="h-8 w-8" />
             </div>
-            <p className="mt-4 text-sm font-semibold text-[#111827]">Drag & drop files here</p>
-            <p className="mt-1 text-sm text-[#64748B]">
-              or <span className="font-semibold text-[#4F46E5]">click to browse</span>
-            </p>
+            <p className="mt-4 text-sm font-semibold text-[#111827]">Click to browse</p>
+            <p className="mt-1 text-sm text-[#64748B]">Uploads the song's master audio file</p>
             <p className="mt-3 text-xs text-[#64748B]">All file types supported. Max 5GB per file.</p>
-          </div>
+          </button>
+          {assets.length > 0 ? (
+            <ul className="mt-4 space-y-2 text-xs text-[#334155]">
+              {assets.map((asset) => (
+                <li key={asset.id} className="rounded-lg border border-[#E5E7EB] bg-[#F8FAFC] px-3 py-2">
+                  <p className="font-semibold">{asset.file_name}</p>
+                  <p className="text-[#64748B]">
+                    {asset.checksum ? `sha256:${asset.checksum.slice(0, 16)}…` : "Hashing…"}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </div>
 
         <div>

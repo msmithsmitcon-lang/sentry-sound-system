@@ -148,6 +148,83 @@ export async function PUT(
   }
 }
 
+/**
+ * Marks all current contributor splits for this work as confirmed.
+ *
+ * This is the real, server-persisted "Confirm splits" milestone referenced
+ * by PLEXICON_MASTER_EXECUTION_BRIEF_V1.md Part 5's V1 success definition
+ * ("invite collaborators to confirm splits"). Previously this was only a
+ * client-side React state flag (`contributorsReviewed`) with no backend
+ * representation — `work_contributors.confirmed` always stayed false.
+ * Re-validates the 100% split sum server-side before confirming, since
+ * confirmation is a governance action and must not trust client state.
+ */
+export async function PATCH(
+  _request: Request,
+  context: { params: Promise<{ workId: string }> }
+) {
+  const { workId } = await context.params;
+
+  if (!UUID_PATTERN.test(workId)) {
+    return NextResponse.json({ success: false, error: "Invalid work ID." }, { status: 400 });
+  }
+
+  try {
+    const authContext = await getAuthenticatedWorkspaceContext();
+    const contributors = await readWorkContributors(workId, authContext.workspace.id);
+
+    if (contributors.length === 0) {
+      return NextResponse.json(
+        { success: false, error: "Save contributors before confirming splits." },
+        { status: 400 }
+      );
+    }
+
+    const splitTotal = roundSplitTotal(
+      contributors.reduce((sum, contributor) => sum + contributor.percentage, 0)
+    );
+
+    if (splitTotal !== 100) {
+      return NextResponse.json(
+        { success: false, error: "Contributor split total must equal 100% before confirming." },
+        { status: 400 }
+      );
+    }
+
+    await confirmWorkContributors(workId, authContext.workspace.id);
+    const confirmedContributors = await readWorkContributors(workId, authContext.workspace.id);
+
+    return NextResponse.json({
+      success: true,
+      contributors: confirmedContributors,
+      splitTotal,
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Failed to confirm splits.";
+    const status =
+      message === "Authentication required."
+        ? 401
+        : message === "Work not found."
+          ? 404
+          : 400;
+
+    return NextResponse.json({ success: false, error: message }, { status });
+  }
+}
+
+async function confirmWorkContributors(workId: string, workspaceId: string) {
+  const pool = getPool();
+  await pool.query(
+    `
+      update public.work_contributors
+      set confirmed = true
+      where work_id = $1::uuid
+        and workspace_id = $2::uuid
+    `,
+    [workId, workspaceId]
+  );
+}
+
 function normalizeContributors(input: ContributorPayload[] | undefined) {
   if (!Array.isArray(input)) return [];
 

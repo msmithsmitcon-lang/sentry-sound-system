@@ -10,6 +10,8 @@ export type CreateSongRequest = {
   work_title: string
   genre?: string
   mood?: string
+  bpm?: number | string
+  musical_key?: string
   copyright_status?: string
   registration_status?: string
   contributors: CreateSongContributorInput[]
@@ -45,10 +47,17 @@ export function validateCreateSongInput(
     throw new Error("Split total must equal 100%.")
   }
 
+  const bpm =
+    input.bpm === undefined || input.bpm === null || input.bpm === ""
+      ? ""
+      : String(Number(input.bpm))
+
   return {
     work_title: input.work_title.trim(),
     genre: input.genre ?? "",
     mood: input.mood ?? "",
+    bpm,
+    musical_key: input.musical_key?.trim() ?? "",
     copyright_status: input.copyright_status ?? "draft",
     registration_status: input.registration_status ?? "draft",
     contributors

@@ -10370,3 +10370,35 @@ Boundary:
 - Real code, schema, and migration changes — not a design/read-only entry like prior entries in this log.
 - `tsc --noEmit` clean throughout (250 pre-existing, unrelated errors in untouched files — finance/CRM/contracts/distribution modules, a missing `@/lib/supabase/admin` module — confirmed unchanged before/after via diff, none introduced by this work).
 - Migrations not applied to a live database in this session — see flagged items above.
+
+---
+
+## 2026-06-22 - Jest Test Runner Configured; PayFast Billing Deferral Decided
+
+Files:
+- `jest.config.js`, `tsconfig.jest.json`, `package.json` (added `test` script)
+- `__tests__/legacy-script-harness.test.ts`
+- `src/lib/compliance/cmo-pack-generator.ts`
+- `app/api/compliance/cmo-pack/route.ts`
+- `docs/build-log/BUILD-LOG.md`
+
+Changes — test runner:
+- No test runner (jest/vitest/etc.) was installed despite 54 `*.test.ts` files existing across `src/lib/**` and `tests/`. Installed `jest`, `ts-jest`, `@types/jest`.
+- Found every one of the 54 existing `*.test.ts` files is a self-executing script (`assert()` + a floating `run().catch(error => { console.error(error); process.exit(1) })`), not written against Jest's `describe`/`test`/`it`/`expect` API. Pointing Jest's `testMatch` directly at them fails every file with "Your test suite must contain at least one test," regardless of whether the script's own internal logic passes — confirmed empirically before settling on an approach.
+- Built `__tests__/legacy-script-harness.test.ts` — a real Jest test (proper `describe`/`test` blocks) that discovers and `require()`s each of the 54 legacy scripts directly, intercepting `process.exit` and unhandled rejections so their actual pass/fail surfaces as a normal Jest result, without modifying any of the 54 original files.
+- `jest.config.js` restricts Jest's own `testMatch` to `__tests__/**/*.test.ts` only (the harness plus any future Jest-native tests); the pre-existing scattered `*.test.ts` naming convention is otherwise unchanged and still runs, via the harness.
+- Added `tsconfig.jest.json` (extends the main tsconfig, overrides `module` to `commonjs`) since the project's `module: "esnext"` setting is required for the Next.js build but breaks Jest's CommonJS test runtime. Does not affect `tsc --noEmit` or `next build`, which both still use `tsconfig.json` directly — confirmed unchanged (still 250 pre-existing errors, same as before this change).
+- Added `"test": "jest"` to `package.json` scripts.
+
+Results: 55 tests collected (1 discovery check + 54 legacy scripts), 39 passed, 16 failed.
+
+Flagged (pre-existing, NOT caused by the recent song-registration/CMO/certificate work — confirmed none of the 16 failing files were touched in any prior session):
+- All 16 failures share one root cause: Prisma's generated client (`src/generated/prisma/client.ts`) reads `import.meta.url`, which is ESM-only syntax incompatible with Jest's CommonJS test runtime. Attempted fixing via the `tsconfig.jest.json` `module` override — no effect on this specific generated file (likely a `ts-jest` transpile-only/`isolatedModules` limitation with Prisma's particular generated output shape). Further config-only fixing was judged not proportionate to pursue further: these 16 scripts are also integration tests requiring a live database connection, which isn't available in this environment regardless — they would not pass here even with the parse error resolved. Failing files: `escalation-dead-letter`, `escalation-delivery-metrics`, `escalation-dispatch-worker`, `escalation-notification-queue`, `escalation-persistence` (all under `src/lib/operations/escalation/`), and `dispatch-attempt`, `dispatch-execution`, `dispatch-failure-retry`, `dispatch-metrics`, `dispatch-worker-orchestration`, `evidence-audit-event`, `operational-alerts`, `operational-incident`, `operational-sla`, `submission-dispatch`, `submission-export-persistence` (all under `tests/`).
+
+Changes — billing deferral:
+- Documented in `src/lib/compliance/cmo-pack-generator.ts` and `app/api/compliance/cmo-pack/route.ts`: PayFast billing enforcement for CMO pack downloads is **intentionally deferred**, decided by Markus Wesley Ivan Smith on 2026-06-22. The free tier's CMO Submission Ready Pack download remains open/unmetered for V1. PayFast integration (and the R50/pack free-tier charge from `PLEXICON_MASTER_EXECUTION_BRIEF_V1.md` Part 5) is scoped as a **V1.5 task**, not a blocking dependency for V1 launch. This was previously flagged as an open question in the 2026-06-22 V1 core journey entry above — it is now resolved, not an oversight.
+
+Boundary:
+- Real configuration, infrastructure, and documentation changes.
+- `tsc --noEmit` confirmed unchanged (250 pre-existing errors, same set as before).
+- No live database migration applied — same limitation as the prior entry.

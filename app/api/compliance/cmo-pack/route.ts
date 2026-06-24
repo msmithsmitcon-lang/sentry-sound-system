@@ -7,24 +7,18 @@ const UUID_PATTERN =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
 /**
- * ENTITLEMENT GATE — STUB, FLAGGED FOR MARKUS:
+ * ENTITLEMENT GATE — BILLING DEFERRAL DECIDED, NOT AN OVERSIGHT.
  *
  * PLEXICON_MASTER_EXECUTION_BRIEF_V1.md Part 5 specifies a pay-per-action
  * gate here (R50/CMO pack on the free tier, unlimited on Growth tier via
- * PayFast). No PayFast integration exists anywhere in this codebase —
- * confirmed by an exhaustive search (zero files reference PayFast). The
- * existing entitlement registry (src/lib/entitlements/capability-registry.ts)
- * also marks most capabilities `rolloutState: "test_only"`, meaning wiring
- * this route through it would block all production downloads outright,
- * not just free-tier ones.
+ * PayFast). No PayFast integration exists anywhere in this codebase.
  *
- * This route currently allows pack generation unconditionally rather than
- * either (a) building a fake payment wall, or (b) blocking the
- * end-to-end journey on missing payment infrastructure. This is a real
- * product/business decision — whether V1 ships with billing enforcement
- * deferred, or whether PayFast integration is a blocking dependency for
- * this feature — not a technical one, and needs Markus's call before a
- * real gate replaces this comment.
+ * Decision made by Markus Wesley Ivan Smith on 2026-06-22: this route
+ * intentionally allows CMO pack generation unconditionally for V1 — the
+ * free tier's download stays open/unmetered. PayFast integration (and
+ * re-introducing this charge) is scoped as a V1.5 task, not a blocking
+ * dependency for V1 launch. See the BUILD-LOG entry dated 2026-06-22
+ * for the full decision record.
  */
 export async function POST(request: Request) {
   try {

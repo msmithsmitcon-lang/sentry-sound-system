@@ -21,6 +21,21 @@ export type CmoPackResult =
 const TARGET_CMOS = ["SAMRO", "CAPASSO", "SAMPRA"] as const
 
 /**
+ * BILLING DEFERRAL — INTENTIONAL PRODUCT DECISION, NOT AN OVERSIGHT.
+ *
+ * PayFast billing enforcement for CMO pack downloads is deliberately
+ * deferred. Decision made by Markus Wesley Ivan Smith on 2026-06-22:
+ * the free tier's CMO Submission Ready Pack download remains open
+ * (unmetered, no payment gate) for V1. PayFast integration — and
+ * re-introducing the R50/pack free-tier charge per
+ * PLEXICON_MASTER_EXECUTION_BRIEF_V1.md Part 5 — is scoped as a V1.5
+ * task, not a blocking dependency for V1 launch. See the entitlement
+ * gate comment on the POST handler in
+ * app/api/compliance/cmo-pack/route.ts, and the BUILD-LOG entry dated
+ * 2026-06-22, for the full decision record.
+ */
+
+/**
  * Generates the CMO Submission Ready Pack (SAMRO + CAPASSO + SAMPRA CSVs
  * plus a checklist instruction document) for a registered, split-confirmed
  * song. Reads from the live workspace-scoped tables (see cmo-pack-data.ts

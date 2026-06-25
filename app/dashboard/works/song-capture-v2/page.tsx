@@ -498,7 +498,7 @@ export default function SongCaptureV2PrototypePage() {
                 <section className="rounded-xl border border-[#E5E7EB] bg-white p-5 shadow-sm">
                   <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                     <div>
-                      <h1 className="text-3xl font-semibold tracking-tight text-[#0F172A]">Create New Song</h1>
+                      <h1 className="text-3xl font-semibold tracking-tight text-[#0F172A]">Start a New Song</h1>
                       <p className="mt-2 text-sm leading-6 text-[#64748B]">
                         Build your song, attach meaningful files, and set the foundation for your release.
                       </p>

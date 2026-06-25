@@ -15,6 +15,8 @@ import {
   Users,
 } from "lucide-react";
 
+import { toArtistStatusLabel } from "@/lib/works/work-status-language";
+
 type WorkContributorSplit = {
   id: string;
   contributor_id: string;
@@ -628,7 +630,7 @@ export default function WorkDetailsPage() {
 
           <div className="rounded-2xl border border-[#DBEAFE] bg-[#EFF6FF] p-4">
             <p className="text-sm font-semibold text-[#2F48F7]">Creative truth</p>
-            <p className="mt-1 text-sm font-semibold text-[#334155]">Workspace Song Profile</p>
+            <p className="mt-1 text-sm font-semibold text-[#334155]">Your Song Profile</p>
           </div>
         </div>
       </header>
@@ -700,7 +702,7 @@ export default function WorkDetailsPage() {
                   <SummaryTile label="Mood" value={work.mood || "Not captured"} />
                   <SummaryTile label="Contributors" value={formatContributorCount(work.contributor_count)} />
                   <SummaryTile label="Split total" value={formatSplitTotal(work.split_total)} />
-                  <SummaryTile label="Registration" value={work.registration_status || "Draft"} />
+                  <SummaryTile label="Protection status" value={toArtistStatusLabel(work.registration_status)} />
                   <SummaryTile label="Copyright" value={work.copyright_status || "Draft"} />
                 </div>
               </section>
@@ -1990,7 +1992,7 @@ function ComplianceExportsCard({ workId }: { workId: string }) {
   return (
     <section className="rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-sm shadow-slate-200/60">
       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#2F48F7]">Compliance exports</p>
-      <p className="mt-1 text-sm font-semibold text-[#334155]">CMO Submission Ready Pack</p>
+      <p className="mt-1 text-sm font-semibold text-[#334155]">Registration Filing Pack</p>
       <p className="mt-1 text-xs text-[#64748B]">
         Generates SAMRO, CAPASSO, and SAMPRA submission CSVs plus a filing checklist, bundled as a zip.
       </p>

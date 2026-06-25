@@ -227,7 +227,7 @@ function WorkspaceProfileSummary({
               <CheckCircle2 className="mr-2 h-3.5 w-3.5" />
               Setup completed
             </div>
-            <h2 className="mt-4 text-2xl font-semibold tracking-tight">Workspace Profile</h2>
+            <h2 className="mt-4 text-2xl font-semibold tracking-tight">Your Music Business Profile</h2>
             <p className="mt-2 max-w-2xl leading-7 text-[#64748B]">
               Your setup already exists. Sentry Sound can use this operational
               identity to personalize dashboard guidance, defaults, and future

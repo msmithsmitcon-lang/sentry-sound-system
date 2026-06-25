@@ -11,6 +11,8 @@ import {
   Search,
 } from "lucide-react";
 
+import { toArtistStatusLabel } from "@/lib/works/work-status-language";
+
 type WorkRow = {
   id: string;
   asset_id?: string | null;
@@ -228,7 +230,7 @@ export default function ExistingWorksListPage() {
                           <td className="px-4 py-4 text-[#475569]">{work.genre || "Not captured yet"}</td>
                           <td className="px-4 py-4 text-[#475569]">{work.mood || "Not captured yet"}</td>
                           <td className="px-4 py-4">
-                            <StatusPill value={work.registration_status} fallback="Not captured yet" />
+                            <StatusPill value={toArtistStatusLabel(work.registration_status)} fallback="Not captured yet" />
                           </td>
                           <td className="px-4 py-4">
                             <StatusPill value={work.copyright_status} fallback="Not captured yet" />

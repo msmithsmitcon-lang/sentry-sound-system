@@ -306,7 +306,7 @@ export default function WorkspaceCalendarPage() {
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to dashboard
             </Link>
-            <h1 className="mt-4 text-3xl font-semibold tracking-tight">Workspace Actions & Calendar</h1>
+            <h1 className="mt-4 text-3xl font-semibold tracking-tight">Your Business Calendar</h1>
             <p className="mt-2 max-w-3xl leading-7 text-[#64748B]">
               A shared task and workflow layer for onboarding, works, approvals,
               submissions, releases, finance, CRM, and future system-recommended actions.

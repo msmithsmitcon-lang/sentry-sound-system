@@ -50,6 +50,13 @@ export function MissionControlWelcome({ firstName }: { firstName: string }) {
           </ul>
         </div>
 
+        <p className="mt-8 text-sm leading-6 text-[#64748B]">
+          Every project you create on Sentry Sound is professionally documented
+          from day one. Your contributors, splits, evidence, and registration
+          records stay together — helping you protect your work and prepare it
+          for industry submissions when you&apos;re ready.
+        </p>
+
         <Link
           href="/dashboard/works/new"
           className="mt-8 inline-block text-sm font-semibold text-[#64748B] underline-offset-4 hover:text-[#2F48F7] hover:underline"

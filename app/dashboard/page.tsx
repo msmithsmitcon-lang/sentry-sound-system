@@ -1,16 +1,22 @@
+import { getDashboardHomeData } from "@/lib/dashboard/get-dashboard-home-data";
 import { getAuthenticatedWorkspaceContext } from "@/lib/workspace-context/get-authenticated-workspace-context";
-import { getCanonicalWorkSummaryRows } from "@/lib/works/works-read-repository";
 
 import { DashboardShell } from "./dashboard-shell";
 import { MissionControlWelcome } from "./mission-control";
 
 export default async function DashboardPage() {
   const { workspace, user } = await getAuthenticatedWorkspaceContext();
-  const existingWorks = await getCanonicalWorkSummaryRows({ workspaceId: workspace.id, limit: 1 });
+  const { projects, attentionItems } = await getDashboardHomeData({ workspaceId: workspace.id });
 
-  if (existingWorks.length === 0) {
+  if (projects.length === 0) {
     return <MissionControlWelcome firstName={user.firstName ?? "there"} />;
   }
 
-  return <DashboardShell />;
+  return (
+    <DashboardShell
+      workspaceName={workspace.name ?? "Your music business"}
+      projects={projects}
+      attentionItems={attentionItems}
+    />
+  );
 }

@@ -8,3 +8,8 @@ dist
 
 # clerk configuration (can include secrets)
 /.clerk/
+
+tsconfig.tsbuildinfo
+*.bak-*
+
+supabase/.temp/

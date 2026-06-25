@@ -1,0 +1,595 @@
+{
+  "snapshot_date": "2026-05-20",
+  "scope": "Limited non-sensitive export of current TEST works, linked assets, work_contributors, and contributor display/linkage data.",
+  "excluded": [
+    "auth data",
+    "workspace membership data",
+    "user profiles",
+    "payment data",
+    "subscription data",
+    "secrets"
+  ],
+  "source_tables": [
+    "musical_works",
+    "assets",
+    "work_contributors",
+    "contributors"
+  ],
+  "work_count": 21,
+  "works": [
+    {
+      "id": "eea8ff8b-fc46-41d8-92f2-f62c76706203",
+      "asset_id": "bde1fec0-b9f2-45b6-b6a7-0dd3901c28a5",
+      "work_title": "WORK 1",
+      "genre": "POP",
+      "mood": "SOFT",
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "draft",
+      "created_at": "2026-05-19T10:07:28.753Z",
+      "asset": {
+        "title": "WORK 1",
+        "asset_type": "music",
+        "created_at": "2026-05-19T10:07:28.753Z"
+      },
+      "contributors": [
+        {
+          "work_contributor_id": "f2454af5-0d43-4363-ac72-38861d2a7317",
+          "contributor_id": "453f00be-b533-4d38-834d-f808795619dd",
+          "contributor_name": "SENTRY SOUND",
+          "stage_name": "SENTRY SOUND",
+          "role": "composer",
+          "split_type": "composition",
+          "percentage": 100,
+          "confirmed": false
+        }
+      ]
+    },
+    {
+      "id": "7fcf44e0-fbfa-4394-a64e-ef6641003d38",
+      "asset_id": "8665c67b-8a76-4e77-b519-81b534ea9c1d",
+      "work_title": "WORK 1",
+      "genre": "POP",
+      "mood": "SOFT",
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "draft",
+      "created_at": "2026-05-19T10:06:59.814Z",
+      "asset": {
+        "title": "WORK 1",
+        "asset_type": "music",
+        "created_at": "2026-05-19T10:06:59.814Z"
+      },
+      "contributors": [
+        {
+          "work_contributor_id": "998dab5c-0621-47cf-970f-d3c59385fe04",
+          "contributor_id": "453f00be-b533-4d38-834d-f808795619dd",
+          "contributor_name": "SENTRY SOUND",
+          "stage_name": "SENTRY SOUND",
+          "role": "composer",
+          "split_type": "composition",
+          "percentage": 100,
+          "confirmed": false
+        }
+      ]
+    },
+    {
+      "id": "e15fc750-8ffb-4c92-a3e2-57a3d76e41a6",
+      "asset_id": "669951dc-86ca-4c2c-b390-9ba0a88faf93",
+      "work_title": "WORK 2",
+      "genre": "POP",
+      "mood": "SLOW",
+      "themes": "WORK RELATED",
+      "copyright_status": "draft",
+      "registration_status": "draft",
+      "created_at": "2026-05-19T07:34:57.081Z",
+      "asset": {
+        "title": "WORK 2",
+        "asset_type": "music",
+        "created_at": "2026-05-19T07:34:57.081Z"
+      },
+      "contributors": [
+        {
+          "work_contributor_id": "f8c31e12-452e-45e3-b89a-ee962bbd8c36",
+          "contributor_id": "453f00be-b533-4d38-834d-f808795619dd",
+          "contributor_name": "SENTRY SOUND",
+          "stage_name": "SENTRY SOUND",
+          "role": "composer",
+          "split_type": "composition",
+          "percentage": 100,
+          "confirmed": false
+        }
+      ]
+    },
+    {
+      "id": "c2ad7b9e-6846-44f6-bc37-5f4b1baff805",
+      "asset_id": "3dc69cde-979f-469a-830b-e982dd4e4cf3",
+      "work_title": "Paper Hearts",
+      "genre": "Pop",
+      "mood": "Romantic",
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "draft",
+      "created_at": "2026-05-19T04:54:11.122Z",
+      "asset": {
+        "title": "Paper Hearts",
+        "asset_type": "music",
+        "created_at": "2026-05-19T04:54:11.122Z"
+      },
+      "contributors": [
+        {
+          "work_contributor_id": "93cc09d5-c0c9-448a-a194-5116f448a20f",
+          "contributor_id": "c33eea27-2406-472d-84cd-8497f2409ab1",
+          "contributor_name": "Emma Petersen",
+          "stage_name": "Emma Petersen",
+          "role": "composer",
+          "split_type": "composition",
+          "percentage": 100,
+          "confirmed": false
+        }
+      ]
+    },
+    {
+      "id": "7a54aee4-4491-4b5e-b9ab-285b08db3fc9",
+      "asset_id": "bbef611a-665c-4c62-aac7-529afd221d35",
+      "work_title": "Fire in the Valley",
+      "genre": "Rock",
+      "mood": "Powerful",
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "draft",
+      "created_at": "2026-05-19T04:54:10.828Z",
+      "asset": {
+        "title": "Fire in the Valley",
+        "asset_type": "music",
+        "created_at": "2026-05-19T04:54:10.828Z"
+      },
+      "contributors": [
+        {
+          "work_contributor_id": "537c7ab4-6c69-4253-8da2-b87dc8a0e61b",
+          "contributor_id": "84f27065-0e47-4de7-b686-5f6aa3ed55d3",
+          "contributor_name": "Daniel Meyer",
+          "stage_name": "Daniel Meyer",
+          "role": "composer",
+          "split_type": "composition",
+          "percentage": 100,
+          "confirmed": false
+        }
+      ]
+    },
+    {
+      "id": "a67af7ef-5ab2-4208-b930-aa8a71a606b8",
+      "asset_id": "f5a53621-1cc3-465e-a23f-1a806a283441",
+      "work_title": "Ocean Memory",
+      "genre": "R&B",
+      "mood": "Emotional",
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "draft",
+      "created_at": "2026-05-19T04:54:10.570Z",
+      "asset": {
+        "title": "Ocean Memory",
+        "asset_type": "music",
+        "created_at": "2026-05-19T04:54:10.570Z"
+      },
+      "contributors": [
+        {
+          "work_contributor_id": "e1d5cbeb-3d1e-42ad-8f62-e2aeee8c86d5",
+          "contributor_id": "ad765355-c06b-4b8e-a50e-d0780e8a767b",
+          "contributor_name": "Aisha Daniels",
+          "stage_name": "Aisha Daniels",
+          "role": "composer",
+          "split_type": "composition",
+          "percentage": 100,
+          "confirmed": false
+        }
+      ]
+    },
+    {
+      "id": "03cc452f-75bd-425b-a1b1-960b70aeb075",
+      "asset_id": "eeff844c-c6af-4e63-b944-041ddde422ca",
+      "work_title": "Desert Rain",
+      "genre": "House",
+      "mood": "Reflective",
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "draft",
+      "created_at": "2026-05-19T04:54:10.267Z",
+      "asset": {
+        "title": "Desert Rain",
+        "asset_type": "music",
+        "created_at": "2026-05-19T04:54:10.267Z"
+      },
+      "contributors": [
+        {
+          "work_contributor_id": "adf047a1-ccb8-4c71-9fae-1102f0ed53f4",
+          "contributor_id": "05b9633f-23e4-4274-918e-8f434bc204b4",
+          "contributor_name": "Naledi Khumalo",
+          "stage_name": "Naledi Khumalo",
+          "role": "composer",
+          "split_type": "composition",
+          "percentage": 100,
+          "confirmed": false
+        }
+      ]
+    },
+    {
+      "id": "df2b96ab-6a4d-47ee-87f8-43bdc50e2e85",
+      "asset_id": "f2239397-a0b1-4ebb-bb36-892d37a573a7",
+      "work_title": "Golden Season",
+      "genre": "Jazz",
+      "mood": "Warm",
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "draft",
+      "created_at": "2026-05-19T04:52:53.391Z",
+      "asset": {
+        "title": "Golden Season",
+        "asset_type": "music",
+        "created_at": "2026-05-19T04:52:53.391Z"
+      },
+      "contributors": [
+        {
+          "work_contributor_id": "84c39261-7504-4976-8082-05af358ecbb5",
+          "contributor_id": "adf24a1e-2d6b-45fb-9a78-6c5a766b3045",
+          "contributor_name": "Michael Williams",
+          "stage_name": "Michael Williams",
+          "role": "composer",
+          "split_type": "composition",
+          "percentage": 100,
+          "confirmed": false
+        }
+      ]
+    },
+    {
+      "id": "7e783cf2-6ed1-4497-91fb-1714bcbb7a29",
+      "asset_id": "ea1f3bff-38a1-48a4-8942-9335391d69f2",
+      "work_title": "Township Sunrise",
+      "genre": "Amapiano",
+      "mood": "Joyful",
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "draft",
+      "created_at": "2026-05-19T04:52:52.838Z",
+      "asset": {
+        "title": "Township Sunrise",
+        "asset_type": "music",
+        "created_at": "2026-05-19T04:52:52.838Z"
+      },
+      "contributors": [
+        {
+          "work_contributor_id": "6de718a8-38e6-4b22-b7d5-61d575cf607e",
+          "contributor_id": "e1c2751c-0075-4bda-904e-1ff8be6f33b1",
+          "contributor_name": "Sipho Ndlovu",
+          "stage_name": "Sipho Ndlovu",
+          "role": "composer",
+          "split_type": "composition",
+          "percentage": 70,
+          "confirmed": false
+        },
+        {
+          "work_contributor_id": "0176e605-a979-456b-b7f1-d33f4364f0cb",
+          "contributor_id": "f99b2b40-768c-4e0b-80de-dc3537e8a6cf",
+          "contributor_name": "Zola Maseko",
+          "stage_name": "Zola Maseko",
+          "role": "writer",
+          "split_type": "composition",
+          "percentage": 30,
+          "confirmed": false
+        }
+      ]
+    },
+    {
+      "id": "d97d0090-81df-4850-a55d-a07b594bd8e7",
+      "asset_id": "3cccedf2-2a2b-4f4f-a719-94e777654533",
+      "work_title": "Sunday Morning",
+      "genre": "Soul",
+      "mood": "Calm",
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "draft",
+      "created_at": "2026-05-19T04:52:52.278Z",
+      "asset": {
+        "title": "Sunday Morning",
+        "asset_type": "music",
+        "created_at": "2026-05-19T04:52:52.278Z"
+      },
+      "contributors": [
+        {
+          "work_contributor_id": "a63b8733-d3ef-4add-9712-f893d70992cf",
+          "contributor_id": "548ee99d-d6d9-4a20-b057-8fa613af74f9",
+          "contributor_name": "Sarah Jacobs",
+          "stage_name": "Sarah Jacobs",
+          "role": "composer",
+          "split_type": "composition",
+          "percentage": 100,
+          "confirmed": false
+        }
+      ]
+    },
+    {
+      "id": "3b40e74d-75e2-4268-8960-94148319bf67",
+      "asset_id": "2687d975-d174-4cb3-bb1e-61b819d4eeba",
+      "work_title": "Street Parade",
+      "genre": "Hip Hop",
+      "mood": "Energetic",
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "draft",
+      "created_at": "2026-05-19T04:52:51.984Z",
+      "asset": {
+        "title": "Street Parade",
+        "asset_type": "music",
+        "created_at": "2026-05-19T04:52:51.984Z"
+      },
+      "contributors": [
+        {
+          "work_contributor_id": "12845db5-f39e-4830-8fb4-fe7b8eb8f1a4",
+          "contributor_id": "d76eb6b2-6158-4578-a5ba-6c2992fb1c8c",
+          "contributor_name": "Neo Adams",
+          "stage_name": "Neo Adams",
+          "role": "writer",
+          "split_type": "composition",
+          "percentage": 50,
+          "confirmed": false
+        },
+        {
+          "work_contributor_id": "9c134ffd-cddc-4dab-bcd6-f013a3904977",
+          "contributor_id": "fe6eba91-6ad3-468e-ba01-bd6ceaf148f0",
+          "contributor_name": "Kabelo Sithole",
+          "stage_name": "Kabelo Sithole",
+          "role": "composer",
+          "split_type": "composition",
+          "percentage": 50,
+          "confirmed": false
+        }
+      ]
+    },
+    {
+      "id": "765dcc11-9a31-4882-9550-131b654e5f64",
+      "asset_id": "f5015c42-df1c-43c2-a5b0-94b88dd4f87e",
+      "work_title": "Kimberley Lights",
+      "genre": "Gospel",
+      "mood": "Hopeful",
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "draft",
+      "created_at": "2026-05-19T04:52:51.455Z",
+      "asset": {
+        "title": "Kimberley Lights",
+        "asset_type": "music",
+        "created_at": "2026-05-19T04:52:51.455Z"
+      },
+      "contributors": [
+        {
+          "work_contributor_id": "3887ab84-1942-45ce-aa8c-6526f6f4d6c9",
+          "contributor_id": "b0f72e80-b14c-4375-92f5-033d10842b13",
+          "contributor_name": "Lindiwe Dlamini",
+          "stage_name": "Lindiwe Dlamini",
+          "role": "writer",
+          "split_type": "composition",
+          "percentage": 40,
+          "confirmed": false
+        },
+        {
+          "work_contributor_id": "bc58b1ce-88c1-43e9-8236-75debba09c8e",
+          "contributor_id": "29415488-b3be-42a6-b7a5-fe397ebe5dba",
+          "contributor_name": "Marcus Stone",
+          "stage_name": "Marcus Stone",
+          "role": "composer",
+          "split_type": "composition",
+          "percentage": 60,
+          "confirmed": false
+        }
+      ]
+    },
+    {
+      "id": "0c2b13c2-a702-4b6a-827d-73f5a244102f",
+      "asset_id": "0b3c1d41-d91d-4386-8e34-7ffe478203b3",
+      "work_title": "Midnight Road",
+      "genre": "Afro Pop",
+      "mood": "Uplifting",
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "draft",
+      "created_at": "2026-05-19T04:52:50.592Z",
+      "asset": {
+        "title": "Midnight Road",
+        "asset_type": "music",
+        "created_at": "2026-05-19T04:52:50.592Z"
+      },
+      "contributors": [
+        {
+          "work_contributor_id": "e6958d4a-50ba-4081-ac9a-0af7118cf466",
+          "contributor_id": "eb5bd121-8f54-4d51-9992-90def452d8b9",
+          "contributor_name": "Thabo Mokoena",
+          "stage_name": "Thabo Mokoena",
+          "role": "composer",
+          "split_type": "composition",
+          "percentage": 100,
+          "confirmed": false
+        }
+      ]
+    },
+    {
+      "id": "5ca5ef2c-cf42-41ab-8cc9-e96586250d8c",
+      "asset_id": "7794124e-0f70-4d08-8e8e-da94d84ac772",
+      "work_title": "CODEX WORKFLOW TEST DELETE LATER",
+      "genre": "Test",
+      "mood": "Inspection",
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "draft",
+      "created_at": "2026-05-16T21:27:36.891Z",
+      "asset": {
+        "title": "CODEX WORKFLOW TEST DELETE LATER",
+        "asset_type": "music",
+        "created_at": "2026-05-16T21:27:36.891Z"
+      },
+      "contributors": [
+        {
+          "work_contributor_id": "dc18101b-ecaa-4b68-96a4-fd9744ce2ddb",
+          "contributor_id": "d79c88ca-1242-4558-a00d-9656b33f69a3",
+          "contributor_name": "Codex Test Contributor",
+          "stage_name": "Codex Test Contributor",
+          "role": "composer",
+          "split_type": "composition",
+          "percentage": 100,
+          "confirmed": false
+        }
+      ]
+    },
+    {
+      "id": "1d6de1ff-540d-4ad4-8212-2a3371d4bb66",
+      "asset_id": "98f29621-eed9-46bb-9e02-382440c504c0",
+      "work_title": "RPC Backend Flow Test",
+      "genre": "Hip Hop",
+      "mood": "Dark",
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "draft",
+      "created_at": "2026-05-16T05:16:37.394Z",
+      "asset": {
+        "title": "RPC Backend Flow Test",
+        "asset_type": "music",
+        "created_at": "2026-05-16T05:16:37.394Z"
+      },
+      "contributors": [
+        {
+          "work_contributor_id": "2ff7d848-dd70-474f-a45d-b0cb29ca95c6",
+          "contributor_id": "c25ff4dd-2824-4c4b-ad25-ce205cb8845d",
+          "contributor_name": "Transactional Composer",
+          "stage_name": "Transactional Composer",
+          "role": "composer",
+          "split_type": "composition",
+          "percentage": 100,
+          "confirmed": false
+        }
+      ]
+    },
+    {
+      "id": "36ed08bd-bc8a-41a4-beff-173444724183",
+      "asset_id": "6965b1aa-f0fb-4bab-a47a-4e376383aa35",
+      "work_title": "RPC Transaction Test",
+      "genre": "Hip Hop",
+      "mood": "Dark",
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "draft",
+      "created_at": "2026-05-16T05:15:25.401Z",
+      "asset": {
+        "title": "RPC Transaction Test",
+        "asset_type": "music",
+        "created_at": "2026-05-16T05:15:25.401Z"
+      },
+      "contributors": [
+        {
+          "work_contributor_id": "52878f12-6ba3-4277-9400-4eeca23fe1ca",
+          "contributor_id": "88e4430e-5a61-4865-ab7d-5a0fdcfbc37b",
+          "contributor_name": "RPC Composer Test",
+          "stage_name": "RPC Composer Test",
+          "role": "composer",
+          "split_type": "composition",
+          "percentage": 100,
+          "confirmed": false
+        }
+      ]
+    },
+    {
+      "id": "18e1601c-27fe-4be6-a9ae-ec51389e3971",
+      "asset_id": "c736c101-4e23-4b1c-872f-bcd048ef95c6",
+      "work_title": "UI Thin API Test",
+      "genre": "Hip Hop",
+      "mood": "Dark",
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "draft",
+      "created_at": "2026-05-16T04:57:00.827Z",
+      "asset": {
+        "title": "UI Thin API Test",
+        "asset_type": "music",
+        "created_at": "2026-05-16T04:57:00.478Z"
+      },
+      "contributors": []
+    },
+    {
+      "id": "4db299b9-ce83-4a98-8c0b-193ce38d5dba",
+      "asset_id": "ee5d37df-c464-40af-aec0-bd3fe2b3d364",
+      "work_title": "Full Backend Contributor Test",
+      "genre": "Hip Hop",
+      "mood": "Dark",
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "draft",
+      "created_at": "2026-05-16T04:48:22.720Z",
+      "asset": {
+        "title": "Full Backend Contributor Test",
+        "asset_type": "music",
+        "created_at": "2026-05-16T04:48:22.382Z"
+      },
+      "contributors": []
+    },
+    {
+      "id": "f3c21426-cad6-4571-afed-e919fbec67dd",
+      "asset_id": "cf711fd2-d1b3-44b1-b3e2-cb89a72f8978",
+      "work_title": "Service Boundary Same Project Test",
+      "genre": "Hip Hop",
+      "mood": "Dark",
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "draft",
+      "created_at": "2026-05-16T04:43:03.580Z",
+      "asset": {
+        "title": "Service Boundary Same Project Test",
+        "asset_type": "music",
+        "created_at": "2026-05-16T04:43:03.055Z"
+      },
+      "contributors": []
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000003",
+      "asset_id": "00000000-0000-0000-0000-000000000002",
+      "work_title": "Test Work",
+      "genre": null,
+      "mood": null,
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "not_started",
+      "created_at": "2026-05-04T13:12:54.994Z",
+      "asset": {
+        "title": "Test Song",
+        "asset_type": "music",
+        "created_at": "2026-05-04T13:11:56.193Z"
+      },
+      "contributors": [
+        {
+          "work_contributor_id": "00000000-0000-0000-0000-000000000005",
+          "contributor_id": "00000000-0000-0000-0000-000000000004",
+          "contributor_name": "Test Artist",
+          "stage_name": null,
+          "role": "composer",
+          "split_type": null,
+          "percentage": 100,
+          "confirmed": false
+        }
+      ]
+    },
+    {
+      "id": "53da2a6b-beab-480b-884f-44652c992cd4",
+      "asset_id": "cf61971c-7664-4197-96ad-aad9f6f5a205",
+      "work_title": "Test Song Work",
+      "genre": null,
+      "mood": null,
+      "themes": null,
+      "copyright_status": "draft",
+      "registration_status": "not_started",
+      "created_at": "2026-05-04T09:13:53.368Z",
+      "asset": {
+        "title": "Test Song Asset",
+        "asset_type": "music",
+        "created_at": "2026-05-04T09:13:01.727Z"
+      },
+      "contributors": []
+    }
+  ]
+}

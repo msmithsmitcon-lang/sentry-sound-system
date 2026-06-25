@@ -1,7 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { supabase } from "@/lib/supabase"
+import { MUSIC_GENRES } from "@/lib/constants/music-genres"
+
 
 const roles = [
   "composer",
@@ -251,7 +252,12 @@ export default function CreateSongPage() {
 
           <div className="space-y-4">
             <input className="input w-full text-sm" placeholder="Song title" value={form.work_title} onChange={(e) => updateForm("work_title", e.target.value)} />
-            <input className="input w-full text-sm" placeholder="Genre" value={form.genre} onChange={(e) => updateForm("genre", e.target.value)} />
+            <select className="input w-full text-sm" value={form.genre} onChange={(e) => updateForm("genre", e.target.value)}>
+              <option value="">Select genre</option>
+              {MUSIC_GENRES.map((genre) => (
+                <option key={genre} value={genre}>{genre}</option>
+              ))}
+            </select>
             <input className="input w-full text-sm" placeholder="Mood" value={form.mood} onChange={(e) => updateForm("mood", e.target.value)} />
           </div>
         </section>
@@ -358,6 +364,7 @@ export default function CreateSongPage() {
     </div>
   )
 }
+
 
 
 

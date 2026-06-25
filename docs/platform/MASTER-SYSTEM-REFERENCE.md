@@ -46,6 +46,37 @@ Development must remain:
 - manually continuable
 - no uncontrolled AI drift
 
+## Layered Execution Discipline
+
+Sentry Sound implementation must follow the governed layer sequence:
+
+1. Define layer
+2. Build layer
+3. Test layer
+4. Stabilize layer
+5. Document layer
+6. Move to next layer
+
+Future discoveries must be documented and aligned to future phases. They must not be prematurely implemented.
+
+Current completed layers include workspace ownership architecture, finance commitments, Money State V0, Commitment Weighting V1, the calendar/action linkage foundational layer, Calendar / Action Linkage Stabilization, Works/Songs UX Continuation, and Contributor/Split UX Continuation.
+
+Current not-started layers include workflow dependency graph, operational dependency reasoning, operational conversion layer, viability reasoning, AI/autopilot reasoning, forecasting, and scoring systems.
+
+Artist Intelligence Layer status:
+
+AIL is future architecture only. Strategic Identity Intelligence inputs such as SIMs, SOBs, artist archetypes, rollout philosophies, audience psychology, emotional positioning, sonic positioning, channel strategy, and signal inputs are product-strategy inputs, not backend authority. M-WIS is one test persona/archetype only and must not become platform doctrine. No AIL schema, API, AI/autopilot behavior, scoring, dependency reasoning, or automated rollout planning is active.
+
+Reference:
+
+docs/platform/LAYERED-EXECUTION-DISCIPLINE.md
+
+docs/platform/ARTIST-INTELLIGENCE-LAYER-FUTURE-NOTE.md
+
+Current next official roadmap layer:
+
+Asset/File/Evidence UX Continuation.
+
 ## Current Stabilization Priority
 
 Do not build new features first.

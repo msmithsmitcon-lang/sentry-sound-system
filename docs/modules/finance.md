@@ -1,6 +1,113 @@
 
 # Finance Module
 
+## Strategic Finance Principle
+
+Finance / Accounting must not only record income and expenses like a normal accounting system.
+
+Sentry Sound Finance must evolve into operational value tracking:
+
+Need -> Analysis -> Solution -> Budget -> Allocation -> Action / Deliverable -> Payment / Expense -> Result -> ROI / Value
+
+Finance records must eventually connect expenses and income to the operational reason, asset, workflow, deliverable, and value outcome.
+
+Phase 1 direction:
+
+Finance V2 Phase 1 starts with actuals and commitments before forecasts. The first expansion should help users understand money in, money out, outstanding commitments, contributor liabilities, compliance reminders, reserve awareness, and what they should not forget.
+
+Key principle:
+
+Money has responsibility. When income is received, the full amount is not necessarily freely spendable. Taxes/compliance may be due, contributors may be owed, planned expenses may exist, and release/project commitments may need funding.
+
+Compliance reminders are educational and operational. They are not legal, accounting, or tax advice.
+
+Independent Module Integrity:
+
+Finance must remain valuable as a standalone operational finance module. It should help a workspace record income, expenses, payables, receivables, commitments, responsibility pressure, and basic financial awareness even when royalty, release, artist intelligence, or submission modules are not active. Royalties may later feed finance through approved posting, but finance must not depend on royalties to deliver its core accounting and obligation-awareness value.
+
+Example:
+A studio fee is not just an expense. It may originate from a recording need and connect to an artist, song/work, recording session, contributors/producers/lyricists, deliverable, budget allocation, and future release/commercial outcome.
+
+Future Finance V2 concepts:
+
+- needs / business case
+- budget
+- allocation
+- action / deliverable
+- linked work/song
+- linked artist
+- linked recording/session
+- linked project/release
+- payment / expense
+- ROI / value result
+
+Phase ladder:
+
+- Phase 1: actuals, commitments, contributor liabilities, compliance reminders, reserve awareness.
+- Phase 2: budget planning and allocation logic.
+- Phase 3: forecasting/projections based on history, royalty cycles, releases, and commitments.
+- Phase 4: ROI/value intelligence.
+- Phase 5: AI financial coach and guided recommendations.
+
+Finance V2 classification strategy:
+
+Commitments must classify obligations across four axes:
+
+- universal finance classification: compliance, tax, contributor/contractor, operational expense, project/production, marketing, software/subscription, professional services, revenue obligation, other.
+- industry classification: music and general now; other verticals such as construction, education, legal, agriculture, and healthcare later.
+- industry-body / external-body classification: SAMRO, CAPASSO, CIPC, SARS, distributor, publisher, PRO/CMO, other, none.
+- commitment type: annual fee, provisional tax, contributor payable, producer fee, studio booking, distribution fee, release campaign, royalty payable, software subscription, other.
+
+This preserves a reusable finance engine plus industry-specific intelligence.
+
+Structured commitment framework:
+
+Finance commitments are business obligations/responsibilities, not just reminders. Capture should be controlled as far as practical:
+
+- commitment domain drives the available commitment type options.
+- commitment nature distinguishes mandatory, operational, strategic, and optional pressure.
+- commitment risk level distinguishes low, medium, high, and critical items.
+- notes remain optional freeform context, not the primary classification system.
+
+Initial examples:
+
+- CIPC annual return: compliance / cipc_annual_return / mandatory / high.
+- SARS provisional tax: tax / provisional_tax / mandatory / critical.
+- Studio booking: production / studio_booking / operational / medium.
+- Producer payment: contributor obligations / producer_payment / operational / high.
+
+This framework should later support business health, reserve awareness, bankability, and AI financial guidance without letting AI silently create finance truth.
+
+Canonical Finance V2 field model:
+
+The future field architecture is defined in `docs/platform/FINANCE-V2-FIELD-MODEL.md`.
+
+Model direction:
+
+- The main finance transaction remains the accounting/money anchor.
+- Transaction basics belong on the main record: type, amount, currency, date, status, category, source, workspace, creator, and notes.
+- Operational reason, business cases, budgets, allocations, deliverables, approvals, evidence, and ROI/value outcomes should become linked child entities or workflow-derived records.
+- Operational links must use canonical entity references such as work, contributor, artist, project, release, recording/session, submission, CRM contact, or workflow action.
+- System-generated fields such as remaining budget, linked revenue, lock status, audit references, completion status, and approval status must not be freely editable.
+- AI may later suggest categories, links, reserves, commitments, budgets, and ROI insights, but those suggestions must remain reviewable system output until accepted by a user or governed workflow.
+
+Current boundary:
+
+- Finance V1 records controlled income and expense categories.
+- Finance V2 Phase 1 now begins with workspace-owned commitments for obligations/responsibilities before or alongside payment.
+- Finance commitments now support lightweight actions: mark paid, cancel, and review later.
+- Due, overdue, and review-later commitments can surface into Workspace Actions/Calendar as operational finance reminders.
+- Commitment Weighting V1 is documented in `docs/platform/COMMITMENT-WEIGHTING-V1.md`. It is a backend-only computed semantic layer that explains why each commitment matters operationally, without ROI, forecasting, AI advice, cash logic, or punitive scoring.
+- Commitment Weighting V1 is stabilized and complete for now. The next work must follow `docs/platform/LAYERED-EXECUTION-DISCIPLINE.md`; future operational dependency reasoning, operational conversion, viability reasoning, AI/autopilot reasoning, forecasting, and scoring systems are not started.
+- Payables and receivables remain simple V1 accounting records.
+- Royalties remain separate and will later feed finance only through approved posting.
+- Royalty income and royalty-derived contributor obligations may later feed commitments, but royalty calculation remains separate from finance.
+- Operational value tracking is strategic architecture direction only; do not implement it until explicitly scoped.
+
+Team alignment:
+
+Product owner, ChatGPT, and Codex should treat this as source-of-truth logic when planning future finance, royalty, workflow/calendar, and AI features.
+
 ## APIs
 
 ### Accounts

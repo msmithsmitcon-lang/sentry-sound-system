@@ -1,4 +1,4 @@
-﻿-- Song Metadata Expansion V1
+-- Song Metadata Expansion V1
 
 alter table musical_works
 add column if not exists internal_code text,

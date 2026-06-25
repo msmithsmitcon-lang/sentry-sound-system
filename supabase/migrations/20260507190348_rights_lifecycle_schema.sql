@@ -57,7 +57,7 @@ create table if not exists public.rights_ownership_claims (
     references public.crm_contacts(id)
     on delete set null,
 
-  contributor_id uuid references public.contributors(id) on delete set null,
+  contributor_id uuid,
 
   ownership_role text not null,
   ownership_percentage numeric(5,2) not null,

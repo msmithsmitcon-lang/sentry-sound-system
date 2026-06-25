@@ -17,7 +17,6 @@ import {
   GraduationCap,
   Headphones,
   LayoutDashboard,
-  Library,
   LineChart,
   LockKeyhole,
   Megaphone,
@@ -33,46 +32,18 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-const navGroups = [
-  {
-    label: "Core Operations",
-    items: [
-      ["Dashboard", "Active", LayoutDashboard],
-      ["Setup", "Active", ClipboardCheck],
-      ["Song Capture", "TEST", Music2],
-      ["Contributors & Splits", "TEST", Users],
-      ["Files / Evidence", "TEST", FileCheck2],
-      ["Readiness", "TEST", CheckCircle2],
-      ["Submissions", "TEST", ShieldCheck],
-    ],
-  },
-  {
-    label: "Growth & Business",
-    items: [
-      ["Projects / Releases", "Planned", FolderOpen],
-      ["Calendar / Bookings", "Future", CalendarDays],
-      ["Artist Profile", "Future", Mic2],
-      ["Listening Portal", "Future", Headphones],
-      ["Marketing", "Coming Soon", Megaphone],
-    ],
-  },
-  {
-    label: "Money & Admin",
-    items: [
-      ["Royalties", "Future", WalletCards],
-      ["Finance / Accounting", "Active", LineChart],
-      ["CRM / Contacts", "Planned", Contact],
-    ],
-  },
-  {
-    label: "Enablement & Governance",
-    items: [
-      ["Academy", "Planned", GraduationCap],
-      ["Reports", "Future", Library],
-      ["Team", "Planned", Users],
-      ["Settings", "Active", Settings],
-    ],
-  },
+// Canonical Navigation Structure — represents what the artist OWNS, not
+// platform modules or backend architecture. Per
+// SENTRY_SOUND_UX_DOCTRINE_AND_REDESIGN_BRIEF_V1.md "THE NAVIGATION DOCTRINE".
+// Items with no href yet are marked "Coming soon" — never TEST/PLANNED/FUTURE/STATIC.
+const navItems = [
+  ["Home", "/dashboard", LayoutDashboard],
+  ["My Projects", "/dashboard/works/list", FolderOpen],
+  ["My Team", null, Users],
+  ["My Protection", null, ShieldCheck],
+  ["My Releases", null, Radio],
+  ["My Royalties", null, WalletCards],
+  ["My Business", "/dashboard/finance", LineChart],
 ] as const;
 
 const setupItems = [
@@ -231,76 +202,56 @@ export function DashboardShell() {
           <div className="sticky top-0 flex h-screen flex-col">
             <div className="border-b border-[#E5E7EB] px-6 py-5">
               <Image src="/logo.png" alt="Sentry Sound" width={170} height={56} className="h-12 w-auto" priority />
-              <p className="mt-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#64748B]">
-                Workspace
-              </p>
             </div>
 
-            <nav className="flex-1 space-y-6 overflow-y-auto px-4 py-5">
-              {navGroups.map((group) => (
-                <div key={group.label}>
-                  <p className="mb-2 px-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#94A3B8]">
-                    {group.label}
-                  </p>
-                  <div className="space-y-1">
-                    {group.items.map(([label, status, Icon]) => {
-                      const active = label === "Dashboard";
-                      const itemClassName = `flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold ${
-                        active
-                          ? "bg-[#EEF2FF] text-[#2F48F7]"
-                          : "text-[#475569] hover:bg-[#F8FAFC]"
-                      }`;
+            <nav className="flex-1 space-y-1 overflow-y-auto px-4 py-5">
+              {navItems.map(([label, href, Icon]) => {
+                const active = label === "Home";
+                const itemClassName = `flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold ${
+                  active
+                    ? "bg-[#EEF2FF] text-[#2F48F7]"
+                    : "text-[#475569] hover:bg-[#F8FAFC]"
+                }`;
 
-                      const itemHref =
-                        label === "Setup"
-                          ? "/dashboard/setup"
-                            : label === "Song Capture"
-                            ? "/dashboard/works/song-capture-v2"
-                            : label === "Artist Profile"
-                              ? "/dashboard/artists/new"
-                            : label === "Calendar / Bookings"
-                              ? "/dashboard/calendar"
-                            : label === "Finance / Accounting"
-                              ? "/dashboard/finance"
-                            : null;
+                const content = (
+                  <>
+                    <div className="flex items-center gap-3">
+                      <Icon className="h-4 w-4" />
+                      <span>{label}</span>
+                    </div>
+                    {!href ? (
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#94A3B8]">
+                        Coming soon
+                      </span>
+                    ) : null}
+                  </>
+                );
 
-                      if (itemHref) {
-                        return (
-                          <Link href={itemHref} key={label} className={itemClassName}>
-                            <div className="flex items-center gap-3">
-                              <Icon className="h-4 w-4" />
-                              <span>{label}</span>
-                            </div>
-                            {status !== "Active" || !active ? <StatusBadge status={status} /> : null}
-                          </Link>
-                        );
-                      }
+                if (href) {
+                  return (
+                    <Link href={href} key={label} className={itemClassName}>
+                      {content}
+                    </Link>
+                  );
+                }
 
-                      return (
-                        <div
-                          key={label}
-                          className={itemClassName}
-                        >
-                          <div className="flex items-center gap-3">
-                            <Icon className="h-4 w-4" />
-                            <span>{label}</span>
-                          </div>
-                          {status !== "Active" || !active ? <StatusBadge status={status} /> : null}
-                        </div>
-                      );
-                    })}
+                return (
+                  <div key={label} className={`${itemClassName} cursor-default opacity-70`}>
+                    {content}
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </nav>
 
             <div className="border-t border-[#E5E7EB] p-4">
               <Link
-                href="/test-control-panel"
-                className="flex items-center justify-between rounded-xl border border-[#DBEAFE] bg-[#EFF6FF] px-4 py-3 text-sm font-semibold text-[#2F48F7]"
+                href="/dashboard/setup"
+                className="flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-[#475569] hover:bg-[#F8FAFC]"
               >
-                TEST Control Panel
-                <ArrowRight className="h-4 w-4" />
+                <div className="flex items-center gap-3">
+                  <Settings className="h-4 w-4" />
+                  <span>Settings</span>
+                </div>
               </Link>
             </div>
           </div>

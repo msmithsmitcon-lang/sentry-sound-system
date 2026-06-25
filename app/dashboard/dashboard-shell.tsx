@@ -1,5 +1,6 @@
 import {
   FolderOpen,
+  GraduationCap,
   LayoutDashboard,
   LineChart,
   Plus,
@@ -139,7 +140,16 @@ export function DashboardShell({
               })}
             </nav>
 
-            <div className="border-t border-[#E5E7EB] p-4">
+            <div className="space-y-1 border-t border-[#E5E7EB] p-4">
+              <Link
+                href="/dashboard/academy"
+                className="flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-[#475569] hover:bg-[#F8FAFC]"
+              >
+                <div className="flex items-center gap-3">
+                  <GraduationCap className="h-4 w-4" />
+                  <span>Academy</span>
+                </div>
+              </Link>
               <Link
                 href="/dashboard/setup"
                 className="flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-[#475569] hover:bg-[#F8FAFC]"

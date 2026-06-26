@@ -107,7 +107,10 @@ export default function AcademyPage() {
           Back to dashboard
         </Link>
 
-        <h1 className="mt-6 text-3xl font-semibold tracking-tight text-[#0F172A] sm:text-4xl">
+        <p className="mt-6 text-xs font-semibold uppercase tracking-[0.16em] text-[#94A3B8]">
+          Platform Guides
+        </p>
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#0F172A] sm:text-4xl">
           Learn how to manage your music business.
         </h1>
         <p className="mt-3 text-base leading-7 text-[#64748B]">

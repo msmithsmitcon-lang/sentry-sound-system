@@ -1,6 +1,6 @@
 import {
   FolderOpen,
-  GraduationCap,
+  HelpCircle,
   LayoutDashboard,
   LineChart,
   Plus,
@@ -146,8 +146,8 @@ export function DashboardShell({
                 className="flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-[#475569] hover:bg-[#F8FAFC]"
               >
                 <div className="flex items-center gap-3">
-                  <GraduationCap className="h-4 w-4" />
-                  <span>Academy</span>
+                  <HelpCircle className="h-4 w-4" />
+                  <span>Help &amp; Guides</span>
                 </div>
               </Link>
               <Link

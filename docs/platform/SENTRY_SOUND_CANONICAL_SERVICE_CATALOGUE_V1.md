@@ -16,6 +16,27 @@
 
 ---
 
+## THE PHILOSOPHY
+
+Sentry Sound removes uncertainty from the artist's
+music business.
+
+Every Business Service exists to answer one question:
+"What uncertainty does this remove from the artist's life?"
+
+Music Protection removes uncertainty about ownership.
+Collaboration removes uncertainty about agreements.
+Compliance & Registration removes uncertainty about submissions.
+Royalty Intelligence removes uncertainty about income.
+Release Management removes uncertainty about launch readiness.
+Business Operations removes uncertainty about administration.
+
+This is the promise Sentry Sound makes.
+Capabilities deliver the promise.
+The promise does not change as capabilities grow.
+
+---
+
 ## THE FOUR LAYERS
 
 ```
@@ -57,6 +78,8 @@ What it does: Royalty statement ingestion, income tracking, payout
 readiness, reconciliation, per-artist roster breakdown.
 Why it matters: Artists and labels know exactly what they are owed,
 from which source, and when.
+Promise: "You will never be left wondering what is
+happening with your royalties."
 
 ### 5. Release Management Service
 What it does: Distribution preparation, release planning, catalogue

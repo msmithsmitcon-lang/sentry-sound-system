@@ -427,7 +427,7 @@ export default function SongCaptureV2PrototypePage() {
     <main className="min-h-screen bg-[#F8FAFC] text-[#111827]">
       <div className="grid min-h-screen lg:grid-cols-[280px_1fr]">
         <aside className="hidden border-r border-[#E5E7EB] bg-white px-6 py-7 lg:flex lg:flex-col">
-          <Link href="/dashboard/works" className="inline-flex items-center">
+          <Link href="/dashboard" className="inline-flex items-center">
             <Image src="/logo.png" alt="Sentry Sound" width={178} height={58} className="h-12 w-auto" priority />
           </Link>
 
@@ -485,7 +485,7 @@ export default function SongCaptureV2PrototypePage() {
         <section className="min-w-0 px-4 py-5 sm:px-6 xl:px-8">
           <div className="mx-auto max-w-[1640px]">
             <div className="mb-5 flex items-center gap-3 text-sm text-[#64748B]">
-              <Link href="/dashboard/works" className="inline-flex items-center font-semibold text-[#334155]">
+              <Link href="/dashboard" className="inline-flex items-center font-semibold text-[#334155]">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Songs
               </Link>

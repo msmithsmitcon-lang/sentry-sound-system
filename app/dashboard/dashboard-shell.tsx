@@ -207,7 +207,7 @@ export function DashboardShell({
                     href="/dashboard/works/new"
                     className="block rounded-xl border border-[#E5E7EB] bg-[#F8FAFC] px-4 py-3 text-sm font-semibold text-[#334155] transition hover:border-[#BFDBFE] hover:bg-[#EFF6FF]"
                   >
-                    Invite a Collaborator
+                    Import Existing Work
                   </Link>
                 </div>
               </section>

@@ -10434,3 +10434,18 @@ Boundary:
 - Did not touch `src/lib/royalties/` (the dead, unreachable V2/V3 royalty-engine code under `src/app/`), any existing finance tables, or any payout/ledger logic, per explicit instruction.
 - `tsc --noEmit` confirmed zero new errors introduced by this work.
 - Migration applied to the live database and verified directly (tables, the new `isrc` column, and live parser matching all confirmed against real data).
+
+## 2026-06-23 - Domain Event Naming Inconsistency Flagged For Future Cleanup
+
+Files:
+- `docs/build-log/BUILD-LOG.md`
+
+Changes:
+- Documenting a real naming inconsistency discovered while building the Release Readiness service (`src/lib/release-readiness/release-readiness.ts`), so it isn't silently re-discovered or re-broken in future domain-event work:
+  - `plexicon_domain_events.event_type` is stored **without** a version suffix (e.g. `'plexicon.domain.music.submission_pack.generated'`), even though the canonical contract naming elsewhere (and this brief's own Part 7 decision contract) implies versioned event names like `'...generated.v1'`. The actual version lives in a separate `event_version` column (`emitMusicDomainEvent` in `src/lib/plexicon-events/emit-domain-event.ts` sets `event_type` and `event_version` independently).
+  - The CMO-pack-generation event's payload uses `song_id` as the work reference key, not `work_id` — inconsistent with the column name (`musical_works.id`) and with the more descriptive naming used elsewhere in this codebase.
+- The Release Readiness service's `CMO_PACK_GENERATED` check uses the corrected, real values (`event_type = 'plexicon.domain.music.submission_pack.generated'`, `payload->>'song_id'`) — verified directly against `cmo-pack-generator.ts`'s actual `emitMusicDomainEvent` call rather than trusting the originally-specified `'...generated.v1'` / `work_id` values, which would never have matched a real row.
+- This inconsistency should be standardised in a future cleanup pass before any V2 domain-event work — either by appending the version suffix consistently into `event_type` itself (redundant with `event_version`, but matches contract naming conventions) or by documenting clearly that `event_version` is always the canonical source of version and `event_type` is deliberately unversioned. Payload key naming (`song_id` vs `work_id`) should also be standardised across all `emitMusicDomainEvent` call sites before more events are added.
+
+Boundary:
+- Documentation only. No schema, code, or event-emission behavior changed by this entry.

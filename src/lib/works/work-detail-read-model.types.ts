@@ -17,6 +17,9 @@ export type WorkDetail = {
   themes: string | null
   copyright_status: string | null
   registration_status: string | null
+  isrc: string | null
+  bpm: number | null
+  musical_key: string | null
   created_at: string | null
   contributor_count: number
   split_total: number

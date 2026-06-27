@@ -39,6 +39,9 @@ type WorkDetailsRow = {
   themes?: string | null;
   copyright_status?: string | null;
   registration_status?: string | null;
+  isrc?: string | null;
+  bpm?: number | null;
+  musical_key?: string | null;
   created_at?: string | null;
   contributor_count?: number | null;
   split_total?: number | null;
@@ -379,6 +382,10 @@ export default function WorkDetailsPage() {
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [savedMessage, setSavedMessage] = useState<string | null>(null);
+  const [basicsDraft, setBasicsDraft] = useState({ isrc: "", bpm: "", musical_key: "" });
+  const [basicsSavingField, setBasicsSavingField] = useState<string | null>(null);
+  const [basicsSavedField, setBasicsSavedField] = useState<string | null>(null);
+  const [basicsError, setBasicsError] = useState<string | null>(null);
   const [supportingMaterials, setSupportingMaterials] = useState<WorkSupportingMaterial[]>([]);
   const [materialsLoading, setMaterialsLoading] = useState(false);
   const [materialsError, setMaterialsError] = useState<string | null>(null);
@@ -463,7 +470,14 @@ export default function WorkDetailsPage() {
         if (!cancelled) {
           const currentWork = data.work ?? null;
           setWork(currentWork);
-          if (currentWork) setDraft(buildDraftFromWork(currentWork));
+          if (currentWork) {
+            setDraft(buildDraftFromWork(currentWork));
+            setBasicsDraft({
+              isrc: currentWork.isrc ?? "",
+              bpm: currentWork.bpm !== null && currentWork.bpm !== undefined ? String(currentWork.bpm) : "",
+              musical_key: currentWork.musical_key ?? "",
+            });
+          }
         }
 
         if (data.work && !cancelled) {
@@ -581,6 +595,45 @@ export default function WorkDetailsPage() {
       setSaveError(saveError instanceof Error ? saveError.message : "Failed to save work intelligence.");
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function saveBasicsField(field: "isrc" | "bpm" | "musical_key") {
+    if (!work) return;
+
+    setBasicsSavingField(field);
+    setBasicsSavedField(null);
+    setBasicsError(null);
+
+    try {
+      const response = await fetch(`/api/works/${work.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          isrc: basicsDraft.isrc,
+          bpm: basicsDraft.bpm.trim() ? Number(basicsDraft.bpm) : null,
+          musical_key: basicsDraft.musical_key,
+        }),
+      });
+      const data = await response.json();
+
+      if (!response.ok || data.success === false) {
+        throw new Error(data.error ?? "Failed to save.");
+      }
+
+      setWork((current) =>
+        current ? { ...current, isrc: data.isrc, bpm: data.bpm, musical_key: data.musical_key } : current
+      );
+      setBasicsDraft({
+        isrc: data.isrc ?? "",
+        bpm: data.bpm !== null && data.bpm !== undefined ? String(data.bpm) : "",
+        musical_key: data.musical_key ?? "",
+      });
+      setBasicsSavedField(field);
+    } catch (saveError) {
+      setBasicsError(saveError instanceof Error ? saveError.message : "Failed to save.");
+    } finally {
+      setBasicsSavingField(null);
     }
   }
 
@@ -711,6 +764,46 @@ export default function WorkDetailsPage() {
                   <SummaryTile label="Copyright" value={work.copyright_status || "Draft"} />
                 </div>
               </section>
+
+              <section className="rounded-2xl border border-[#E5E7EB] bg-white p-6 shadow-sm shadow-slate-200/60">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#2F48F7]">Track details</p>
+                <p className="mt-2 text-sm leading-6 text-[#64748B]">
+                  Optional, but used to check this song&apos;s release readiness.
+                </p>
+
+                <div className="mt-5 grid gap-4 md:grid-cols-3">
+                  <BasicsField
+                    label="Track ID (ISRC)"
+                    value={basicsDraft.isrc}
+                    placeholder="e.g. ZAA123456789"
+                    saving={basicsSavingField === "isrc"}
+                    saved={basicsSavedField === "isrc"}
+                    onChange={(value) => setBasicsDraft((current) => ({ ...current, isrc: value }))}
+                    onBlur={() => saveBasicsField("isrc")}
+                  />
+                  <BasicsField
+                    label="Tempo (BPM)"
+                    value={basicsDraft.bpm}
+                    placeholder="e.g. 120"
+                    type="number"
+                    saving={basicsSavingField === "bpm"}
+                    saved={basicsSavedField === "bpm"}
+                    onChange={(value) => setBasicsDraft((current) => ({ ...current, bpm: value }))}
+                    onBlur={() => saveBasicsField("bpm")}
+                  />
+                  <BasicsField
+                    label="Musical Key"
+                    value={basicsDraft.musical_key}
+                    placeholder="e.g. C major, A minor"
+                    saving={basicsSavingField === "musical_key"}
+                    saved={basicsSavedField === "musical_key"}
+                    onChange={(value) => setBasicsDraft((current) => ({ ...current, musical_key: value }))}
+                    onBlur={() => saveBasicsField("musical_key")}
+                  />
+                </div>
+                {basicsError ? <p className="mt-3 text-sm font-semibold text-[#B91C1C]">{basicsError}</p> : null}
+              </section>
+
               {gapActions.length > 0 ? (
                 <section className="rounded-2xl border border-[#FEF3C7] bg-[#FFFBEB] p-4 shadow-sm shadow-slate-200/60">
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
@@ -1444,6 +1537,47 @@ function EnrichmentInput({
       )}
       <span className="mt-2 block text-xs leading-5 text-[#64748B]">{field.purpose}</span>
     </label>
+  );
+}
+
+function BasicsField({
+  label,
+  value,
+  placeholder,
+  type = "text",
+  saving,
+  saved,
+  onChange,
+  onBlur,
+}: {
+  label: string;
+  value: string;
+  placeholder: string;
+  type?: "text" | "number";
+  saving: boolean;
+  saved: boolean;
+  onChange: (value: string) => void;
+  onBlur: () => void;
+}) {
+  return (
+    <div>
+      <label className="text-xs font-semibold uppercase tracking-[0.12em] text-[#94A3B8]">{label}</label>
+      <input
+        type={type}
+        value={value}
+        placeholder={placeholder}
+        onChange={(event) => onChange(event.target.value)}
+        onBlur={onBlur}
+        className="mt-2 w-full rounded-xl border border-[#CBD5E1] bg-white px-3 py-2 text-sm text-[#334155] focus:border-[#2F48F7] focus:outline-none"
+      />
+      <div className="mt-1 h-4 text-xs font-semibold">
+        {saving ? (
+          <span className="text-[#64748B]">Saving…</span>
+        ) : saved ? (
+          <span className="text-[#15803D]">Saved ✓</span>
+        ) : null}
+      </div>
+    </div>
   );
 }
 

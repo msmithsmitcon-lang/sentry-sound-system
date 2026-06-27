@@ -23,6 +23,9 @@ export async function getCanonicalWorkDetailRow(
       mw.themes,
       mw.copyright_status,
       mw.registration_status,
+      mw.isrc,
+      mw.bpm,
+      mw.musical_key,
       mw.created_at,
       COALESCE(COUNT(wc.id), 0)::int AS contributor_count,
       COALESCE(SUM(wc.percentage), 0)::float8 AS split_total,
@@ -40,6 +43,9 @@ export async function getCanonicalWorkDetailRow(
       mw.themes,
       mw.copyright_status,
       mw.registration_status,
+      mw.isrc,
+      mw.bpm,
+      mw.musical_key,
       mw.created_at,
       mw.metadata
     LIMIT 1

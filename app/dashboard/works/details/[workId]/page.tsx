@@ -4,7 +4,9 @@ import { type ReactNode, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import {
+  AlertTriangle,
   ArrowLeft,
+  ArrowRight,
   CheckCircle2,
   FileText,
   Lightbulb,
@@ -140,7 +142,8 @@ type WorkDetailTab =
   | "supporting-materials"
   | "captured-basics"
   | "progress-context"
-  | "song-opportunities";
+  | "song-opportunities"
+  | "release-readiness";
 
 const workDetailTabs: { key: WorkDetailTab; label: string; cue: string }[] = [
   { key: "creative-details", label: "Creative Details", cue: "Add or update song details" },
@@ -149,6 +152,7 @@ const workDetailTabs: { key: WorkDetailTab; label: string; cue: string }[] = [
   { key: "captured-basics", label: "Song Basics", cue: "Review saved song basics" },
   { key: "progress-context", label: "Progress / Context", cue: "Review profile progress and helpful context" },
   { key: "song-opportunities", label: "Opportunities", cue: "Future planning ideas" },
+  { key: "release-readiness", label: "Release Readiness", cue: "See what's complete, what's missing, and what to do next" },
 ];
 
 function isWorkDetailTab(value: string | null): value is WorkDetailTab {
@@ -184,6 +188,7 @@ const tabAccentColors: Record<WorkDetailTab, string> = {
   "captured-basics": "#2F48F7",
   "progress-context": "#7C3AED",
   "song-opportunities": "#64748B",
+  "release-readiness": "#16A34A",
 };
 
 type WorkIntelligenceMetadata = {
@@ -1276,6 +1281,8 @@ export default function WorkDetailsPage() {
                 </div>
               </section>
               ) : null}
+
+              {activeTab === "release-readiness" ? <ReleaseReadinessPanel workId={workId} /> : null}
             </>
           )}
         </div>
@@ -1920,6 +1927,150 @@ function formatDate(value?: string | null) {
     month: "short",
     day: "numeric",
   });
+}
+
+type ReadinessCheckStatus = "complete" | "missing" | "attention";
+
+type ReadinessCheck = {
+  key: string;
+  label: string;
+  status: ReadinessCheckStatus;
+  description: string;
+  action: string | null;
+  action_href: string | null;
+};
+
+type ReleaseReadinessReport = {
+  overall_score: number;
+  checks: ReadinessCheck[];
+  ready_to_release: boolean;
+  next_action: string;
+};
+
+function ReleaseReadinessPanel({ workId }: { workId: string }) {
+  const [report, setReport] = useState<ReleaseReadinessReport | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await fetch(`/api/works/${workId}/release-readiness`, { cache: "no-store" });
+        const data = await response.json();
+        if (!response.ok || data.success === false) {
+          throw new Error(data.error ?? "Failed to load release readiness.");
+        }
+        if (!cancelled) setReport(data.report);
+      } catch (loadError) {
+        if (!cancelled) {
+          setError(loadError instanceof Error ? loadError.message : "Failed to load release readiness.");
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, [workId]);
+
+  if (loading) {
+    return (
+      <section className="rounded-2xl border border-[#E5E7EB] bg-white p-10 shadow-sm shadow-slate-200/60">
+        <div className="flex items-center justify-center">
+          <Loader2 className="h-6 w-6 animate-spin text-[#2F48F7]" />
+        </div>
+      </section>
+    );
+  }
+
+  if (error || !report) {
+    return (
+      <section className="rounded-2xl border border-[#FECACA] bg-[#FEF2F2] p-6 shadow-sm shadow-slate-200/60">
+        <p className="text-sm font-semibold text-[#B91C1C]">{error ?? "Release readiness is not available."}</p>
+      </section>
+    );
+  }
+
+  const scoreLabel = report.ready_to_release ? "Release Ready ✓" : `${report.overall_score}% Release Ready`;
+  const incompleteChecks = report.checks.filter((check) => check.status !== "complete");
+
+  return (
+    <div className="space-y-6">
+      <section className="rounded-2xl border border-[#E5E7EB] bg-white p-6 shadow-sm shadow-slate-200/60">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#2F48F7]">Release Readiness</p>
+        <h2
+          className={`mt-2 text-2xl font-semibold ${
+            report.ready_to_release ? "text-[#15803D]" : "text-[#0F172A]"
+          }`}
+        >
+          {scoreLabel}
+        </h2>
+        <p className="mt-2 text-sm leading-6 text-[#64748B]">
+          {report.ready_to_release
+            ? "This song meets the bar for release readiness."
+            : `${incompleteChecks.length} thing${incompleteChecks.length === 1 ? "" : "s"} still need your attention before this song is fully release-ready.`}
+        </p>
+      </section>
+
+      <section className="rounded-2xl border border-[#E5E7EB] bg-white p-6 shadow-sm shadow-slate-200/60">
+        <h3 className="text-sm font-semibold uppercase tracking-[0.16em] text-[#2F48F7]">Checklist</h3>
+        <div className="mt-4 space-y-3">
+          {report.checks.map((check) => (
+            <div
+              key={check.key}
+              className={`rounded-xl border p-4 ${
+                check.status === "complete"
+                  ? "border-[#DCFCE7] bg-[#F0FDF4]"
+                  : "border-[#FEF3C7] bg-[#FFFBEB]"
+              }`}
+            >
+              <div className="flex items-start gap-3">
+                {check.status === "complete" ? (
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#15803D]" />
+                ) : (
+                  <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#B45309]" />
+                )}
+                <div className="min-w-0 flex-1">
+                  <p className="font-semibold text-[#0F172A]">{check.label}</p>
+                  <p className="mt-1 text-sm leading-6 text-[#64748B]">{check.description}</p>
+                  {check.status !== "complete" && check.action ? (
+                    <Link
+                      href={check.action_href ?? "#"}
+                      className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-[#2F48F7]"
+                    >
+                      {check.action}
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-2xl border border-[#DBEAFE] bg-[#EFF6FF] p-6 shadow-sm shadow-slate-200/60">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#2F48F7]">Your next step</p>
+        <p className="mt-2 text-lg font-semibold text-[#0F172A]">{report.next_action}</p>
+        {!report.ready_to_release ? (
+          <Link
+            href={incompleteChecks[0]?.action_href ?? `/dashboard/works/details/${workId}`}
+            className="mt-4 inline-flex items-center justify-center gap-2 rounded-xl bg-[#2F48F7] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition hover:bg-[#2438D6]"
+          >
+            Take the next step
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        ) : null}
+      </section>
+    </div>
+  );
 }
 
 function ComplianceExportsCard({ workId }: { workId: string }) {

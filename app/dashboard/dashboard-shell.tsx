@@ -28,7 +28,7 @@ const navItems = [
   ["My Team", null, Users],
   ["My Protection", null, ShieldCheck],
   ["My Releases", null, Radio],
-  ["My Royalties", null, WalletCards],
+  ["My Royalties", "/dashboard/royalties", WalletCards],
   ["My Business", "/dashboard/finance", LineChart],
 ] as const;
 

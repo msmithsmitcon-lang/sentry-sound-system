@@ -27,7 +27,9 @@ const navItems = [
   ["My Projects", "/dashboard/works/list", FolderOpen],
   ["My Team", null, Users],
   ["My Protection", null, ShieldCheck],
-  ["My Releases", null, Radio],
+  // TODO V2: dedicated releases page at /dashboard/releases.
+  // Bridged to the projects list for now — not a permanent solution.
+  ["My Releases", "/dashboard/works/list", Radio],
   ["My Royalties", "/dashboard/royalties", WalletCards],
   ["My Business", "/dashboard/finance", LineChart],
 ] as const;

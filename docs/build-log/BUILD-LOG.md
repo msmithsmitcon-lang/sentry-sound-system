@@ -10402,3 +10402,35 @@ Boundary:
 - Real configuration, infrastructure, and documentation changes.
 - `tsc --noEmit` confirmed unchanged (250 pre-existing errors, same set as before).
 - No live database migration applied — same limitation as the prior entry.
+
+## 2026-06-23 - Royalty Intelligence Service V1 Complete (Royalty Statement Clarity)
+
+Files:
+- `supabase/migrations/20260623000001_royalty_statements_v1.sql`
+- `src/lib/royalties-v1/royalty-statement-parser.ts`
+- `app/api/royalties/statements/route.ts`
+- `app/api/royalties/statements/[statementId]/route.ts`
+- `app/dashboard/royalties/page.tsx`
+- `app/dashboard/dashboard-shell.tsx`
+- `docs/build-log/BUILD-LOG.md`
+
+Changes:
+- Built the first complete vertical slice of the Royalty Intelligence Service: an artist uploads one royalty statement CSV and immediately sees, in plain language, what arrived, which songs it matches, what couldn't be matched, and what needs their attention — fulfilling the Royalty Intelligence Service promise ("You will never be left wondering what is happening with your royalties.") from `SENTRY_SOUND_CANONICAL_SERVICE_CATALOGUE_V1.md`.
+- New tables: `royalty_statements` (source, period, total, currency, status) and `royalty_statement_lines` (raw CSV row data, match status, attention reason, optional FK to `musical_works`).
+- Added an `isrc` column to `musical_works` — it had none at all (only `iswc`, for compositions). Required for the parser's ISRC-first matching strategy to have a real field to match against. Approved by Markus as a correct addition, not scope creep.
+- Built a dependency-free CSV parser (`royalty-statement-parser.ts`) rather than installing a library (e.g. `papaparse`), per the existing "do not change the tech stack" constraint. Handles quoted fields, embedded commas, and variable column names across SAMRO/DistroKid/TuneCore-style exports via a header-alias map. Matching strategy: exact ISRC match, then exact case-insensitive title match, then a normalized substring "partial" match (flagged for confirmation rather than silently treated as confident), then unmatched.
+- Verified the matching logic directly against the live database (not just in isolation): inserted a temporary test song, ran the parser against a 3-row CSV with deliberately non-canonical headers, confirmed ISRC match / partial title match / unmatched all resolved correctly, then deleted the test data.
+- Confirmed the domain event `plexicon.domain.music.royalty_ingestion.completed.v1` logs correctly to `plexicon_domain_events` via the existing `emitMusicDomainEvent` helper.
+- Wired "My Royalties" in `dashboard-shell.tsx` from a `null`-href "Coming soon" placeholder to a real route; the "Coming soon" tag is removed automatically since it was already conditional on a missing href.
+
+Flagged as V1.5 (accepted, not built now):
+- Upgrade the custom CSV parser to `papaparse` (or similar) once a dependency-stack decision is approved — the hand-written parser is correct for the formats tested but hasn't been hardened against every real-world CSV encoding/quoting edge case a mature library handles.
+- Period detection: `royalty_statements.period_start`/`period_end` exist in schema but are never populated — no source CSV column was specified for them in V1.
+- A real re-matching UI: unmatched/partial line items currently link to "My Projects" rather than a dedicated workflow for manually attaching a statement line to a specific song.
+- The `complete` status on the status lifecycle (`processing` → `matched`/`needs_attention` → `complete`) is defined in schema but never reached — no workflow yet transitions a statement to "complete" once attention items are resolved.
+
+Boundary:
+- Real schema, backend, and frontend implementation — not documentation-only.
+- Did not touch `src/lib/royalties/` (the dead, unreachable V2/V3 royalty-engine code under `src/app/`), any existing finance tables, or any payout/ledger logic, per explicit instruction.
+- `tsc --noEmit` confirmed zero new errors introduced by this work.
+- Migration applied to the live database and verified directly (tables, the new `isrc` column, and live parser matching all confirmed against real data).
